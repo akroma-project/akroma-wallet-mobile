@@ -37,7 +37,8 @@ export const WalletScreen = ({ route }: { route: any }) => {
       }
     }
     init();
-  }, [setActive, updateBalance, wallet.id, wallet.lastBalance, walletsRepository]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wallet.id]);
 
   const onCopyAddress = () => {
     Clipboard.setString(wallet.address);

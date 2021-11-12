@@ -16,12 +16,10 @@ export const DatabaseConnectionProvider: React.FC = ({ children }) => {
 
   const connect = useCallback(async () => {
     const createdConnection = await createConnection({
-      type: 'expo',
+      type: 'react-native',
       database: 'akroma6.db',
-      driver: require('expo-sqlite'),
+      location: 'default',
       entities: [WalletModel],
-      migrations: [],
-      migrationsRun: false,
       synchronize: true,
       logging: true,
     });
