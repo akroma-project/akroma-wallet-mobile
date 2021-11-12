@@ -1,4 +1,4 @@
-package com.myapp;
+package org.akroma.wallet.mobile;
 
 import android.app.Application;
 import android.content.Context;
