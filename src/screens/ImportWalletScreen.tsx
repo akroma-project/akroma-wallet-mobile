@@ -45,14 +45,27 @@ export const ImportWalletScreen = () => {
     return <Text>Spinner....</Text>;
   }
 
+  const invalid = () => {
+    if (name.length < 5) {
+      return true;
+    }
+    if (walletPassword.length < 4) {
+      return true;
+    }
+    if (walletJson.length < 4) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.container}>
         <View>
-          <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name" disabled={loading} />
+          <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
           <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Wallet Password" disabled={loading} />
           <Input style={GlobalStyles.input} onChangeText={walletJsonChange} value={walletJson} numberOfLines={12} placeholder="Wallet JSON" disabled={loading} />
-          <Button disabled={loading} onPress={async () => await OnImportPress()}>
+          <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
             IMPORT WALLET
           </Button>
         </View>
