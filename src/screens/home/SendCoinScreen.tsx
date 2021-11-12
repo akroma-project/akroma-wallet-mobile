@@ -30,7 +30,7 @@ export const SendCoinScreen = () => {
       console.debug('invalid amount');
       return;
     }
-    if (sendA < state.wallet.lastBalance) {
+    if (sendA >= state.wallet.lastBalance) {
       console.debug('not enough in wallet');
       return;
     }
@@ -82,7 +82,7 @@ export const SendCoinScreen = () => {
       console.debug('invalid amount');
       return true;
     }
-    if (sendA < state.wallet.lastBalance) {
+    if (sendA >= state.wallet.lastBalance) {
       console.debug('not enough in wallet');
       return true;
     }
