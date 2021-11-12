@@ -6,10 +6,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { WalletContext } from '../../providers/WalletProvider';
 import { useContext, useEffect, useState } from 'react';
-import { Button, Card, Divider, Text } from '@ui-kitten/components';
+import { Button, Icon, Input, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
+import Toast from 'react-native-toast-message';
 
 export const WalletSettingsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
@@ -17,11 +18,11 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
   const { removeWallet, setActive, state } = useContext(WalletContext);
-
+  const [displayExport, setDisplayExport] = useState(false);
   const wallet: WalletModel = route.params.wallet;
 
   const [refreshing] = useState(false);
-  const onRefresh = React.useCallback(() => {}, []);
+  const onRefresh = React.useCallback(() => { }, []);
 
   useEffect(() => {
     setActive(wallet.id);
@@ -44,10 +45,6 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     ]);
   };
 
-  const onCopyAddress = () => {
-    Clipboard.setString(wallet.address);
-  };
-
   if (state.wallet === undefined) {
     return (
       <View>
@@ -56,20 +53,21 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     );
   }
 
-  const walletsCardHeader = (wallet: WalletModel) => (
-    <View
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        minHeight: 50,
-        justifyContent: 'space-between',
-      }}>
-      <Text category="h6" style={{ paddingLeft: 0 }}>
-        Name: {wallet.name}
-      </Text>
-    </View>
-  );
+  const CopyIcon = (props: any, value: string) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          Clipboard.setString(value);
+          Toast.show({
+            type: 'info',
+            text1: 'Copied to the clipboard',
+            position: 'bottom',
+          });
+        }}>
+        <Icon {...props} name="copy" />
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
@@ -77,14 +75,14 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{ flexGrow: 1 }}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-        <Card header={walletsCardHeader(state.wallet)}>
-          <Text category="h4">{'Balance:' + state.wallet.lastBalance?.toString()}</Text>
-          <View style={{ paddingTop: 20 }} />
-          <TouchableOpacity onPress={() => onCopyAddress()}>
-            <Text>{state.wallet.address}</Text>
-          </TouchableOpacity>
-          <Divider style={{ marginBottom: 10, marginTop: 10 }} />
-        </Card>
+        <Input style={GlobalStyles.input} disabled={true} value={state.wallet.name} label="Name" />
+        <Input style={GlobalStyles.input} disabled={true} value={state.wallet.lastBalance?.toString()} label="Balance" />
+        {displayExport && (
+          <>
+            <Input style={GlobalStyles.input} disabled={true} value={wallet.pin} label="Password" accessoryRight={(props: any) => CopyIcon(props, wallet.pin)} />
+            <Input style={GlobalStyles.input} disabled={true} value={wallet.encrypted} label="Keystore" accessoryRight={(props: any) => CopyIcon(props, wallet.encrypted)} />
+          </>
+        )}
         <View style={GlobalStyles.actions}>
           <View
             style={{
@@ -92,7 +90,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
               flexWrap: 'wrap',
               justifyContent: 'space-between',
             }}>
-            <Button>EXPORT</Button>
+            <Button onPress={() => setDisplayExport(!displayExport)}>EXPORT</Button>
             <Button status="danger" disabled={refreshing} onPress={DeleteWallet}>
               DELETE
             </Button>
