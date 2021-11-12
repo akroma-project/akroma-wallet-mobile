@@ -1,4 +1,6 @@
 import React from 'react';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
 import 'core-js/proposals/reflect-metadata';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import Navigation from './src/navigation/Navigation';

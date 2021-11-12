@@ -25,7 +25,8 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
 
   useEffect(() => {
     setActive(wallet.id);
-  }, [setActive, wallet.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wallet.id]);
 
   const DeleteWallet = async () => {
     return Alert.alert('Delete wallet?', 'Are you sure you want to delete this wallet?', [
