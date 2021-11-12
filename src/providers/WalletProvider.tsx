@@ -37,18 +37,18 @@ const WalletProvider = (props: serverProviderProps) => {
   const addWallet = (wallet: WalletModel) => {
     console.debug('add wallet called');
     setWallets(state.wallets.concat(wallet));
-  };;
+  };
 
   const removeWallet = (wallet: WalletModel) => {
     console.debug('remove wallet called', wallet.id);
     const wallets = state.wallets.filter(x => x.id !== wallet.id);
     setWallets(wallets);
-  };;
+  };
 
   const setWallets = (wallets: WalletModel[]) => {
     console.debug('set wallets called', wallets.length);
     setState({ ...state, wallets: wallets });
-  };;
+  };
 
   const setActive = (id: string): void => {
     console.debug('set active called', id);
@@ -57,7 +57,8 @@ const WalletProvider = (props: serverProviderProps) => {
       throw 'setActive: could not find wallet';
     }
     setState({ ...state, wallet: wallet, wallets: state.wallets });
-  };;
+  };
+
   const updateBalance = async (id: string): Promise<WalletModel> => {
     console.debug('update balance called', id);
     const wallet = state.wallets.find(x => x.id === id);
@@ -79,14 +80,10 @@ const WalletProvider = (props: serverProviderProps) => {
     console.debug('updated list of wallets:', others.length);
     setState({ ...state, wallets: others, wallet: updated });
     return updated;
-  };;
+  };
 
   const send = async (to: string, value: string): Promise<string> => {
     console.debug('send called');
-    // return new Promise(resolve =>
-    //     setTimeout(() => resolve(value), 5000)
-    //   );
-
     // return "none";
     const wallet = state.wallets.find(x => x.id === state.wallet.id);
     if (wallet === undefined) {
@@ -99,7 +96,7 @@ const WalletProvider = (props: serverProviderProps) => {
     const txid = await akromaRn.sendFunds(wallet.address, wallet.pin, to, parseInt(value), EthUnits.eth);
     console.debug('txid:', txid);
     return txid;
-  };;
+  };
 
   const initalValue = {
     state,
@@ -111,7 +108,7 @@ const WalletProvider = (props: serverProviderProps) => {
     send: send,
   };
 
-  return <WalletContext.Provider value={initalValue}>{props.children}</WalletContext.Provider>;;
+  return <WalletContext.Provider value={initalValue}>{props.children}</WalletContext.Provider>;
 };
 
 export { WalletContext, WalletProvider };
