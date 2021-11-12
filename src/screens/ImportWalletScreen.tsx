@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import GlobalStyles from '../constants/GlobalStyles';
 import { useState } from 'react';
-import { Button, Input, Text } from '@ui-kitten/components';
+import { Button, Input } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/core';
 import { useDatabaseConnection } from '../data/connection';
 import { AkromaRn } from 'akroma-react-native';
@@ -19,20 +19,22 @@ export const ImportWalletScreen = () => {
   const OnImportPress = async () => {
     setLoading(true);
     try {
-      const valid: Boolean = await akromaRn.validateKeystoreCreds(walletJson, walletPassword);
-      if (valid) {
-        const wallet = await akromaRn.loadWallet(walletJson, walletPassword);
-        await walletsRepository.create({
-          name: name,
-          address: wallet.address,
-          pin: walletPassword,
-          encrypted: walletJson,
-        });
-        nav.goBack();
-        console.debug(`wallet opened:: ${wallet}`);
-      } else {
-        console.debug('unable to load wallet');
-      }
+      setTimeout(async () => {
+        const valid: Boolean = await akromaRn.validateKeystoreCreds(walletJson, walletPassword);
+        if (valid) {
+          const wallet = await akromaRn.loadWallet(walletJson, walletPassword);
+          await walletsRepository.create({
+            name: name,
+            address: wallet.address,
+            pin: walletPassword,
+            encrypted: walletJson,
+          });
+          nav.goBack();
+          console.debug(`wallet opened:: ${wallet}`);
+        } else {
+          console.debug('unable to load wallet');
+        }
+      }, 600);
     } catch (error) {
       console.error(error);
       console.error('unable to open wallet');
@@ -40,10 +42,6 @@ export const ImportWalletScreen = () => {
       setLoading(false);
     }
   };
-
-  if (loading === true) {
-    return <Text>Spinner....</Text>;
-  }
 
   const invalid = () => {
     if (name.length < 5) {
@@ -61,14 +59,18 @@ export const ImportWalletScreen = () => {
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.container}>
-        <View>
-          <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-          <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Wallet Password" disabled={loading} />
-          <Input style={GlobalStyles.input} onChangeText={walletJsonChange} value={walletJson} numberOfLines={12} placeholder="Wallet JSON" disabled={loading} />
-          <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
-            IMPORT WALLET
-          </Button>
-        </View>
+        {loading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <View>
+            <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
+            <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Wallet Password" disabled={loading} />
+            <Input style={GlobalStyles.input} onChangeText={walletJsonChange} value={walletJson} numberOfLines={12} placeholder="Wallet JSON" disabled={loading} />
+            <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
+              IMPORT WALLET
+            </Button>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
