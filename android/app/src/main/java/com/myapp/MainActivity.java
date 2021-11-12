@@ -1,4 +1,4 @@
-package com.myapp;
+package org.akroma.wallet.mobile;
 
 import com.facebook.react.ReactActivity;
 
