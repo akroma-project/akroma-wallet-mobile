@@ -13,7 +13,7 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    height: 30,
+    // height: 30,
   },
   colorWhite: {
     color: 'white',
