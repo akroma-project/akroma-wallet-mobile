@@ -1,20 +1,31 @@
 import { StyleSheet } from 'react-native';
 
+// $akroma-gold-darker: 	#E25D00;
+// $akroma-gold-dark: 		#F17100;
+// $akroma-gold-base: 		#FFA600;
+// $akroma-red-darker: 	#AF0000;
+// $akroma-red-dark:		#CF0000;
+// $akroma-red-base: 		#F10000;
+// $akroma-purple-darker:	#930077;
+// $akroma-purple-dark: 	#C2009D;
+// $akroma-purple-base: 	#AA0087;
+// $akroma-gray-darker: 	#CCCCCC;
+// $akroma-gray-dark: 		#E6E6E6;
+// $akroma-white: 			#FFFFFF;
+// $akroma-dark: 			#1A1A1A;
+// $akroma-dark-base:      #343a40;
+
 const GlobalStyles = StyleSheet.create({
   actions: {
     flex: 1,
     alignContent: 'center',
     justifyContent: 'flex-end',
   },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-  },
+  backdrop: {},
   body: {
     flex: 1,
   },
-  button: {
-    // height: 30,
-  },
+  button: {},
   colorWhite: {
     color: 'white',
   },
@@ -42,7 +53,6 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 10,
     marginBottom: 10,
-    borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
   },
   error: {
@@ -67,7 +77,6 @@ const GlobalStyles = StyleSheet.create({
   label: {
     paddingVertical: 5,
     paddingLeft: 5,
-    color: 'gray',
   },
   list: {
     marginHorizontal: -24,

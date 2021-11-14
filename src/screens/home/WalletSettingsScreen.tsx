@@ -75,7 +75,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{ flexGrow: 1 }}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-        <Input style={GlobalStyles.input} disabled={true} value={state.wallet.name} label="Name" />
+        <Input status="basic" style={GlobalStyles.input} disabled={true} value={state.wallet.name} label="Name" />
         <Input style={GlobalStyles.input} disabled={true} value={state.wallet.lastBalance?.toString()} label="Balance" />
         {displayExport && (
           <>
