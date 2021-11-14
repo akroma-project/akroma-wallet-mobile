@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ActivityIndicator, Alert, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { WalletContext } from '../../providers/WalletProvider';
 import { Input, Button, Text, Icon } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -9,14 +9,20 @@ import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 
-export const SendCoinScreen = () => {
+export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
+
+  const sendToAddress = route.params?.address ?? '';
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
   const [sending, setSending] = React.useState(false);
   const { send, state } = React.useContext(WalletContext);
   const u = new Utils();
+
+  useEffect(() => {
+    setAddress(sendToAddress);
+  }, [sendToAddress]);
 
   const OnSendPress = async () => {
     if (u.isAddress(address) === false) {
