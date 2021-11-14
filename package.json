@@ -1,6 +1,6 @@
 {
   "name": "myapp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "bump": "npx react-native bump-version --skip-semver-for android"
+    "bump": "npx react-native bump-version --skip-semver-for android --type patch"
   },
   "dependencies": {
     "@eva-design/eva": "^2.1.1",

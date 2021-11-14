@@ -9,11 +9,12 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { DatabaseConnectionProvider } from './src/data/connection';
 import Toast from 'react-native-toast-message';
+import { AkromaTheme } from './src/custom-theme';
 
 export default function App() {
   return (
     <DatabaseConnectionProvider>
-      <ApplicationProvider {...eva} theme={eva.light}>
+      <ApplicationProvider {...eva} theme={{ ...eva.light, ...AkromaTheme }}>
         <IconRegistry icons={EvaIconsPack} />
         <WalletProvider>
           <Navigation />

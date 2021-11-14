@@ -61,7 +61,7 @@ export const CreateWalletScreen = () => {
           <View>
             <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name" disabled={loading} />
             <Input style={GlobalStyles.input} onChangeText={pinChange} value={pin} placeholder="123456" disabled={loading} keyboardType="number-pad" />
-            <Button disabled={loading || invalid()} onPress={async () => await OnCreateWalletPress()}>
+            <Button style={GlobalStyles.button} disabled={loading || invalid()} onPress={async () => await OnCreateWalletPress()}>
               CREATE WALLET
             </Button>
           </View>
