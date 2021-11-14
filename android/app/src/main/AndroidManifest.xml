@@ -2,7 +2,7 @@
   package="org.akroma.wallet.mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
       android:largeHeap="true"
       android:name=".MainApplication"
@@ -23,4 +23,5 @@
         </intent-filter>
       </activity>
     </application>
+    <uses-feature android:name="android.hardware.camera" />
 </manifest>

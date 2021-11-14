@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RefreshControl, SafeAreaView, ScrollView, View } from 'react-native';
+import { AppState, Platform, RefreshControl, SafeAreaView, ScrollView, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -11,6 +11,7 @@ import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import { WalletContext } from '../../providers/WalletProvider';
 import { NoWallet } from '../../components/NoWallet';
+import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 
 export const HomeScreen = () => {
   const { walletsRepository } = useDatabaseConnection();
@@ -23,6 +24,37 @@ export const HomeScreen = () => {
     console.debug('home: wallet count: ', fromDb.length);
     setWallets(fromDb);
   };
+
+  const [statuses, setStatuses] = React.useState<Partial<Record<Permission, PermissionStatus>>>({});
+  const [notifications, setNotifications] = React.useState<NotificationsResponse>({
+    settings: {},
+    status: 'unavailable',
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { SIRI, ...PERMISSIONS_IOS } = PERMISSIONS.IOS; // remove siri (certificate required)
+
+  const PLATFORM_PERMISSIONS = Platform.select<typeof PERMISSIONS.ANDROID | typeof PERMISSIONS_IOS | typeof PERMISSIONS.WINDOWS | {}>({
+    android: PERMISSIONS.ANDROID,
+    ios: PERMISSIONS_IOS,
+    windows: PERMISSIONS.WINDOWS,
+    default: {},
+  });
+
+  const PERMISSIONS_VALUES: Permission[] = Object.values(PLATFORM_PERMISSIONS);
+
+  const check = React.useCallback(() => {
+    RNPermissions.checkMultiple(PERMISSIONS_VALUES)
+      .then(setStatuses)
+      .then(() => RNPermissions.checkNotifications())
+      .then(setNotifications)
+      .catch(error => console.warn(error));
+  }, []);
+
+  React.useEffect(() => {
+    const { remove } = AppState.addEventListener('change', status => status === 'active' && check());
+    return remove;
+  }, [check]);
 
   useEffect(() => {
     async function init() {
