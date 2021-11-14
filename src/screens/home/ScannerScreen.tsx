@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { useEffect, useState } from 'react';
-import { StyleService, Text, useStyleSheet } from '@ui-kitten/components';
+import { useEffect } from 'react';
+import { StyleService, useStyleSheet } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/core';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
@@ -11,9 +11,8 @@ import { GoogleVisionBarcodesDetectedEvent, RNCamera } from 'react-native-camera
 export const ScannerScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
-  const [hasPermission, setHasPermission] = useState(false);
-  const [scanned, setScanned] = useState(false);
   const styles = useStyleSheet(themedStyles);
+  const [camera, setCamera] = React.useState<RNCamera | null>();
 
   useEffect(() => {
     (async () => {
@@ -23,29 +22,29 @@ export const ScannerScreen = () => {
   }, []);
 
   const handleBarCodeScanned = (event: GoogleVisionBarcodesDetectedEvent) => {
-    setScanned(true);
+    // setScanned(true);
     console.debug(event);
     navigator.navigate('SendCoinScreen', { address: event.barcodes[0].data });
   };
 
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  // if (hasPermission === null) {
+  //   return <Text>Requesting for camera permission</Text>;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.container}>
         {/* <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={GlobalStyles.body} /> */}
         <RNCamera
-          ref={ref => {
-            this.camera = ref;
-          }}
+          // ref={ref => {
+          //   setCamera(ref);
+          // }}
+          captureAudio={false}
+          trackingEnabled={false}
           type={RNCamera.Constants.Type.back}
-          permissionDialogTitle={'Permission to use camera'}
-          permissionDialogMessage={'We need your permission to use your camera phone'}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
             message: 'We need your permission to use your camera',
