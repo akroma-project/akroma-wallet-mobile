@@ -20,9 +20,9 @@ export const HomeScreen = () => {
   const { state, setWallets } = useContext(WalletContext);
 
   const loadWallets = async () => {
-    const fromDb = await walletsRepository.getAll();
-    console.debug('home: wallet count: ', fromDb.length);
-    setWallets(fromDb);
+    const wallets = await walletsRepository.getAll();
+    console.debug('home: wallet count: ', wallets.length);
+    setWallets(wallets);
   };
 
   const [statuses, setStatuses] = React.useState<Partial<Record<Permission, PermissionStatus>>>({});
@@ -49,7 +49,7 @@ export const HomeScreen = () => {
       .then(() => RNPermissions.checkNotifications())
       .then(setNotifications)
       .catch(error => console.warn(error));
-  }, []);
+  }, [PERMISSIONS_VALUES]);
 
   React.useEffect(() => {
     const { remove } = AppState.addEventListener('change', status => status === 'active' && check());

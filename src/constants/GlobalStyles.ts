@@ -82,6 +82,16 @@ const GlobalStyles = StyleSheet.create({
     marginHorizontal: -24,
     marginVertical: -16,
   },
+  logoContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  logoImage: {
+    width: 240,
+    height: 240,
+    borderRadius: 0,
+    marginVertical: 16,
+  },
   main: {
     flex: 1,
     alignContent: 'center',

@@ -6,7 +6,7 @@ import { ReceiveCoinScreen } from '../screens/home/ReceiveCoinScreen';
 import { WalletScreen } from '../screens/home/WalletScreen';
 import { ScannerScreen } from '../screens/home/ScannerScreen';
 import { WalletModel } from '../data/entities/wallet';
-import { CreateWalletScreen } from '../screens/CreateWalletScreen';
+import { CreateWalletScreen } from '../screens/onboarding/CreateWalletScreen';
 import { TouchableOpacity } from 'react-native';
 import { WalletSettingsScreen } from '../screens/home/WalletSettingsScreen';
 import { Icon } from '@ui-kitten/components/ui';
