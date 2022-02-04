@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@ui-kitten/components/ui';
 import GlobalStyles from '../constants/GlobalStyles';
-import { ImportWalletScreen } from '../screens/ImportWalletScreen';
+import { ImportWalletScreen } from '../screens/onboarding/ImportWalletScreen';
 
 export type ImportStackParamList = {
   ImportWalletScreen: undefined;

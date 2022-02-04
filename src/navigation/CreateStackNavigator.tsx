@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { CreateWalletScreen } from '../screens/CreateWalletScreen';
+import { CreateWalletScreen } from '../screens/onboarding/CreateWalletScreen';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@ui-kitten/components/ui';
 import GlobalStyles from '../constants/GlobalStyles';

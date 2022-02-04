@@ -1,5 +1,4 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { Connection, createConnection } from 'typeorm';
 
 import { WalletModel } from './entities/wallet';
@@ -28,14 +27,10 @@ export const DatabaseConnectionProvider: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!connection) {
-      connect();
+    if (connection === null) {
+      setTimeout(() => connect(), 1000);
     }
   }, [connect, connection]);
-
-  if (!connection) {
-    return <ActivityIndicator />;
-  }
 
   return (
     <DatabaseConnectionContext.Provider
@@ -49,6 +44,5 @@ export const DatabaseConnectionProvider: React.FC = ({ children }) => {
 
 export function useDatabaseConnection() {
   const context = useContext(DatabaseConnectionContext);
-
   return context;
 }

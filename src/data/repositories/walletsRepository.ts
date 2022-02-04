@@ -12,7 +12,14 @@ export class WalletsRepository {
   private _orm: Repository<WalletModel>;
 
   constructor(connection: Connection) {
-    this._orm = connection.getRepository(WalletModel);
+    if (connection) {
+      this._orm = connection.getRepository(WalletModel);
+    }
+  }
+
+  public async any(): Promise<boolean> {
+    const wallets = await this._orm.findOne();
+    return wallets !== undefined;
   }
 
   public async getAll(): Promise<WalletModel[]> {
