@@ -11,10 +11,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SettingsContext } from '../providers/SettingsProvider';
 import { CreateWalletScreen } from '../screens/onboarding/CreateWalletScreen';
 import { OnboardingScreen } from '../screens/onboarding/OnboardingScreen';
+import { ImportWalletTabNav } from '../screens/onboarding/ImportWalletScreen';
 
 export type OnboardingStackParamList = {
   OnboardingScreen: undefined;
   CreateWalletScreen: undefined;
+  ImportWalletScreen: undefined;
+  WatchWalletScreen: undefined;
+  ImportWalletTabNav: undefined;
 };
 
 const ApplicationTable = createBottomTabNavigator();
@@ -47,6 +51,7 @@ export const ApplicationNavigation = () => {
       <OnboardingStack.Navigator screenOptions={{ headerShown: false }}>
         <OnboardingStack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ title: '' }} />
         <OnboardingStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: '' }} />
+        <OnboardingStack.Screen name="ImportWalletTabNav" component={ImportWalletTabNav} options={{ title: '' }} />
       </OnboardingStack.Navigator>
     </NavigationContainer>
   );

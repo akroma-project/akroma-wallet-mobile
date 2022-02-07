@@ -3,7 +3,6 @@ import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useContext, useState } from 'react';
 import { Avatar, Button, Input } from '@ui-kitten/components';
-import { useNavigation } from '@react-navigation/core';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletContext } from '../../providers/WalletProvider';
 import { AkromaRn } from 'akroma-react-native';
@@ -11,7 +10,6 @@ import { ImageOverlay } from '../../extra/image-overlay.component';
 import { SettingsContext } from '../../providers/SettingsProvider';
 
 export const CreateWalletScreen = () => {
-  const nav = useNavigation();
   const { walletsRepository } = useDatabaseConnection();
   const { addWallet } = useContext(WalletContext);
   const { setOnboarded } = useContext(SettingsContext);

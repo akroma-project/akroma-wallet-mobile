@@ -1,77 +1,30 @@
+import { Tab, TabBar } from '@ui-kitten/components/ui';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import * as React from 'react';
-import { ActivityIndicator, SafeAreaView, View } from 'react-native';
-import GlobalStyles from '../../constants/GlobalStyles';
-import { useState } from 'react';
-import { Button, Input } from '@ui-kitten/components';
-import { useNavigation } from '@react-navigation/core';
-import { useDatabaseConnection } from '../../data/connection';
-import { AkromaRn } from 'akroma-react-native';
-const akromaRn = new AkromaRn();
+import { ImportWalletKeystore } from './ImportWalletKeystore';
+import { ImportWalletSeedPhrase } from './ImportWalletSeedPhrase';
+import { ImportWalletPrivateKey } from './ImportWalletPrivateKey';
 
-export const ImportWalletScreen = () => {
-  const nav = useNavigation();
-  const { walletsRepository } = useDatabaseConnection();
-  const [walletJson, walletJsonChange] = useState('');
-  const [walletPassword, walletPasswordChange] = useState('');
-  const [name, setName] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const OnImportPress = async () => {
-    setLoading(true);
-    try {
-      setTimeout(async () => {
-        const valid: Boolean = await akromaRn.validateKeystoreCreds(walletJson, walletPassword);
-        if (valid) {
-          const wallet = await akromaRn.loadWallet(walletJson, walletPassword);
-          await walletsRepository.create({
-            name: name,
-            address: wallet.address,
-            pin: walletPassword,
-            encrypted: walletJson,
-          });
-          nav.goBack();
-          console.debug(`wallet opened:: ${wallet}`);
-        } else {
-          console.debug('unable to load wallet');
-        }
-      }, 600);
-    } catch (error) {
-      console.error(error);
-      console.error('unable to open wallet');
-    } finally {
-      setLoading(false);
-    }
+const ImportWalletTabBar = ({ navigation, state }) => {
+  const onTabSelect = (index: number): void => {
+    navigation.navigate(state.routeNames[index]);
   };
 
-  const invalid = () => {
-    if (name.length < 5) {
-      return true;
-    }
-    if (walletPassword.length < 4) {
-      return true;
-    }
-    if (walletJson.length < 4) {
-      return true;
-    }
-    return false;
-  };
+  const renderTab = (route: string): React.ReactElement => <Tab key={route} title={route.toUpperCase()} />;
 
   return (
-    <SafeAreaView style={GlobalStyles.flex}>
-      <View style={GlobalStyles.container}>
-        {loading ? (
-          <ActivityIndicator size="large" />
-        ) : (
-          <View>
-            <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-            <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Wallet Password" disabled={loading} />
-            <Input style={GlobalStyles.input} onChangeText={walletJsonChange} value={walletJson} numberOfLines={12} placeholder="Wallet JSON" disabled={loading} />
-            <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
-              IMPORT WALLET
-            </Button>
-          </View>
-        )}
-      </View>
-    </SafeAreaView>
+    <TabBar selectedIndex={state.index} onSelect={onTabSelect}>
+      {state.routeNames.map(renderTab)}
+    </TabBar>
   );
 };
+
+const ImportWalletTabs = createMaterialTopTabNavigator();
+
+export const ImportWalletTabNav = () => (
+  <ImportWalletTabs.Navigator tabBar={props => <ImportWalletTabBar {...props} />}>
+    <ImportWalletTabs.Screen name="Keystore" component={ImportWalletKeystore} />
+    <ImportWalletTabs.Screen name="Seed Phrase" component={ImportWalletSeedPhrase} />
+    <ImportWalletTabs.Screen name="Private Key" component={ImportWalletPrivateKey} />
+  </ImportWalletTabs.Navigator>
+);
