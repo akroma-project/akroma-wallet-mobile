@@ -11,6 +11,7 @@ import { TouchableOpacity } from 'react-native';
 import { WalletSettingsScreen } from '../screens/home/WalletSettingsScreen';
 import { Icon } from '@ui-kitten/components/ui';
 import GlobalStyles from '../constants/GlobalStyles';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
@@ -25,13 +26,28 @@ export type HomeStackParamList = {
 const HomeStack = createStackNavigator<HomeStackParamList>();
 
 export function HomeStackNavigator() {
+  const { showActionSheetWithOptions } = useActionSheet();
   return (
     <HomeStack.Navigator
-      screenOptions={({ navigation }) => ({
+      screenOptions={() => ({
         headerStyle: GlobalStyles.header,
         headerRight: (style: any) => (
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Icon name="menu-2-outline" {...style} style={GlobalStyles.iconRight} fill="#000000" />
+          <TouchableOpacity
+            onPress={() =>
+              showActionSheetWithOptions(
+                {
+                  options: ['Copy Wallet Address', 'Show Wallet Address', 'Add / Hide Tokens', 'Rename Wallet'],
+                  cancelButtonIndex: 99,
+                  showSeparators: true,
+                },
+                (index: number) => {
+                  if (index === 0) {
+                    console.debug('delete called');
+                  }
+                },
+              )
+            }>
+            <Icon name="menu-outline" {...style} style={GlobalStyles.iconRight} fill="#000000" />
           </TouchableOpacity>
         ),
         title: '',
