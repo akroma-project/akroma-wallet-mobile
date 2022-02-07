@@ -10,7 +10,6 @@ import _ from 'lodash';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import { WalletContext } from '../../providers/WalletProvider';
-import { NoWallet } from '../../components/NoWallet';
 import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 
 export const HomeScreen = () => {
@@ -21,11 +20,12 @@ export const HomeScreen = () => {
 
   const loadWallets = async () => {
     const wallets = await walletsRepository.getAll();
-    console.debug('home: wallet count: ', wallets.length);
     setWallets(wallets);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [statuses, setStatuses] = React.useState<Partial<Record<Permission, PermissionStatus>>>({});
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [notifications, setNotifications] = React.useState<NotificationsResponse>({
     settings: {},
     status: 'unavailable',
@@ -80,7 +80,7 @@ export const HomeScreen = () => {
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.container}>
         <ScrollView contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-          {state.wallets.length < 1 && <NoWallet />}
+          {/* {state.wallets.length < 1 && <NoWallet />} */}
           {state.wallets.length > 0 &&
             _.sortBy(state.wallets, x => x.address).map((item, index) => (
               <ListItem

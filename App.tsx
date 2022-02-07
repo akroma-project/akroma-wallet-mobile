@@ -11,19 +11,26 @@ import { DatabaseConnectionProvider } from './src/data/connection';
 import Toast from 'react-native-toast-message';
 import { AkromaTheme } from './src/custom-theme';
 import { SettingsProvider } from './src/providers/SettingsProvider';
+import { ActionSheetProvider, connectActionSheet } from '@expo/react-native-action-sheet';
 
-export default function App() {
+const App = () => {
   return (
     <DatabaseConnectionProvider>
       <ApplicationProvider {...eva} theme={{ ...eva.light, ...AkromaTheme }}>
         <IconRegistry icons={EvaIconsPack} />
-        <WalletProvider>
-          <SettingsProvider>
-            <ApplicationNavigation />
-            <Toast />
-          </SettingsProvider>
-        </WalletProvider>
+        <ActionSheetProvider>
+          <WalletProvider>
+            <SettingsProvider>
+              <ApplicationNavigation />
+              <Toast />
+            </SettingsProvider>
+          </WalletProvider>
+        </ActionSheetProvider>
       </ApplicationProvider>
     </DatabaseConnectionProvider>
   );
-}
+};
+
+const ConnectedApp = connectActionSheet(App);
+
+export default ConnectedApp;

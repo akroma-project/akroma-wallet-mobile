@@ -1,8 +1,11 @@
 import React, { createContext, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 type Props = {
   state: SettingsState;
-  setOnboarded: (onboarded: boolean) => void;
+  setOnboarded: (onboarded: boolean) => Promise<void>;
+  init: () => Promise<void>;
 };
 
 const SettingsContext = createContext<Props>({} as Props);
@@ -18,14 +21,25 @@ interface SettingsState {
 const SettingsProvider = (props: serverProviderProps) => {
   const [state, setState] = useState({} as SettingsState);
 
-  const setOnboarded = (onboarded: boolean) => {
-    console.debug('set onboarded', onboarded);
+  const init = async () => {
+    const value = await AsyncStorage.getItem('@onboardComplete');
+    const onboardComplete = value === 'true';
+    setState({ ...state, onboardComplete: onboardComplete });
+    if (value) {
+      return true;
+    }
+    return false;
+  };
+
+  const setOnboarded = async (onboarded: boolean) => {
+    await AsyncStorage.setItem('@onboardComplete', onboarded.toString());
     setState({ ...state, onboardComplete: onboarded });
   };
 
   const initalValue = {
     state,
     setOnboarded,
+    init,
   };
 
   return <SettingsContext.Provider value={initalValue}>{props.children}</SettingsContext.Provider>;

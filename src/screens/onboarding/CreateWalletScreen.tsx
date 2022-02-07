@@ -40,7 +40,7 @@ export const CreateWalletScreen = () => {
       setLoading(false);
       pinChange('');
       setName('');
-      setOnboarded(true);
+      await setOnboarded(true);
     }, 600);
   };
 
