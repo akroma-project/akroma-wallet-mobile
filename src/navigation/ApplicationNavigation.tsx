@@ -33,7 +33,13 @@ const BottomTabBar = ({ navigation, state }) => (
 const OnboardingStack = createStackNavigator<OnboardingStackParamList>();
 
 export const ApplicationNavigation = () => {
-  const { state } = useContext(SettingsContext);
+  const { state, init } = useContext(SettingsContext);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      init();
+    }, 2000);
+  }, [init]);
 
   if (state.onboardComplete) {
     return (
