@@ -22,7 +22,7 @@ export const OnboardingScreen = () => {
   };
 
   const onImportWalletPress = (): void => {
-    navigator && navigator.goBack();
+    navigator && navigator.navigate('ImportWalletTabNav');
   };
 
   return (
@@ -35,12 +35,12 @@ export const OnboardingScreen = () => {
         <Button size="large" onPress={onCreateWalletPress}>
           CREATE WALLET
         </Button>
-        <View style={styles.socialAuthContainer}>
-          <Divider style={styles.profileSocialsDivider} />
-          <Text style={styles.socialAuthHintText} status="control">
+        <View style={styles.useExistingWalletContainer}>
+          <Divider style={styles.fullDivider} />
+          <Text style={styles.hintText} status="control">
             Use existing wallet
           </Text>
-          <View style={styles.profileButtonsContainer}>
+          <View style={styles.useExistingWalletButtonContainer}>
             <Button style={styles.profileButton} accessoryLeft={WatchIcon} onPress={onAddWatchWalletPress}>
               WATCH
             </Button>
@@ -52,14 +52,14 @@ export const OnboardingScreen = () => {
       </ImageOverlay>
     </KeyboardAvoidingView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  profileSocialsDivider: {
+  fullDivider: {
     marginHorizontal: -16,
     marginBottom: 32,
   },
-  profileButtonsContainer: {
+  useExistingWalletButtonContainer: {
     flexDirection: 'row',
     marginVertical: 24,
   },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 24,
   },
-  socialAuthContainer: {
+  useExistingWalletContainer: {
     marginTop: 48,
   },
   evaButton: {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  socialAuthHintText: {
+  hintText: {
     alignSelf: 'center',
     marginBottom: 16,
   },
