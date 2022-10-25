@@ -36,7 +36,7 @@ export const HomeScreenHeaderRight = () => {
             }
             if (index === 4) {
               console.debug('watch called');
-              navigator.navigate('CreateWalletScreen');
+              navigator.navigate('ImportWalletWatch');
             }
           },
         )

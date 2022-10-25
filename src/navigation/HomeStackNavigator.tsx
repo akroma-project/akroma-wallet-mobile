@@ -12,6 +12,7 @@ import { HomeScreenHeaderRight } from '../components/HomeScreenHeaderRight';
 import { ImportWalletKeystore } from '../screens/home/ImportWalletKeystore';
 import { ImportWalletPrivateKey } from '../screens/home/ImportWalletPrivateKey';
 import { ImportWalletSeedPhrase } from '../screens/home/ImportWalletSeedPhrase';
+import { ImportWalletWatch } from '../screens/home/ImportWalletWatch';
 
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
@@ -24,6 +25,7 @@ export type HomeStackParamList = {
   ImportWalletKeystore: undefined;
   ImportWalletPrivateKey: undefined;
   ImportWalletSeedPhrase: undefined;
+  ImportWalletWatch: undefined;
 };
 
 const HomeStack = createStackNavigator<HomeStackParamList>();
@@ -35,7 +37,7 @@ export function HomeStackNavigator() {
         headerShown: true,
       })}>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home', headerRight: () => <HomeScreenHeaderRight /> }} />
-      <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create', headerShown: true }} />
+      <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create' }} />
       <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />
       <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />
       <HomeStack.Screen name="ReceiveCoinScreen" component={ReceiveCoinScreen} options={{ title: 'Receive' }} />
@@ -44,6 +46,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="ImportWalletKeystore" component={ImportWalletKeystore} options={{ title: 'Import Keystore' }} />
       <HomeStack.Screen name="ImportWalletPrivateKey" component={ImportWalletPrivateKey} options={{ title: 'Import Private Key' }} />
       <HomeStack.Screen name="ImportWalletSeedPhrase" component={ImportWalletSeedPhrase} options={{ title: 'Import Seed Phrase' }} />
+      <HomeStack.Screen name="ImportWalletWatch" component={ImportWalletWatch} options={{ title: 'Watch Wallet' }} />
     </HomeStack.Navigator>
   );
 }
