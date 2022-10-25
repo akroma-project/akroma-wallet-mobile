@@ -14,6 +14,7 @@ export const DatabaseConnectionProvider: React.FC = ({ children }) => {
   const [connection, setConnection] = useState<Connection | null>(null);
 
   const connect = useCallback(async () => {
+    console.debug('Connecting to database');
     const createdConnection = await createConnection({
       type: 'react-native',
       database: 'akroma6.db',
@@ -28,7 +29,7 @@ export const DatabaseConnectionProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (connection === null) {
-      setTimeout(() => connect(), 1000);
+      setTimeout(() => connect(), 500);
     }
   }, [connect, connection]);
 

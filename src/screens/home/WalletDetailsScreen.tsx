@@ -9,7 +9,7 @@ import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { WalletActionButtons } from '../../components/WalletActionButtons';
 
-export const WalletScreen = ({ route }: { route: any }) => {
+export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
   console.debug(route.params.wallet.id);
   const { updateBalance, setActive, state } = useContext(WalletContext);

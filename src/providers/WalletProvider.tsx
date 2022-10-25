@@ -3,9 +3,11 @@ import { WalletModel } from '../data/entities/wallet';
 import { TypeSafeWeb3 } from 'typesafe-web3';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import { AkromaRn, EthUnits } from 'akroma-react-native';
+import { useDatabaseConnection } from '../data/connection';
 
 type Props = {
   state: WalletState;
+  loadWallets: () => Promise<void>;
   addWallet: (wallet: WalletModel) => void;
   removeWallet: (wallet: WalletModel) => void;
   updateBalance: (id: string) => Promise<WalletModel>;
@@ -20,19 +22,23 @@ interface serverProviderProps {
   children: React.ReactNode;
 }
 
-interface WalletState {
-  wallet: WalletModel;
-  wallets: WalletModel[];
+class WalletState {
+  wallet: WalletModel = new WalletModel();
+  wallets: WalletModel[] = [];
 }
 
 const WalletProvider = (props: serverProviderProps) => {
-  const [state, setState] = useState({
-    wallets: [] as WalletModel[],
-  } as WalletState);
-
+  const { walletsRepository } = useDatabaseConnection();
+  const [state, setState] = useState(new WalletState());
   const address = 'https://boot2.akroma.org';
   const provider = new TypeSafeWeb3(address);
   const utils = new Utils();
+
+  const loadWallets = async () => {
+    const wallets = await walletsRepository.getAll();
+    console.debug(`wallets:: ${JSON.stringify(wallets)}`);
+    setWallets(wallets);
+  };
 
   const addWallet = (wallet: WalletModel) => {
     console.debug('add wallet called');
@@ -100,6 +106,7 @@ const WalletProvider = (props: serverProviderProps) => {
 
   const initalValue = {
     state,
+    loadWallets,
     addWallet: addWallet,
     removeWallet: removeWallet,
     updateBalance: updateBalance,

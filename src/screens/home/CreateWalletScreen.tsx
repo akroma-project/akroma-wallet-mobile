@@ -7,12 +7,10 @@ import { useDatabaseConnection } from '../../data/connection';
 import { WalletContext } from '../../providers/WalletProvider';
 import { AkromaRn } from 'akroma-react-native';
 import { ImageOverlay } from '../../extra/image-overlay.component';
-import { SettingsContext } from '../../providers/SettingsProvider';
 
 export const CreateWalletScreen = () => {
   const { walletsRepository } = useDatabaseConnection();
   const { addWallet } = useContext(WalletContext);
-  const { setOnboarded } = useContext(SettingsContext);
 
   const [pin, pinChange] = useState('');
   const [name, setName] = useState<string>('');
@@ -40,7 +38,6 @@ export const CreateWalletScreen = () => {
       setLoading(false);
       pinChange('');
       setName('');
-      await setOnboarded(true);
     }, 600);
   };
 

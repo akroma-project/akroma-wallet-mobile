@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@ui-kitten/components/ui';
 import GlobalStyles from '../constants/GlobalStyles';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
 
 export type SettingsStackParamList = {
   SettingsWalletScreen: undefined;
@@ -15,7 +15,6 @@ export function SettingsStackNavigator() {
   return (
     <SettingsStack.Navigator
       screenOptions={({ navigation }) => ({
-        headerStyle: GlobalStyles.header,
         headerRight: (style: any) => (
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Icon name="menu-2-outline" {...style} style={GlobalStyles.iconRight} fill="#000000" />
