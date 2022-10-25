@@ -65,9 +65,19 @@ const GlobalStyles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  header: {},
+  header: {
+    backgroundColor: '#343a40',
+  },
+  headerTintColor: {
+    color: 'white',
+  },
   iconRight: {
     marginRight: 15,
+    height: 30,
+    width: 30,
+  },
+  iconLeft: {
+    marginLeft: 15,
     height: 30,
     width: 30,
   },

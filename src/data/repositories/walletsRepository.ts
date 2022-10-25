@@ -12,19 +12,25 @@ export class WalletsRepository {
   private _orm: Repository<WalletModel>;
 
   constructor(connection: Connection) {
-    if (connection) {
+    if (connection && !this._orm) {
       this._orm = connection.getRepository(WalletModel);
     }
   }
 
   public async any(): Promise<boolean> {
-    const wallets = await this._orm.findOne();
-    return wallets !== undefined;
+    if (this._orm) {
+      const wallets = await this._orm.findOne();
+      return wallets !== undefined;
+    }
+    return false;
   }
 
   public async getAll(): Promise<WalletModel[]> {
-    const wallets = await this._orm.find();
-    return wallets;
+    if (this._orm) {
+      const wallets = await this._orm.find();
+      return wallets;
+    }
+    return [];
   }
 
   public async create({

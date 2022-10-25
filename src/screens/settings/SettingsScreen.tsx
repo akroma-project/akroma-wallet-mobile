@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import GlobalStyles from '../constants/GlobalStyles';
+import GlobalStyles from '../../constants/GlobalStyles';
 
 export default function SettingsScreen() {
   return (

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Button, Input } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { AkromaRn } from 'akroma-react-native';
 import { ImageOverlay } from '../../extra/image-overlay.component';
-import { SettingsContext } from '../../providers/SettingsProvider';
 const akromaRn = new AkromaRn();
 
 export const ImportWalletKeystore = () => {
@@ -15,7 +14,6 @@ export const ImportWalletKeystore = () => {
   const [walletPassword, walletPasswordChange] = useState('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const { setOnboarded } = useContext(SettingsContext);
 
   const OnImportPress = async () => {
     setLoading(true);
@@ -30,7 +28,6 @@ export const ImportWalletKeystore = () => {
             pin: walletPassword,
             encrypted: walletJson,
           });
-          await setOnboarded(true);
           console.debug(`wallet opened:: ${wallet}`);
         } else {
           console.debug('unable to load wallet');

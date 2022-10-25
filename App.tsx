@@ -10,7 +10,6 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { DatabaseConnectionProvider } from './src/data/connection';
 import Toast from 'react-native-toast-message';
 import { AkromaTheme } from './src/custom-theme';
-import { SettingsProvider } from './src/providers/SettingsProvider';
 import { ActionSheetProvider, connectActionSheet } from '@expo/react-native-action-sheet';
 
 const App = () => {
@@ -20,17 +19,14 @@ const App = () => {
         <IconRegistry icons={EvaIconsPack} />
         <ActionSheetProvider>
           <WalletProvider>
-            <SettingsProvider>
-              <ApplicationNavigation />
-              <Toast />
-            </SettingsProvider>
+            <ApplicationNavigation />
+            <Toast />
           </WalletProvider>
         </ActionSheetProvider>
       </ApplicationProvider>
     </DatabaseConnectionProvider>
   );
 };
-
 const ConnectedApp = connectActionSheet(App);
 
 export default ConnectedApp;
