@@ -12,7 +12,7 @@ export const ReceiveCoinScreen = () => {
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.centerCenter}>
         <View>
-          <View key="qr" style={{ marginBottom: 20 }}>
+          <View key="qr" style={GlobalStyles.marginBottom20}>
             <QRCode value={state.wallet?.address} size={300} />
           </View>
           <Button accessoryRight={ShareIcon} style={GlobalStyles.button}>

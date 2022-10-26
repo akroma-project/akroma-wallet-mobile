@@ -48,8 +48,8 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
   }
 
   const walletsCardHeader = () => (
-    <View style={{ flex: 1, flexDirection: 'row', minHeight: 50, justifyContent: 'space-between' }}>
-      <Text category="h6" style={{ paddingLeft: 0 }}>
+    <View style={GlobalStyles.rowSpaceBetween}>
+      <Text category="h6" style={GlobalStyles.p}>
         Name: {wallet.name}
       </Text>
     </View>
@@ -57,11 +57,9 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
 
   return (
     <SafeAreaView style={GlobalStyles.flex}>
-      <ScrollView style={GlobalStyles.container} contentContainerStyle={{ flexGrow: 1 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+      <ScrollView style={GlobalStyles.container} contentContainerStyle={GlobalStyles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <Card header={walletsCardHeader()}>
           <Text category="h4">{'Balance:' + state.wallet.lastBalance?.toString()}</Text>
-          <View style={{ paddingTop: 20 }} />
-
           <TouchableOpacity onPress={() => onCopyAddress()}>
             <Text>{state.wallet.address}</Text>
           </TouchableOpacity>

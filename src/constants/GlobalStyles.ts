@@ -101,6 +101,9 @@ const GlobalStyles = StyleSheet.create({
     borderRadius: 0,
     marginVertical: 16,
   },
+  marginBottom20: {
+    marginBottom: 20,
+  },
   main: {
     flex: 1,
     alignContent: 'center',
@@ -117,6 +120,11 @@ const GlobalStyles = StyleSheet.create({
   },
   p: {
     paddingBottom: 10,
+  },
+  rowSpaceBetween: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   scrollView: {
     flex: 1,

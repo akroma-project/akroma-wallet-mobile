@@ -12,7 +12,7 @@ export const WalletActionButtons = (props: any) => {
   const navigator = useNavigation<homeScreenProp>();
 
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+    <View style={GlobalStyles.rowSpaceBetween}>
       <Button style={GlobalStyles.button} accessoryRight={ReceiveIcon} onPress={() => navigator.push('ReceiveCoinScreen')} />
       <Button style={GlobalStyles.button} accessoryRight={SendIcon} onPress={() => navigator.push('SendCoinScreen')} />
       <Button accessoryRight={SettingsIcon} style={GlobalStyles.button} onPress={() => navigator.push('WalletSettingsScreen', { wallet: props.wallet })} />
