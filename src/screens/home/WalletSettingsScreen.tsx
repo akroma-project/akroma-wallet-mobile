@@ -84,12 +84,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
           </>
         )}
         <View style={GlobalStyles.actions}>
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-            }}>
+          <View style={GlobalStyles.rowSpaceBetween}>
             <Button onPress={() => setDisplayExport(!displayExport)}>EXPORT</Button>
             <Button status="danger" disabled={refreshing} onPress={DeleteWallet}>
               DELETE

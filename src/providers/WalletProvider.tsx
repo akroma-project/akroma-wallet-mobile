@@ -99,7 +99,7 @@ const WalletProvider = (props: serverProviderProps) => {
     await akromaRn.loadWallet(wallet.encrypted, wallet.pin);
     // wallet must be loaded first
     console.debug('from:', wallet.address, 'to:', to);
-    const txid = await akromaRn.sendFunds(wallet.address, wallet.pin, to, parseInt(value), EthUnits.eth);
+    const txid = await akromaRn.sendFunds(wallet.address, wallet.pin, to, parseInt(value, 10), EthUnits.eth);
     console.debug('txid:', txid);
     return txid;
   };

@@ -58,9 +58,8 @@ const GlobalStyles = StyleSheet.create({
   error: {
     textAlign: 'center',
     fontSize: 20,
-    padding: 10,
+    paddingBottom: 30,
     color: 'white',
-    backgroundColor: 'red',
   },
   flex: {
     flex: 1,
@@ -102,6 +101,9 @@ const GlobalStyles = StyleSheet.create({
     borderRadius: 0,
     marginVertical: 16,
   },
+  marginBottom20: {
+    marginBottom: 20,
+  },
   main: {
     flex: 1,
     alignContent: 'center',
@@ -118,6 +120,11 @@ const GlobalStyles = StyleSheet.create({
   },
   p: {
     paddingBottom: 10,
+  },
+  rowSpaceBetween: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   scrollView: {
     flex: 1,
