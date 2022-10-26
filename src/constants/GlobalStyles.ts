@@ -58,9 +58,8 @@ const GlobalStyles = StyleSheet.create({
   error: {
     textAlign: 'center',
     fontSize: 20,
-    padding: 10,
+    paddingBottom: 30,
     color: 'white',
-    backgroundColor: 'red',
   },
   flex: {
     flex: 1,
