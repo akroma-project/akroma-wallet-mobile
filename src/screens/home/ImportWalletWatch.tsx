@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, Alert, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState } from 'react';
 import { Button, Input } from '@ui-kitten/components';
