@@ -6,6 +6,7 @@ import { Button, Input } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { ImageOverlay } from '../../extra/image-overlay.component';
 import { isAddress } from 'ethers/lib/utils';
+import Toast from 'react-native-toast-message';
 
 export const ImportWalletWatch = () => {
   const { walletsRepository } = useDatabaseConnection();
@@ -17,14 +18,21 @@ export const ImportWalletWatch = () => {
   const onSuccessWatchWallet = () => {
     setName('');
     walletAddressChange('');
-    Alert.alert('The wallet is saved');
+    Toast.show({
+      text1: 'The wallet is saved',
+      position: 'top',
+    });
   };
 
   const OnImportPress = () => {
     setLoading(true);
 
     if (!isValidAddress) {
-      Alert.alert('The address is no valid');
+      Toast.show({
+        type: 'error',
+        text1: 'The address is no valid',
+        position: 'top',
+      });
       setLoading(false);
       return;
     }
