@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
+import Toast from 'react-native-toast-message';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -23,6 +24,21 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
   useEffect(() => {
     setAddress(sendToAddress);
   }, [sendToAddress]);
+
+  const sendAmount = async () => {
+    setSending(true);
+    setTimeout(async () => {
+      await send(address, amount);
+      setSending(false);
+      setAddress('');
+      setAmount('');
+      navigator.goBack();
+      Toast.show({
+        text1: 'The transfer was succesfully sent',
+        position: 'top',
+      });
+    }, 600);
+  };
 
   const OnSendPress = async () => {
     if (u.isAddress(address) === false) {
@@ -40,20 +56,11 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
       console.debug('not enough in wallet');
       return;
     }
-    return Alert.alert('Send AKA?', `Send ${amount}aka to \r\n${address}`, [
+    Alert.alert('Send AKA?', `Send ${amount}aka to \r\n${address}`, [
       // The "Yes" button
       {
         text: 'Yes',
-        onPress: async () => {
-          setSending(true);
-          setTimeout(async () => {
-            await send(address, amount);
-            setSending(false);
-            setAddress('');
-            setAmount('');
-            navigator.goBack();
-          }, 600);
-        },
+        onPress: sendAmount,
       },
       {
         text: 'No',
