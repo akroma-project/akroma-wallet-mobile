@@ -134,6 +134,12 @@ const GlobalStyles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  captionText: {
+    fontSize: 12,
+    fontWeight: '400',
+    fontFamily: 'opensans-regular',
+    color: '#8F9BB3',
+  },
 });
 
 export default GlobalStyles;
