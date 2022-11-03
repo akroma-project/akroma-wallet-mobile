@@ -137,8 +137,7 @@ const GlobalStyles = StyleSheet.create({
   captionText: {
     fontSize: 12,
     fontWeight: '400',
-    fontFamily: 'opensans-regular',
-    color: '#8F9BB3',
+    color: '#fff',
   },
 });
 
