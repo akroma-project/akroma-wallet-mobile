@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, SafeAreaView, Text, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useContext, useState } from 'react';
 import { Avatar, Button, Input } from '@ui-kitten/components';
@@ -15,6 +15,8 @@ export const CreateWalletScreen = () => {
   const [pin, pinChange] = useState('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [isNameValid, setIsNameValid] = useState<boolean>(false);
+  const [isPinValid, setIsPinValid] = useState<boolean>(false);
 
   const OnCreateWalletPress = async () => {
     setLoading(true);
@@ -41,14 +43,28 @@ export const CreateWalletScreen = () => {
     }, 600);
   };
 
+  const validateName = (newName: string) => {
+    setName(newName);
+    setIsNameValid(newName.length >= 5);
+  };
+
+  const validatePin = (newPin: string) => {
+    pinChange(newPin);
+    setIsPinValid(newPin.length >= 4);
+  };
+
   const invalid = () => {
-    if (name.length < 5) {
-      return true;
-    }
-    if (pin.length < 4) {
-      return true;
-    }
-    return false;
+    return !isNameValid || !isPinValid;
+  };
+
+  const renderCaption = (text: string, display: boolean) => {
+    return display ? (
+      <View>
+        <Text style={GlobalStyles.captionText}>{text}</Text>
+      </View>
+    ) : (
+      ' '
+    );
   };
 
   return (
@@ -62,8 +78,8 @@ export const CreateWalletScreen = () => {
         ) : (
           <View style={GlobalStyles.container}>
             <View>
-              <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name" disabled={loading} />
-              <Input style={GlobalStyles.input} onChangeText={pinChange} value={pin} placeholder="123456" disabled={loading} keyboardType="number-pad" />
+              <Input style={GlobalStyles.input} onChangeText={validateName} value={name} placeholder="Enter a Wallet name" disabled={loading} caption={renderCaption('Should contain at least 5 characters', !isNameValid)} />
+              <Input style={GlobalStyles.input} onChangeText={validatePin} value={pin} placeholder="Enter a Pin" disabled={loading} keyboardType="number-pad" caption={renderCaption('Should contain at least 4 numbers', !isPinValid)} />
               <Button style={GlobalStyles.button} disabled={loading || invalid()} onPress={async () => await OnCreateWalletPress()}>
                 CREATE WALLET
               </Button>
