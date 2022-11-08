@@ -12,6 +12,9 @@ target 'AkromaWallet' do
     :hermes_enabled => false
   )
 
+
+  pod 'akroma-react-native', :path => '../node_modules/akroma-react-native'
+
   target 'AkromaWalletTests' do
     inherit! :complete
     # Pods for testing
