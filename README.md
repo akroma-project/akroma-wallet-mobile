@@ -6,8 +6,8 @@ Remove old version of app
 
 `adb uninstall org.akroma.wallet.mobile`
 
-### **Getting Started with Android**
-
+---
+### **Installing dependencies**
 You will need Node, Watchman, the React Native command line interface, a JDK, and Android Studio.
 
 While you can use any editor of your choice to develop your app, you will need to install Android Studio in order to set up the necessary tooling to build your React Native app for Android.
@@ -20,6 +20,10 @@ We recommend installing Node and Watchman using Homebrew. Run the following comm
 brew install node
 brew install watchman
 ```
+---
+### **Getting Started with Android**
+
+
 
 #### **Java Development Kit**
 
@@ -81,3 +85,32 @@ To run the project just you have to run the following commands:
 yarn
 npm run android
 ```
+---
+### **Getting Started with IOS**
+
+#### **Xcode**
+Install Xcode from [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
+Installing Xcode will also install the iOS Simulator and all the necessary tools to build your iOS app.
+
+If you have already installed Xcode on your system, make sure it is version 10 or newer.
+
+You will also need to install the Xcode Command Line Tools. Open Xcode, then choose "Preferences..." from the Xcode menu. Go to the Locations panel and install the tools by selecting the most recent version in the Command Line Tools dropdown.
+
+#### **CocoaPods**
+Using the default Ruby install will require you to use sudo when installing gems. (This is only an issue for the duration of the gem installation, though.)
+```
+sudo gem install cocoapods
+```
+#### **Run**
+
+```
+yarn
+cd ./ios && pod install
+cd ../
+npm run ios
+```
+
+#### Note
+If you have diferent ruby version, use [rbenv](https://github.com/rbenv/rbenv) to install the required.
+
+---

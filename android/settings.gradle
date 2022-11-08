@@ -1,4 +1,12 @@
 rootProject.name = 'AkromaWallet'
+include ':akroma-react-native'
+project(':akroma-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/akroma-react-native/android')
+include ':akroma-react-native'
+project(':akroma-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/akroma-react-native/android')
+include ':akroma-react-native'
+project(':akroma-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/akroma-react-native/android')
+include ':akroma-react-native'
+project(':akroma-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/akroma-react-native/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 
 include ':react-native-camera'
