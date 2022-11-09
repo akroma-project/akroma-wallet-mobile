@@ -78,12 +78,9 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
+  - hermes-engine (0.9.0)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
-  - Permission-LocationAlways (3.6.1):
-    - RNPermissions
-  - Permission-LocationWhenInUse (3.6.1):
-    - RNPermissions
   - PromiseKit (6.8.5):
     - PromiseKit/CorePromise (= 6.8.5)
     - PromiseKit/Foundation (= 6.8.5)
@@ -104,6 +101,12 @@ PODS:
     - DoubleConversion
     - fmt (~> 6.2.1)
     - glog
+  - RCT-Folly/Futures (2021.06.28.00-v2):
+    - boost
+    - DoubleConversion
+    - fmt (~> 6.2.1)
+    - glog
+    - libevent
   - RCTRequired (0.66.2)
   - RCTTypeSafety (0.66.2):
     - FBLazyVector (= 0.66.2)
@@ -270,6 +273,17 @@ PODS:
     - React-logger (= 0.66.2)
     - React-perflogger (= 0.66.2)
     - React-runtimeexecutor (= 0.66.2)
+  - React-hermes (0.66.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2021.06.28.00-v2)
+    - RCT-Folly/Futures (= 2021.06.28.00-v2)
+    - React-cxxreact (= 0.66.2)
+    - React-jsi (= 0.66.2)
+    - React-jsiexecutor (= 0.66.2)
+    - React-jsinspector (= 0.66.2)
+    - React-perflogger (= 0.66.2)
   - React-jsi (0.66.2):
     - boost (= 1.76.0)
     - DoubleConversion
@@ -299,7 +313,9 @@ PODS:
     - React-Core
   - react-native-camera/RN (4.2.1):
     - React-Core
-  - react-native-pager-view (5.4.9):
+  - react-native-get-random-values (1.8.0):
+    - React-Core
+  - react-native-pager-view (5.4.25):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -370,15 +386,15 @@ PODS:
     - React-jsi (= 0.66.2)
     - React-logger (= 0.66.2)
     - React-perflogger (= 0.66.2)
-  - RNCAsyncStorage (1.15.17):
+  - RNCAsyncStorage (1.17.10):
     - React-Core
-  - RNCClipboard (1.9.0):
+  - RNCClipboard (1.11.1):
     - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNReanimated (2.2.4):
+  - RNReanimated (2.12.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -386,7 +402,6 @@ PODS:
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
     - React-callinvoker
     - React-Core
     - React-Core/DevSupport
@@ -404,21 +419,20 @@ PODS:
     - React-RCTNetwork
     - React-RCTSettings
     - React-RCTText
-    - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.9.0):
+  - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSentry (3.2.3):
+  - RNSentry (3.4.3):
     - React-Core
-    - Sentry (= 7.5.1)
-  - RNSVG (12.1.1):
-    - React
+    - Sentry (= 7.11.0)
+  - RNSVG (12.4.4):
+    - React-Core
   - secp256k1.c (0.1.2)
-  - Sentry (7.5.1):
-    - Sentry/Core (= 7.5.1)
-  - Sentry/Core (7.5.1)
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
   - Starscream (3.1.1)
   - web3swift (2.2.1):
     - BigInt (~> 4.0)
@@ -458,8 +472,8 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.99.0)
   - FlipperKit/SKIOSNetworkPlugin (= 0.99.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - Permission-LocationAlways (from `../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec`)
-  - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec`)
+  - hermes-engine (~> 0.9.0)
+  - libevent (~> 2.1.12)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -470,11 +484,13 @@ DEPENDENCIES:
   - React-Core/RCTWebSocket (from `../node_modules/react-native/`)
   - React-CoreModules (from `../node_modules/react-native/React/CoreModules`)
   - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
+  - React-hermes (from `../node_modules/react-native/ReactCommon/hermes`)
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
@@ -517,6 +533,7 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - fmt
+    - hermes-engine
     - libevent
     - OpenSSL-Universal
     - PromiseKit
@@ -539,10 +556,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
-  Permission-LocationAlways:
-    :path: "../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec"
-  Permission-LocationWhenInUse:
-    :path: "../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -559,6 +572,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/CoreModules"
   React-cxxreact:
     :path: "../node_modules/react-native/ReactCommon/cxxreact"
+  React-hermes:
+    :path: "../node_modules/react-native/ReactCommon/hermes"
   React-jsi:
     :path: "../node_modules/react-native/ReactCommon/jsi"
   React-jsiexecutor:
@@ -569,6 +584,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -638,10 +655,9 @@ SPEC CHECKSUMS:
   FlipperKit: d8d346844eca5d9120c17d441a2f38596e8ed2b9
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
+  hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
-  Permission-LocationAlways: 8d99b025c9f73c696e0cdb367e42525f2e9a26f2
-  Permission-LocationWhenInUse: 3ba99e45c852763f730eabecec2870c2382b7bd4
   PromiseKit: 9616b0afef31eae56ab9ce044c8ec2b8612a15cd
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 5e9e85f48da8dd447f5834ce14c6799ea8c7f41a
@@ -651,12 +667,14 @@ SPEC CHECKSUMS:
   React-Core: 9fb6365464ecc235d7023ee7f868dc643ca20f41
   React-CoreModules: 9874a32779eadf7492fb85e71fbc5eeab733df32
   React-cxxreact: e562a15aba33752febb3125bad4e329e8d024252
+  React-hermes: 3662f9a800e517e21c188e9133da99c24c8c75b8
   React-jsi: 78f1c0eb3f9054d15745e89e06f9dc17de4d07da
   React-jsiexecutor: 573adf0d6ce5e05c55872dfde5b1589acb88a96f
   React-jsinspector: b08b2d5e86cef9dc4bb69f0aa0bbe6d210fb7da5
   React-logger: faee236598b0f7e1a5e3b68577016ac451f1f993
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
-  react-native-pager-view: 3ee7d4c7697fb3ef788346e834a60cca97ed8540
+  react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
+  react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-sqlite-storage: f6d515e1c446d1e6d026aa5352908a25d4de3261
   React-perflogger: 5ab487cacfe6ec19bfe3d3f8072bf71eb07d63da
@@ -671,21 +689,21 @@ SPEC CHECKSUMS:
   React-RCTVibration: 3e815c3d2dd2e0e931b68595b5b92d23ba38b3fb
   React-runtimeexecutor: 393e26602c1b248683372051e34db63e359e3b01
   ReactCommon: c0263c1a41509aeb94be3214fa7bc3b71eae5ef6
-  RNCAsyncStorage: 6bd5a7ba3dde1c3facba418aa273f449bdc5437a
-  RNCClipboard: 99fc8ad669a376b756fbc8098ae2fd05c0ed0668
+  RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
+  RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNReanimated: 65583befd5706cc9c86ae9a081786181ced37b93
-  RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
-  RNSentry: 97bc62fa65b7d663daee16fbf9771470852217cf
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNReanimated: f6d11918cc6b85881a5256dcfe68b2cac8832e4d
+  RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
+  RNSentry: 85f6525b5fe8d2ada065858026b338605b3c09da
+  RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   secp256k1.c: db47b726585d80f027423682eb369729e61b3b20
-  Sentry: 0718c3ad7a08e1107599610795adaf08864102f3
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   web3swift: d79140b9d5fdd06a377072936b086bb7ae187157
   Yoga: 9a08effa851c1d8cc1647691895540bc168ea65f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: b1dfda1c5ed01ddc0e21c2831849cd076d1945c1
+PODFILE CHECKSUM: a1fa7d723c13a471186dbb7586080cae484bae41
 
 COCOAPODS: 1.11.3

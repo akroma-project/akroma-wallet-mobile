@@ -1,9 +1,9 @@
 import React from 'react';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
-import 'core-js/proposals/reflect-metadata';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { ApplicationNavigation } from './src/navigation/ApplicationNavigation';
+import 'react-native-get-random-values';
 import { WalletProvider } from './src/providers/WalletProvider';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
