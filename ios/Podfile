@@ -8,7 +8,15 @@ target 'AkromaWallet' do
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => false
+
   )
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  pod 'secp256k1.c', '0.1.2', :modular_headers => true
+  pod 'web3swift', '2.2.1', :modular_headers => true
+
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways/Permission-LocationAlways.podspec"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
 
   pod 'secp256k1.c', '0.1.2', :modular_headers => true
   pod 'web3swift', '2.2.1', :modular_headers => true
