@@ -1,8 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
-
+platform :ios, '12.0'
 target 'AkromaWallet' do
   config = use_native_modules!
   use_react_native!(
@@ -12,9 +11,12 @@ target 'AkromaWallet' do
   )
 
   pod 'secp256k1.c', '0.1.2', :modular_headers => true
-pod 'web3swift', '2.2.1', :modular_headers => true
+  pod 'web3swift', '2.2.1', :modular_headers => true
 
-
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways/Permission-LocationAlways.podspec"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
 
   target 'AkromaWalletTests' do
     inherit! :complete
