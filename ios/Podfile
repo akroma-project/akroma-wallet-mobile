@@ -17,13 +17,6 @@ target 'AkromaWallet' do
 
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways/Permission-LocationAlways.podspec"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
-
-  pod 'secp256k1.c', '0.1.2', :modular_headers => true
-  pod 'web3swift', '2.2.1', :modular_headers => true
-
-  permissions_path = '../node_modules/react-native-permissions/ios'
-  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways/Permission-LocationAlways.podspec"
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
 
   target 'AkromaWalletTests' do
