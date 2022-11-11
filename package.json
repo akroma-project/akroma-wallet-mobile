@@ -32,6 +32,7 @@
     "react-native": "0.66.2",
     "react-native-camera": "^4.2.1",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-get-random-values": "^1.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-pager-view": "^5.4.9",
     "react-native-permissions": "^3.6.1",
