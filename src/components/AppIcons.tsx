@@ -1,5 +1,5 @@
-import { Icon, IconElement } from '@ui-kitten/components';
 import * as React from 'react';
+import { Icon, IconElement } from '@ui-kitten/components';
 import { ImageStyle } from 'react-native';
 
 export const HomeIcon = (props: any) => <Icon {...props} name="home-outline" />;
@@ -19,3 +19,5 @@ export const GoogleIcon = (style: ImageStyle): IconElement => <Icon {...style} n
 export const WatchIcon = (style: ImageStyle): IconElement => <Icon {...style} name="eye-outline" />;
 
 export const ImportIcon = (style: ImageStyle): IconElement => <Icon {...style} name="file-add-outline" />;
+
+export const AppTest = (props: { name: string }) => <div>{props.name}</div>;
