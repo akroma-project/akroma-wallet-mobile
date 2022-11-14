@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
 import { TypeSafeWeb3 } from 'typesafe-web3';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
-import { AkromaRn, EthUnits } from 'akroma-react-native';
+import { AkromaRn, EthUnits } from '@akroma-project/akroma-react-native';
 import { useDatabaseConnection } from '../data/connection';
 
 type Props = {

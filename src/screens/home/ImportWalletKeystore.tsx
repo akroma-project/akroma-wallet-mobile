@@ -4,7 +4,7 @@ import GlobalStyles from '../../constants/GlobalStyles';
 import { useState } from 'react';
 import { Button, Input } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
-import { AkromaRn } from 'akroma-react-native';
+import { AkromaRn } from '@akroma-project/akroma-react-native';
 import { ImageOverlay } from '../../extra/image-overlay.component';
 const akromaRn = new AkromaRn();
 
