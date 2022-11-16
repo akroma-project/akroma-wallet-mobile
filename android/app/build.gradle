@@ -154,17 +154,6 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-        release {
-          String androidUrl = System.getenv("BITRISEIO_ANDROID_URL") as String ?: "testEnv"
-          String storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD") as String ?: "testEnv"
-          String keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS") as String ?: "testEnv"
-          String keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD") as String ?: "testEnv"
-
-          storeFile file(STRING, "BITRISEIO_ANDROID_URL", "\"$androidUrl\"")
-          storePassword STRING, "BITRISEIO_ANDROID_KEYSTORE_PASSWORD", "\"$storePassword\""
-          keyAlias STRING, "BITRISEIO_ANDROID_KEYSTORE_ALIAS", "\"$keyAlias\""
-          keyPassword STRING, "BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD", "\"$keyPassword\""
-        }
     }
     buildTypes {
         debug {
@@ -178,7 +167,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
