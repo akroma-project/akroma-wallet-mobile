@@ -155,10 +155,15 @@ android {
             keyPassword 'android'
         }
         release {
-          storeFile file(System.getenv("BITRISEIO_ANDROID_URL") as String)
-          storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD") as String
-          keyAlias System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS") as String
-          keyPassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD") as String
+          String androidUrl = System.getenv("BITRISEIO_ANDROID_URL") as String ?: "testEnv"
+          String storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD") as String ?: "testEnv"
+          String keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS") as String ?: "testEnv"
+          String keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD") as String ?: "testEnv"
+
+          storeFile file(STRING, "BITRISEIO_ANDROID_URL", "\"$androidUrl\"")
+          storePassword STRING, "BITRISEIO_ANDROID_KEYSTORE_PASSWORD", "\"$storePassword\""
+          keyAlias STRING, "BITRISEIO_ANDROID_KEYSTORE_ALIAS", "\"$keyAlias\""
+          keyPassword STRING, "BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD", "\"$keyPassword\""
         }
     }
     buildTypes {
