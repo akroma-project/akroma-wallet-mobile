@@ -155,10 +155,10 @@ android {
             keyPassword 'android'
         }
         release {
-          storeFile file(BITRISEIO_ANDROID_URL)
-          storePassword BITRISEIO_ANDROID_KEYSTORE_PASSWORD
-          keyAlias BITRISEIO_ANDROID_KEYSTORE_ALIAS
-          keyPassword BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD
+          storeFile file(System.getenv("BITRISEIO_ANDROID_URL") as String)
+          storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD") as String
+          keyAlias System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS") as String
+          keyPassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD") as String
         }
     }
     buildTypes {
