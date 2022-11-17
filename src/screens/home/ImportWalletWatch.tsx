@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Button, Input } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { ImageOverlay } from '../../extra/image-overlay.component';
 import { isAddress } from 'ethers/lib/utils';
 import Toast from 'react-native-toast-message';
+import { WalletContext } from '../../providers/WalletProvider';
 
 export const ImportWalletWatch = () => {
   const { walletsRepository } = useDatabaseConnection();
@@ -14,6 +15,7 @@ export const ImportWalletWatch = () => {
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const isValidAddress = isAddress(walletAddress);
+  const { addWallet } = useContext(WalletContext);
 
   const onSuccessWatchWallet = () => {
     setName('');
@@ -24,9 +26,8 @@ export const ImportWalletWatch = () => {
     });
   };
 
-  const OnImportPress = () => {
+  const OnImportPress = async () => {
     setLoading(true);
-
     if (!isValidAddress) {
       Toast.show({
         type: 'error',
@@ -36,16 +37,16 @@ export const ImportWalletWatch = () => {
       setLoading(false);
       return;
     }
-    setTimeout(() => {
-      walletsRepository
-        .create({
-          name: name,
-          address: walletAddress,
-          pin: '0',
-          encrypted: 'watch',
-        })
-        .then(onSuccessWatchWallet)
-        .finally(() => setLoading(false));
+    setTimeout(async () => {
+      const created = await walletsRepository.create({
+        name: name,
+        address: walletAddress,
+        pin: '0',
+        encrypted: 'watch',
+      });
+      onSuccessWatchWallet();
+      addWallet(created);
+      setLoading(false);
     }, 1500);
   };
 
@@ -59,7 +60,7 @@ export const ImportWalletWatch = () => {
             <View>
               <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
               <Input style={GlobalStyles.input} onChangeText={walletAddressChange} value={walletAddress} placeholder="Wallet Address" disabled={loading} />
-              <Button disabled={loading} onPress={OnImportPress}>
+              <Button disabled={loading} onPress={async () => await OnImportPress()}>
                 IMPORT
               </Button>
             </View>
