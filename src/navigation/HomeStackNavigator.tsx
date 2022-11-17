@@ -39,7 +39,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home', headerRight: () => <HomeScreenHeaderRight /> }} />
       <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create' }} />
       <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />
-      <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />
+      {/* <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} /> */}
       <HomeStack.Screen name="ReceiveCoinScreen" component={ReceiveCoinScreen} options={{ title: 'Receive' }} />
       <HomeStack.Screen name="WalletScreen" component={WalletDetailsScreen} options={{ title: 'Details' }} />
       <HomeStack.Screen name="WalletSettingsScreen" component={WalletSettingsScreen} options={{ title: 'Settings' }} />
