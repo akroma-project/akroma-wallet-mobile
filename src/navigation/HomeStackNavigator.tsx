@@ -4,7 +4,7 @@ import { HomeScreen } from '../screens/home/HomeScreen';
 import { SendCoinScreen } from '../screens/home/SendCoinScreen';
 import { ReceiveCoinScreen } from '../screens/home/ReceiveCoinScreen';
 import { WalletDetailsScreen } from '../screens/home/WalletDetailsScreen';
-import { ScannerScreen } from '../screens/home/ScannerScreen';
+// import { ScannerScreen } from '../screens/home/ScannerScreen';
 import { WalletModel } from '../data/entities/wallet';
 import { CreateWalletScreen } from '../screens/home/CreateWalletScreen';
 import { WalletSettingsScreen } from '../screens/home/WalletSettingsScreen';
