@@ -20,10 +20,8 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
   const { removeWallet, setActive, state } = useContext(WalletContext);
   const [displayExport, setDisplayExport] = useState(false);
   const wallet: WalletModel = route.params.wallet;
-
   const [refreshing] = useState(false);
   const onRefresh = React.useCallback(() => {}, []);
-
   useEffect(() => {
     setActive(wallet.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
