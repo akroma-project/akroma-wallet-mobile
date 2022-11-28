@@ -7,7 +7,6 @@ import { Card, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { WalletActionButtons } from '../../components/WalletActionButtons';
 
 export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
@@ -64,9 +63,6 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
             <Text>{state.wallet.address}</Text>
           </TouchableOpacity>
         </Card>
-        <View style={GlobalStyles.actions}>
-          <WalletActionButtons wallet={state.wallet} />
-        </View>
       </ScrollView>
     </SafeAreaView>
   );

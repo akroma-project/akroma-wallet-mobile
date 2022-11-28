@@ -11,6 +11,7 @@ import { WalletModel } from '../../data/entities/wallet';
 import { WalletContext } from '../../providers/WalletProvider';
 import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { ImageOverlay } from '../../extra/image-overlay.component';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -65,9 +66,9 @@ export const HomeScreen = () => {
     await loadWallets();
   };
 
-  const onWalletPress = (wallet: WalletModel) => {
+  const onWalletPress = async (wallet: WalletModel) => {
+    await AsyncStorage.setItem('walletSelected', JSON.stringify(wallet));
     navigator.navigate('WalletScreen', { wallet: wallet });
-    console.debug(wallet.address);
   };
 
   const renderWalletRight = (item: WalletModel) => <Text>{item.lastBalance?.toString()}</Text>;

@@ -22,11 +22,9 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
   const [displayExport, setDisplayExport] = useState(false);
   const wallet: WalletModel = route.params.wallet;
   const path = RNFS.DocumentDirectoryPath;
-
-
+  
   const [refreshing] = useState(false);
   const onRefresh = React.useCallback(() => {}, []);
-
   useEffect(() => {
     setActive(wallet.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps

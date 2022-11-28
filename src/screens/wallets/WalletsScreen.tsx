@@ -9,6 +9,7 @@ import { Text, ListItem } from '@ui-kitten/components';
 import _ from 'lodash';
 import { WalletModel } from '../../data/entities/wallet';
 import { WalletContext } from '../../providers/WalletProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const WalletsScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -28,9 +29,9 @@ export const WalletsScreen = () => {
     await loadWallets();
   };
 
-  const onWalletPress = (wallet: WalletModel) => {
+  const onWalletPress = async (wallet: WalletModel) => {
+    await AsyncStorage.setItem('walletSelected', JSON.stringify(wallet));
     navigator.navigate('WalletScreen', { wallet: wallet });
-    console.debug(wallet.address);
   };
 
   const renderWalletRight = (item: WalletModel) => <Text>{item.lastBalance?.toString()}</Text>;
