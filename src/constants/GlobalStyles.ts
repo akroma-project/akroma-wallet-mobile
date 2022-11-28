@@ -139,6 +139,9 @@ const GlobalStyles = StyleSheet.create({
     fontWeight: '400',
     color: '#fff',
   },
+  mt20: {
+    marginTop: 20,
+  },
 });
 
 export default GlobalStyles;

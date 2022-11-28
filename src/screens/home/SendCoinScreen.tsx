@@ -9,6 +9,7 @@ import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import Toast from 'react-native-toast-message';
+import { SimpleCard } from '../../components/TransactionCard';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -17,6 +18,8 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
   const sendToAddress = route.params?.address ?? '';
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
+  const [status, setStatus] = useState('');
+  const [showStatus, setShowStatus] = useState(false);
   const [sending, setSending] = React.useState(false);
   const { send, state } = React.useContext(WalletContext);
   const u = new Utils();
@@ -27,19 +30,25 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
 
   const sendAmount = async () => {
     setSending(true);
+    setStatus('Sending');
     setTimeout(async () => {
+      setShowStatus(true);
       await send(address, amount);
-      setSending(false);
-      setAddress('');
-      setAmount('');
-      navigator.goBack();
+      setStatus('Complete');
+
       Toast.show({
         text1: 'The transfer was succesfully sent',
         position: 'top',
       });
     }, 600);
   };
-
+  const anotherSend = () => {
+    setSending(false);
+    setShowStatus(false);
+    setStatus('');
+    setAddress('');
+    setAmount('');
+  };
   const OnSendPress = async () => {
     if (u.isAddress(address) === false) {
       console.debug('not an address');
@@ -105,8 +114,11 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.container}>
-        {sending ? (
-          <ActivityIndicator size="large" />
+        {sending || showStatus ? (
+          <View style={GlobalStyles.mt20}>
+            <SimpleCard addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
+            <View style={GlobalStyles.mt20}>{status === 'Complete' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
+          </View>
         ) : (
           <View>
             <Input style={GlobalStyles.input} onChangeText={setAddress} value={address} placeholder="To" accessoryLeft={ContactIcon} accessoryRight={ScanIcon} />
