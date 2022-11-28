@@ -3,9 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { Text, Avatar, Layout } from '@ui-kitten/components';
 export const SimpleCard = ({ addressFrom, addressTo, status, amount }) => {
   const color = () => {
-    if (status === 'Sending') {
+    if (status === 'In Progress') {
       return 'blue';
-    } else if (status === 'Complete') {
+    } else if (status === 'Successful') {
       return 'green';
     } else {
       return 'red';

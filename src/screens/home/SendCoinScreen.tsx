@@ -30,11 +30,11 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
 
   const sendAmount = async () => {
     setSending(true);
-    setStatus('Sending');
+    setStatus('In Progress');
     setTimeout(async () => {
       setShowStatus(true);
       await send(address, amount);
-      setStatus('Complete');
+      setStatus('Successful');
 
       Toast.show({
         text1: 'The transfer was succesfully sent',
@@ -117,7 +117,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
         {sending || showStatus ? (
           <View style={GlobalStyles.mt20}>
             <SimpleCard addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
-            <View style={GlobalStyles.mt20}>{status === 'Complete' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
+            <View style={GlobalStyles.mt20}>{status === 'Successful' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
           </View>
         ) : (
           <View>
