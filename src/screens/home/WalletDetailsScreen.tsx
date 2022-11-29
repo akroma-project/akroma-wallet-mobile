@@ -15,8 +15,9 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
   console.debug(route.params.wallet.id);
   const { updateBalance, setActive, state } = useContext(WalletContext);
-  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'WalletScreen'>;
-  const navigator = useNavigation<homeScreenProp>();
+
+  type detailScreenProp = StackNavigationProp<HomeStackParamList, 'WalletScreen'>;
+  const navigator = useNavigation<detailScreenProp>();
 
   const wallet: WalletModel = route.params.wallet;
 
@@ -44,6 +45,7 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
     });
 
     return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigator]);
 
   const onCopyAddress = () => {
