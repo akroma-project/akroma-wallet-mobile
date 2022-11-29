@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { Alert, RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, View, Platform } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, View, Platform } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { WalletContext } from '../../providers/WalletProvider';
 import { useContext, useEffect, useState } from 'react';
 import { Button, Icon, Input, Text } from '@ui-kitten/components';
-import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
@@ -15,11 +13,9 @@ import RNFS from 'react-native-fs';
 import { GlobalContext } from '../../providers/GlobalProvider';
 
 export const WalletSettingsScreen = ({ route }: { route: any }) => {
-  const { walletsRepository } = useDatabaseConnection();
   console.debug(route.params.wallet.id);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
-  const navigator = useNavigation<homeScreenProp>();
-  const { removeWallet, setActive, state } = useContext(WalletContext);
+  const { setActive, state } = useContext(WalletContext);
   const wallet: WalletModel = route.params.wallet;
   const path = RNFS.DocumentDirectoryPath;
   const [refreshing] = useState(false);
