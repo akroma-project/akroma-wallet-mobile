@@ -11,20 +11,23 @@ import { DatabaseConnectionProvider } from './src/data/connection';
 import Toast from 'react-native-toast-message';
 import { AkromaTheme } from './src/custom-theme';
 import { ActionSheetProvider, connectActionSheet } from '@expo/react-native-action-sheet';
+import { GlobalProvider } from './src/providers/GlobalProvider';
 
 const App = () => {
   return (
-    <DatabaseConnectionProvider>
-      <ApplicationProvider {...eva} theme={{ ...eva.light, ...AkromaTheme }}>
-        <IconRegistry icons={EvaIconsPack} />
-        <ActionSheetProvider>
-          <WalletProvider>
-            <ApplicationNavigation />
-            <Toast />
-          </WalletProvider>
-        </ActionSheetProvider>
-      </ApplicationProvider>
-    </DatabaseConnectionProvider>
+    <GlobalProvider>
+      <DatabaseConnectionProvider>
+        <ApplicationProvider {...eva} theme={{ ...eva.light, ...AkromaTheme }}>
+          <IconRegistry icons={EvaIconsPack} />
+          <ActionSheetProvider>
+            <WalletProvider>
+              <ApplicationNavigation />
+              <Toast />
+            </WalletProvider>
+          </ActionSheetProvider>
+        </ApplicationProvider>
+      </DatabaseConnectionProvider>
+    </GlobalProvider>
   );
 };
 const ConnectedApp = connectActionSheet(App);
