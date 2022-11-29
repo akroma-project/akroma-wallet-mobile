@@ -16,20 +16,24 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const wallet: WalletModel = route.params.wallet;
 
   const [refreshing] = useState(false);
-  const onRefresh = React.useCallback(() => {}, []);
+  const onRefresh = async () => {
+    await init();
+  };
+
+  async function init() {
+    setActive(wallet.id);
+    console.debug('wallet-screen: useEffect: update called');
+    const previous = wallet.lastBalance;
+    const updated = await updateBalance(wallet.id);
+
+    if (updated.lastBalance !== previous) {
+      console.debug(`old: ${previous} new: ${updated.lastBalance}`);
+      console.debug('useEffect: updating database with new blance');
+      await walletsRepository.update(updated);
+    }
+  }
 
   useEffect(() => {
-    async function init() {
-      setActive(wallet.id);
-      console.debug('wallet-screen: useEffect: update called');
-      const previous = wallet.lastBalance;
-      const updated = await updateBalance(wallet.id);
-      if (updated.lastBalance !== previous) {
-        console.debug(`old: ${previous} new: ${updated.lastBalance}`);
-        console.debug('useEffect: updating database with new blance');
-        await walletsRepository.update(updated);
-      }
-    }
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wallet.id]);
