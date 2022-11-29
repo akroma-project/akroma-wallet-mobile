@@ -15,8 +15,8 @@ import { GlobalProvider } from './src/providers/GlobalProvider';
 
 const App = () => {
   return (
-    <GlobalProvider>
-      <DatabaseConnectionProvider>
+    <DatabaseConnectionProvider>
+      <GlobalProvider>
         <ApplicationProvider {...eva} theme={{ ...eva.light, ...AkromaTheme }}>
           <IconRegistry icons={EvaIconsPack} />
           <ActionSheetProvider>
@@ -26,8 +26,8 @@ const App = () => {
             </WalletProvider>
           </ActionSheetProvider>
         </ApplicationProvider>
-      </DatabaseConnectionProvider>
-    </GlobalProvider>
+      </GlobalProvider>
+    </DatabaseConnectionProvider>
   );
 };
 const ConnectedApp = connectActionSheet(App);

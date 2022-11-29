@@ -32,22 +32,6 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wallet.id]);
 
-  const DeleteWallet = async () => {
-    return Alert.alert('Delete wallet?', 'Are you sure you want to delete this wallet?', [
-      // The "Yes" button
-      {
-        text: 'Yes',
-        onPress: () => {
-          removeWallet(wallet);
-          walletsRepository.delete(wallet.id).then(() => navigator.navigate('HomeScreen'));
-        },
-      },
-      {
-        text: 'No',
-      },
-    ]);
-  };
-
   if (state.wallet === undefined) {
     return (
       <View>

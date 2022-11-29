@@ -1,4 +1,6 @@
 import React, { createContext, useState } from 'react';
+import { Alert } from 'react-native';
+import { WalletModel } from '../data/entities/wallet';
 
 type Props = {
   displayExport: boolean;
@@ -17,6 +19,7 @@ const GlobalProvider = (props: serverProviderProps) => {
     displayExport,
     setDisplayExport,
   };
+
   return <GlobalContext.Provider value={initialValue}>{props.children}</GlobalContext.Provider>;
 };
 
