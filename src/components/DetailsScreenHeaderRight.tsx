@@ -23,7 +23,7 @@ export const DetailsScreenHeaderRight = () => {
       onPress={() =>
         showActionSheetWithOptions(
           {
-            options: ['Receive Coin', 'Send Coin', 'Wallet Settings'],
+            options: ['Receive Coin', 'Send Coin', 'History Transactions', 'Wallet Settings'],
             cancelButtonIndex: 99,
             showSeparators: true,
           },
@@ -35,6 +35,9 @@ export const DetailsScreenHeaderRight = () => {
               navigator.navigate('SendCoinScreen');
             }
             if (index === 2) {
+              navigator.navigate('WalletTransactionHistory');
+            }
+            if (index === 3) {
               navigator.navigate('WalletSettingsScreen', {
                 wallet: JSON.parse(await AsyncStorage.getItem('walletSelected')),
               });

@@ -1,7 +1,16 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Avatar, Layout } from '@ui-kitten/components';
-export const SimpleCard = ({ addressFrom, addressTo, status, amount }) => {
+interface Props {
+  addressFrom: string;
+  addressTo: string;
+  status: string;
+  amount: string;
+  blockNumber?: string;
+  sent?: boolean;
+}
+export const TransactionCard = (props: Props) => {
+  const { addressFrom, addressTo, status, amount, blockNumber, sent } = props;
   const color = () => {
     if (status === 'In Progress') {
       return 'blue';
@@ -30,7 +39,15 @@ export const SimpleCard = ({ addressFrom, addressTo, status, amount }) => {
             <Text style={styles.textBold}>To: </Text>
             {addressTo}
           </Text>
-          <Text style={styles.textBold}>{amount} AKA</Text>
+          {blockNumber && (
+            <Text style={styles.textAddress}>
+              <Text style={styles.textBold}>#Block: </Text>
+              {blockNumber}
+            </Text>
+          )}
+          <Text style={[sent ? styles.sent : styles.received, styles.textBold]}>
+            {sent ? '-' : '+'} {amount} AKA
+          </Text>
         </Layout>
       </Layout>
     </View>
@@ -52,6 +69,12 @@ const bannerStyle = (color: string) =>
     },
   });
 const styles = StyleSheet.create({
+  sent: {
+    color: 'red',
+  },
+  received: {
+    color: 'green',
+  },
   bodyContainer: {
     flex: 7,
     paddingLeft: 10,
