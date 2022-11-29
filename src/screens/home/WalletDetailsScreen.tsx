@@ -3,15 +3,20 @@ import { RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, View } from
 import GlobalStyles from '../../constants/GlobalStyles';
 import { WalletContext } from '../../providers/WalletProvider';
 import { useContext, useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { Card, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
   console.debug(route.params.wallet.id);
   const { updateBalance, setActive, state } = useContext(WalletContext);
+  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'WalletScreen'>;
+  const navigator = useNavigation<homeScreenProp>();
 
   const wallet: WalletModel = route.params.wallet;
 
@@ -34,9 +39,12 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
   }
 
   useEffect(() => {
-    init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet.id]);
+    const unsubscribe = navigator.addListener('focus', async () => {
+      await init();
+    });
+
+    return unsubscribe;
+  }, [navigator]);
 
   const onCopyAddress = () => {
     Clipboard.setString(wallet.address);

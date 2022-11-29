@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const WalletsScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
-  const { state, loadWallets } = useContext(WalletContext);
+  const { state, loadWallets, refreshWallets } = useContext(WalletContext);
 
   useEffect(() => {
     async function init() {
@@ -26,6 +26,7 @@ export const WalletsScreen = () => {
 
   const [refreshing] = React.useState(false);
   const onRefresh = async () => {
+    await refreshWallets();
     await loadWallets();
   };
 

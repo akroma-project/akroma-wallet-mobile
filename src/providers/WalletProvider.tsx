@@ -14,6 +14,7 @@ type Props = {
   setWallets: (wallets: WalletModel[]) => void;
   setActive: (id: string) => void;
   send: (to: string, value: string) => Promise<string>;
+  refreshWallets: () => Promise<void>;
 };
 
 const WalletContext = createContext<Props>({} as Props);
@@ -104,6 +105,32 @@ const WalletProvider = (props: serverProviderProps) => {
     return txid;
   };
 
+  const refreshWallets = async () => {
+    let updatedWallets: WalletModel[] = [];
+
+    for (let i = 0; i < state.wallets.length; i++) {
+      const wallet = state.wallets[i];
+      const success = await provider.getBalance(wallet.address);
+      let balance = 0;
+      if (success.ok) {
+        balance = parseInt(utils.fromWei(success.data ?? 0, 'ether').toString(), 10);
+      }
+
+      const updated: WalletModel = {
+        ...wallet,
+        lastBalance: balance,
+      };
+
+      if (updated.lastBalance !== wallet.lastBalance) {
+        await walletsRepository.update(updated);
+      }
+      updatedWallets.push(updated);
+    }
+
+    setState({ ...state, wallets: updatedWallets });
+    console.debug('refreshed list of wallets:');
+  };
+
   const initalValue = {
     state,
     loadWallets,
@@ -113,6 +140,7 @@ const WalletProvider = (props: serverProviderProps) => {
     setActive: setActive,
     setWallets: setWallets,
     send: send,
+    refreshWallets,
   };
 
   return <WalletContext.Provider value={initalValue}>{props.children}</WalletContext.Provider>;
