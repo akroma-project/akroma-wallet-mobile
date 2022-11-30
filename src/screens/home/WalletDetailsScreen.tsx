@@ -3,36 +3,50 @@ import { RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, View } from
 import GlobalStyles from '../../constants/GlobalStyles';
 import { WalletContext } from '../../providers/WalletProvider';
 import { useContext, useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { Card, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
   console.debug(route.params.wallet.id);
   const { updateBalance, setActive, state } = useContext(WalletContext);
 
+  type detailScreenProp = StackNavigationProp<HomeStackParamList, 'WalletScreen'>;
+  const navigator = useNavigation<detailScreenProp>();
+
   const wallet: WalletModel = route.params.wallet;
 
   const [refreshing] = useState(false);
-  const onRefresh = React.useCallback(() => {}, []);
+  const onRefresh = async () => {
+    await init();
+  };
+
+  async function init() {
+    setActive(wallet.id);
+    console.debug('wallet-screen: useEffect: update called');
+    const previous = wallet.lastBalance;
+    const updated = await updateBalance(wallet.id);
+
+    if (updated.lastBalance !== previous) {
+      console.debug(`old: ${previous} new: ${updated.lastBalance}`);
+      console.debug('useEffect: updating database with new blance');
+      await walletsRepository.update(updated);
+    }
+  }
 
   useEffect(() => {
-    async function init() {
-      setActive(wallet.id);
-      console.debug('wallet-screen: useEffect: update called');
-      const previous = wallet.lastBalance;
-      const updated = await updateBalance(wallet.id);
-      if (updated.lastBalance !== previous) {
-        console.debug(`old: ${previous} new: ${updated.lastBalance}`);
-        console.debug('useEffect: updating database with new blance');
-        await walletsRepository.update(updated);
-      }
-    }
-    init();
+    const unsubscribe = navigator.addListener('focus', async () => {
+      await init();
+    });
+
+    return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet.id]);
+  }, [navigator]);
 
   const onCopyAddress = () => {
     Clipboard.setString(wallet.address);
