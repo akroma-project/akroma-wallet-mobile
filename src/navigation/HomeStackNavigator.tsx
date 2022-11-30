@@ -15,6 +15,7 @@ import { ImportWalletSeedPhrase } from '../screens/home/ImportWalletSeedPhrase';
 import { ImportWalletWatch } from '../screens/home/ImportWalletWatch';
 import { DetailsScreenHeaderRight } from '../components/DetailsScreenHeaderRight';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
+import { WalletTransactionHistory } from '../screens/home/WalletTransactionHistory';
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
   WalletScreen: { wallet: WalletModel };
@@ -27,6 +28,7 @@ export type HomeStackParamList = {
   ImportWalletPrivateKey: undefined;
   ImportWalletSeedPhrase: undefined;
   ImportWalletWatch: undefined;
+  WalletTransactionHistory: undefined;
 };
 
 const HomeStack = createStackNavigator<HomeStackParamList>();
@@ -48,6 +50,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="ImportWalletPrivateKey" component={ImportWalletPrivateKey} options={{ title: 'Import Private Key' }} />
       <HomeStack.Screen name="ImportWalletSeedPhrase" component={ImportWalletSeedPhrase} options={{ title: 'Import Seed Phrase' }} />
       <HomeStack.Screen name="ImportWalletWatch" component={ImportWalletWatch} options={{ title: 'Watch Wallet' }} />
+      <HomeStack.Screen name="WalletTransactionHistory" component={WalletTransactionHistory} options={{ title: 'Wallet Transaction History' }} />
     </HomeStack.Navigator>
   );
 }

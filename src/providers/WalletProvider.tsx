@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
 import { TypeSafeWeb3 } from 'typesafe-web3';
+import { Transaction } from 'typesafe-web3/dist/lib/model/transaction';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import { AkromaRn, EthUnits } from '@akroma-project/akroma-react-native';
 import { useDatabaseConnection } from '../data/connection';
@@ -14,6 +15,8 @@ type Props = {
   setWallets: (wallets: WalletModel[]) => void;
   setActive: (id: string) => void;
   send: (to: string, value: string) => Promise<string>;
+  getTransactionCountByAddress: (address: string) => Promise<number>;
+  refreshWallets: () => Promise<void>;
 };
 
 const WalletContext = createContext<Props>({} as Props);
@@ -33,7 +36,6 @@ const WalletProvider = (props: serverProviderProps) => {
   const address = 'https://boot2.akroma.org';
   const provider = new TypeSafeWeb3(address);
   const utils = new Utils();
-
   const loadWallets = async () => {
     const wallets = await walletsRepository.getAll();
     console.debug(`wallets:: ${JSON.stringify(wallets)}`);
@@ -87,7 +89,11 @@ const WalletProvider = (props: serverProviderProps) => {
     setState({ ...state, wallets: others, wallet: updated });
     return updated;
   };
-
+  const getTransactionCountByAddress = async (ads: string) => {
+    Transaction;
+    const { data } = await provider.getTransactionCountByAddress(ads);
+    return data;
+  };
   const send = async (to: string, value: string): Promise<string> => {
     console.debug('send called');
     // return "none";
@@ -104,6 +110,32 @@ const WalletProvider = (props: serverProviderProps) => {
     return txid;
   };
 
+  const refreshWallets = async () => {
+    let updatedWallets: WalletModel[] = [];
+
+    for (let i = 0; i < state.wallets.length; i++) {
+      const wallet = state.wallets[i];
+      const success = await provider.getBalance(wallet.address);
+      let balance = 0;
+      if (success.ok) {
+        balance = parseInt(utils.fromWei(success.data ?? 0, 'ether').toString(), 10);
+      }
+
+      const updated: WalletModel = {
+        ...wallet,
+        lastBalance: balance,
+      };
+
+      if (updated.lastBalance !== wallet.lastBalance) {
+        await walletsRepository.update(updated);
+      }
+      updatedWallets.push(updated);
+    }
+
+    setState({ ...state, wallets: updatedWallets });
+    console.debug('refreshed list of wallets:');
+  };
+
   const initalValue = {
     state,
     loadWallets,
@@ -113,6 +145,8 @@ const WalletProvider = (props: serverProviderProps) => {
     setActive: setActive,
     setWallets: setWallets,
     send: send,
+    getTransactionCountByAddress: getTransactionCountByAddress,
+    refreshWallets,
   };
 
   return <WalletContext.Provider value={initalValue}>{props.children}</WalletContext.Provider>;
