@@ -3,6 +3,12 @@ package org.akroma.wallet.mobile;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.rnfs.RNFSPackage;
+
+import java.util.List;
+import java.util.Arrays;
+import com.facebook.react.shell.MainReactPackage;
+import com.facebook.react.ReactPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -44,5 +50,12 @@ public class MainActivity extends ReactActivity {
     //   // More on this on https://reactjs.org/blog/2022/03/29/react-v18.html
     //   return BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     // }
+  }
+
+  protected List<ReactPackage> getPackages() {
+    return Arrays.<ReactPackage>asList(
+      new MainReactPackage(),
+      new RNFSPackage() 
+    );
   }
 }

@@ -14,6 +14,7 @@ import { ImportWalletPrivateKey } from '../screens/home/ImportWalletPrivateKey';
 import { ImportWalletSeedPhrase } from '../screens/home/ImportWalletSeedPhrase';
 import { ImportWalletWatch } from '../screens/home/ImportWalletWatch';
 import { DetailsScreenHeaderRight } from '../components/DetailsScreenHeaderRight';
+import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletTransactionHistory } from '../screens/home/WalletTransactionHistory';
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
@@ -44,7 +45,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />
       <HomeStack.Screen name="ReceiveCoinScreen" component={ReceiveCoinScreen} options={{ title: 'Receive' }} />
       <HomeStack.Screen name="WalletScreen" component={WalletDetailsScreen} options={{ title: 'Details', headerRight: () => <DetailsScreenHeaderRight /> }} />
-      <HomeStack.Screen name="WalletSettingsScreen" component={WalletSettingsScreen} options={{ title: 'Settings' }} />
+      <HomeStack.Screen name="WalletSettingsScreen" component={WalletSettingsScreen} options={{ title: 'Settings', headerRight: () => <WalletSettingsHeaderRight /> }} />
       <HomeStack.Screen name="ImportWalletKeystore" component={ImportWalletKeystore} options={{ title: 'Import Keystore' }} />
       <HomeStack.Screen name="ImportWalletPrivateKey" component={ImportWalletPrivateKey} options={{ title: 'Import Private Key' }} />
       <HomeStack.Screen name="ImportWalletSeedPhrase" component={ImportWalletSeedPhrase} options={{ title: 'Import Seed Phrase' }} />
