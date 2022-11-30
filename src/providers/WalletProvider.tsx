@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
 import { TypeSafeWeb3 } from 'typesafe-web3';
+import { Transaction } from 'typesafe-web3/dist/lib/model/transaction';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import { AkromaRn, EthUnits } from '@akroma-project/akroma-react-native';
 import { useDatabaseConnection } from '../data/connection';
@@ -14,6 +15,7 @@ type Props = {
   setWallets: (wallets: WalletModel[]) => void;
   setActive: (id: string) => void;
   send: (to: string, value: string) => Promise<string>;
+  getTransactionCountByAddress: (address: string) => Promise<number>;
   refreshWallets: () => Promise<void>;
 };
 
@@ -34,7 +36,6 @@ const WalletProvider = (props: serverProviderProps) => {
   const address = 'https://boot2.akroma.org';
   const provider = new TypeSafeWeb3(address);
   const utils = new Utils();
-
   const loadWallets = async () => {
     const wallets = await walletsRepository.getAll();
     console.debug(`wallets:: ${JSON.stringify(wallets)}`);
@@ -88,7 +89,11 @@ const WalletProvider = (props: serverProviderProps) => {
     setState({ ...state, wallets: others, wallet: updated });
     return updated;
   };
-
+  const getTransactionCountByAddress = async (ads: string) => {
+    Transaction;
+    const { data } = await provider.getTransactionCountByAddress(ads);
+    return data;
+  };
   const send = async (to: string, value: string): Promise<string> => {
     console.debug('send called');
     // return "none";
@@ -140,6 +145,7 @@ const WalletProvider = (props: serverProviderProps) => {
     setActive: setActive,
     setWallets: setWallets,
     send: send,
+    getTransactionCountByAddress: getTransactionCountByAddress,
     refreshWallets,
   };
 
