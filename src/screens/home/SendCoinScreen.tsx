@@ -9,7 +9,7 @@ import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import Toast from 'react-native-toast-message';
-import { SimpleCard } from '../../components/TransactionCard';
+import { TransactionCard } from '../../components/TransactionCard';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -116,7 +116,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
       <View style={GlobalStyles.container}>
         {sending || showStatus ? (
           <View style={GlobalStyles.mt20}>
-            <SimpleCard addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
+            <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
             <View style={GlobalStyles.mt20}>{status === 'Successful' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
           </View>
         ) : (

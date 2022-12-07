@@ -142,6 +142,9 @@ const GlobalStyles = StyleSheet.create({
   mt20: {
     marginTop: 20,
   },
+  p10: {
+    padding: 10,
+  },
 });
 
 export default GlobalStyles;
