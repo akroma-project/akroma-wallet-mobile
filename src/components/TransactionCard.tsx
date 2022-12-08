@@ -28,7 +28,6 @@ export const TransactionCard = (props: Props) => {
   const navigator = useNavigation<walletScreenProp>();
   const goDetailts = (block: string) => {
     if (block) {
-      console.log(block, '------------');
       navigator.navigate('BlockNumber', {
         blockNumber: block,
       });
