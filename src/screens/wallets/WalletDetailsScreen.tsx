@@ -4,7 +4,7 @@ import GlobalStyles from '../../constants/GlobalStyles';
 import { WalletContext } from '../../providers/WalletProvider';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
+import { WalletsStackParamList } from '../../navigation/WalletsStackNavigator';
 import { Card, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
@@ -16,7 +16,7 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
   console.debug(route.params.wallet.id);
   const { updateBalance, setActive, state } = useContext(WalletContext);
 
-  type detailScreenProp = StackNavigationProp<HomeStackParamList, 'WalletScreen'>;
+  type detailScreenProp = StackNavigationProp<WalletsStackParamList, 'WalletScreen'>;
   const navigator = useNavigation<detailScreenProp>();
 
   const wallet: WalletModel = route.params.wallet;

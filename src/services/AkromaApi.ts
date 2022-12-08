@@ -1,7 +1,21 @@
 const urlAkromaApi = 'https://api.akroma.org';
 
 export const getTransactionsByAddress = async (address: string, page: number) => {
-  const res = await fetch(`${urlAkromaApi}/addresses/${address}/transactions/${page}`);
-  const json = await res.json();
-  return json;
+  try {
+    const res = await fetch(`${urlAkromaApi}/addresses/${address}/transactions/${page}`);
+    const json = await res.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBlockByNumber = async (blockNumber: string) => {
+  try {
+    const res = await fetch(`${urlAkromaApi}/blocks/${blockNumber}`);
+    const json = await res.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
 };
