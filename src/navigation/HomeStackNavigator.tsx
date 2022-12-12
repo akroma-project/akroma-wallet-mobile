@@ -13,6 +13,7 @@ import { ImportWalletSeedPhrase } from '../screens/home/ImportWalletSeedPhrase';
 import { ImportWalletWatch } from '../screens/home/ImportWalletWatch';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletModel } from '../data/entities/wallet';
+import { Image } from 'react-native';
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
   SendCoinScreen: { address: string } | undefined;
@@ -34,7 +35,7 @@ export function HomeStackNavigator() {
       screenOptions={() => ({
         headerShown: true,
       })}>
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home', headerRight: () => <HomeScreenHeaderRight /> }} />
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create' }} />
       <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />
       <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />

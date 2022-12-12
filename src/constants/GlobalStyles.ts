@@ -145,6 +145,16 @@ const GlobalStyles = StyleSheet.create({
   p10: {
     padding: 10,
   },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fba304',
+  },
+  headerContainer: {
+    flex: 1,
+    maxHeight: '45%',
+  },
 });
 
 export default GlobalStyles;
