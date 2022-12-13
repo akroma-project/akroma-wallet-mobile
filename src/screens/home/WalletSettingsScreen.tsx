@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, View, Platform } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GDrive, MimeTypes } from '@robinbobin/react-native-google-drive-api-wrapper';
+
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { WalletContext } from '../../providers/WalletProvider';
-import { useContext, useEffect, useState } from 'react';
 import { Button, Icon, Input, Text } from '@ui-kitten/components';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -52,10 +55,15 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     );
   };
 
-  const downloadKeystore = () => {
+  const getKeystoreFileName = () => {
     const sanitizedWalletName = wallet.name.replace(/[^a-zA-Z0-9]/g, '');
-    const fullPath = `${path}/${sanitizedWalletName}.${wallet.address}.json`;
-    const androidpath = `${RNFS.DownloadDirectoryPath}/${sanitizedWalletName}.${wallet.address}.json`;
+    return `${sanitizedWalletName}.${wallet.address}`;
+  };
+
+  const downloadKeystore = () => {
+    const fileName = getKeystoreFileName();
+    const fullPath = `${path}/${fileName}.json`;
+    const androidpath = `${RNFS.DownloadDirectoryPath}/${fileName}.json`;
 
     // write the keystore file
     RNFS.writeFile(Platform.OS === 'android' ? androidpath : fullPath, wallet.encrypted, 'utf8')
@@ -65,6 +73,31 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
       .catch(err => {
         console.log(err.message);
       });
+  };
+
+  const exportToGoogleDrive = async () => {
+    const fileName = getKeystoreFileName();
+
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/drive.file'],
+    });
+    await GoogleSignin.signIn();
+
+    const gdrive = new GDrive();
+    gdrive.accessToken = (await GoogleSignin.getTokens()).accessToken;
+    //console.log('Lista en drive ', await gdrive.files.list());
+
+    const id = (
+      await gdrive.files
+        .newMultipartUploader()
+        .setData(wallet.encrypted, MimeTypes.JSON)
+        .setRequestBody({
+          name: `${fileName}.json`,
+        })
+        .execute()
+    ).id;
+
+    console.debug('file uploaded to GDrive', id);
   };
 
   return (
@@ -80,7 +113,10 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
           <>
             <Input style={GlobalStyles.input} disabled={true} value={wallet.pin} label="Password" accessoryRight={(props: any) => CopyIcon(props, wallet.pin)} />
             <Input style={GlobalStyles.input} disabled={true} value={wallet.encrypted} label="Keystore" accessoryRight={(props: any) => CopyIcon(props, wallet.encrypted)} />
-            <Button onPress={() => downloadKeystore('test')}>Download keystore file</Button>
+            <Button onPress={() => downloadKeystore()}>Download keystore file</Button>
+            <Button style={GlobalStyles.exportBtn} onPress={() => exportToGoogleDrive()}>
+              Export to Google drive
+            </Button>
           </>
         )}
         {/* <View style={GlobalStyles.actions}>
