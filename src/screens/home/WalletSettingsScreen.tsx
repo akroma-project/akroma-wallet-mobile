@@ -68,7 +68,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     // write the keystore file
     RNFS.writeFile(Platform.OS === 'android' ? androidpath : fullPath, wallet.encrypted, 'utf8')
       .then(() => {
-        console.log('FILE WRITTEN!');
+        console.debug('file written');
       })
       .catch(err => {
         console.log(err.message);
@@ -77,10 +77,9 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
 
   const exportToGoogleDrive = async () => {
     const fileName = getKeystoreFileName();
+    const platformSetup = Platform.OS === 'android' ? { scopes: ['https://www.googleapis.com/auth/drive.file'] } : { iosClientId: '507652349383-rmhtbabce3ir7tk5pmv32j9qug0bfc9o.apps.googleusercontent.com' };
 
-    GoogleSignin.configure({
-      scopes: ['https://www.googleapis.com/auth/drive.file'],
-    });
+    GoogleSignin.configure(platformSetup);
     await GoogleSignin.signIn();
 
     const gdrive = new GDrive();
