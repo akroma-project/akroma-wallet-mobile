@@ -20,6 +20,7 @@ target 'AkromaWallet' do
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
   pod 'RNFS', :path => '../node_modules/react-native-fs'
+  pod 'GoogleSignIn'
 
   target 'AkromaWalletTests' do
     inherit! :complete
