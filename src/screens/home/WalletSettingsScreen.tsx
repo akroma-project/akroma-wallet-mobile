@@ -14,6 +14,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import RNFS from 'react-native-fs';
 import { GlobalContext } from '../../providers/GlobalProvider';
+import { GOOGLESIGNIN_IOS_CLIENTID } from '../../constants/constants';
 
 export const WalletSettingsScreen = ({ route }: { route: any }) => {
   console.debug(route.params.wallet.id);
@@ -77,14 +78,13 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
 
   const exportToGoogleDrive = async () => {
     const fileName = getKeystoreFileName();
-    const platformSetup = Platform.OS === 'android' ? { scopes: ['https://www.googleapis.com/auth/drive.file'] } : { iosClientId: '507652349383-rmhtbabce3ir7tk5pmv32j9qug0bfc9o.apps.googleusercontent.com' };
+    const platformSetup = Platform.OS === 'android' ? { scopes: ['https://www.googleapis.com/auth/drive.file'] } : { iosClientId: GOOGLESIGNIN_IOS_CLIENTID };
 
     GoogleSignin.configure(platformSetup);
     await GoogleSignin.signIn();
 
     const gdrive = new GDrive();
     gdrive.accessToken = (await GoogleSignin.getTokens()).accessToken;
-    //console.log('Lista en drive ', await gdrive.files.list());
 
     const id = (
       await gdrive.files
