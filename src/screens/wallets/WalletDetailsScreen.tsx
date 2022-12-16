@@ -79,7 +79,7 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
           </TouchableOpacity>
         </Card>
         <View style={GlobalStyles.actions}>
-          <WalletActionButtons wallet={state.wallet} />
+          <WalletActionButtons />
         </View>
       </ScrollView>
     </SafeAreaView>

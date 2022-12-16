@@ -6,7 +6,7 @@ import { View, StyleSheet } from 'react-native';
 import GlobalStyles from '../constants/GlobalStyles';
 import { HomeStackParamList } from '../navigation/HomeStackNavigator';
 
-export const WalletActionButtons = (props: any) => {
+export const WalletActionButtons = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
   const navigate = location => {
