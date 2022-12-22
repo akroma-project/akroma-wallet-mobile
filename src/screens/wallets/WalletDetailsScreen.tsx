@@ -11,6 +11,8 @@ import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletActionButtons } from '../../components/WalletActionButtons';
+import formatNumber from '../../extra/numberFormat';
+
 
 export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
@@ -73,7 +75,7 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
     <SafeAreaView style={GlobalStyles.flex}>
       <ScrollView style={GlobalStyles.container} contentContainerStyle={GlobalStyles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <Card header={walletsCardHeader()}>
-          <Text category="h4">{'Balance:' + state.wallet.lastBalance?.toString()}</Text>
+          <Text category="h4">{'Balance: ' + formatNumber(state.wallet.lastBalance as number)}</Text>
           <TouchableOpacity onPress={() => onCopyAddress()}>
             <Text>{state.wallet.address}</Text>
           </TouchableOpacity>

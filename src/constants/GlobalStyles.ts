@@ -145,6 +145,9 @@ const GlobalStyles = StyleSheet.create({
   p10: {
     padding: 10,
   },
+  exportBtn: {
+    marginTop: 10,
+  },
 });
 
 export default GlobalStyles;
