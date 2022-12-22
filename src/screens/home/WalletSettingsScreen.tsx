@@ -131,13 +131,18 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
           <>
             <Input style={GlobalStyles.input} disabled={true} value={wallet.pin} label="Password" accessoryRight={(props: any) => CopyIcon(props, wallet.pin)} />
             <Input style={GlobalStyles.input} disabled={true} value={wallet.encrypted} label="Keystore" accessoryRight={(props: any) => CopyIcon(props, wallet.encrypted)} />
-            <Button onPress={() => downloadKeystore()}>Download keystore file</Button>
+            <Button style={GlobalStyles.exportBtn} onPress={() => downloadKeystore()}>
+              Download to File system
+            </Button>
             <Button style={GlobalStyles.exportBtn} onPress={() => exportToGoogleDrive()}>
               Export to Google drive
             </Button>
-            <Button style={GlobalStyles.exportBtn} onPress={() => exportToIcloud()}>
-              Export to Icloud Drive
-            </Button>
+
+            {Platform.OS === 'ios' && (
+              <Button style={GlobalStyles.exportBtn} onPress={() => exportToIcloud()}>
+                Export to Icloud Drive
+              </Button>
+            )}
           </>
         )}
         {/* <View style={GlobalStyles.actions}>
