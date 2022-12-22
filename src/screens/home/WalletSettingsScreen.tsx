@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
+import * as CloudStore from 'react-native-cloud-store';
 import { RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, View, Platform } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { GDrive, MimeTypes } from '@robinbobin/react-native-google-drive-api-wrapper';
+import { defaultICloudContainerPath } from 'react-native-cloud-store';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
@@ -76,6 +78,23 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
       });
   };
 
+  const exportToIcloud = async () => {
+    const isAvailable = await CloudStore.isICloudAvailable();
+    const fileName = getKeystoreFileName();
+    const filePathForWrite = `${defaultICloudContainerPath}/Documents/${fileName}.json`;
+
+    if (isAvailable) {
+      try {
+        await CloudStore.writeFile(filePathForWrite, wallet.encrypted, { override: true });
+        console.debug('file uploaded to Icloud drive');
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      console.debug('You should login with your apple id');
+    }
+  };
+
   const exportToGoogleDrive = async () => {
     const fileName = getKeystoreFileName();
     const platformSetup = Platform.OS === 'android' ? { scopes: ['https://www.googleapis.com/auth/drive.file'] } : { iosClientId: GOOGLESIGNIN_IOS_CLIENTID };
@@ -115,6 +134,9 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
             <Button onPress={() => downloadKeystore()}>Download keystore file</Button>
             <Button style={GlobalStyles.exportBtn} onPress={() => exportToGoogleDrive()}>
               Export to Google drive
+            </Button>
+            <Button style={GlobalStyles.exportBtn} onPress={() => exportToIcloud()}>
+              Export to Icloud Drive
             </Button>
           </>
         )}

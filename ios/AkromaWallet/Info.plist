@@ -68,5 +68,18 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSUbiquitousContainers</key>
+    <dict>
+        <key>iCloud.org.reactjs.native.example.AkromaWallet</key>
+        <dict>
+            <key>NSUbiquitousContainerIsDocumentScopePublic</key>
+            <true/>
+            <key>NSUbiquitousContainerName</key>
+            <string>AkromaWallet</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+        </dict>
+    </dict>
 </dict>
+
 </plist>

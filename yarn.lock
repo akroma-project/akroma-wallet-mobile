@@ -7379,6 +7379,11 @@ react-native-cli-bump-version@^1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-cli-bump-version/-/react-native-cli-bump-version-1.5.0.tgz#f078532aef307e5645975e44cf26c397b2f62625"
   integrity sha512-B7eHE5gpVfc5Py90rU+cZsPEbaiz6wsFjxZrPbsKw1oyk/04Ae72ipQbAl/Y8FYK5AcvkyYf/DwQkTcDkKOEPA==
 
+react-native-cloud-store@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-cloud-store/-/react-native-cloud-store-0.9.1.tgz#47c8d9055817ee5f6c1811d6073d76a05d399f2b"
+  integrity sha512-fQG+8yZUU1l43+b//eAvu8bbdApiC+baZmNDJcW8KY3CHtDXkt1sr0bN6rpBmD0ZiiGKralGblkgBban9bUbtg==
+
 react-native-codegen@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.7.tgz#86651c5c5fec67a8077ef7f4e36f7ed459043e14"
