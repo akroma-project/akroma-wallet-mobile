@@ -18,27 +18,29 @@ export const DetailsScreenHeaderRight = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'WalletScreen'>;
   const navigator = useNavigation<homeScreenProp>();
   const { showActionSheetWithOptions } = useActionSheet();
+
+  const navigation = () => {
+    showActionSheetWithOptions(
+      {
+        options: ['History Transactions', 'Wallet Settings'],
+        cancelButtonIndex: 99,
+        showSeparators: true,
+      },
+      async (index: number) => {
+        if (index === 0) {
+          navigator.navigate('WalletTransactionHistory');
+        }
+        if (index === 1) {
+          navigator.navigate('WalletSettingsScreen', {
+            wallet: JSON.parse(await AsyncStorage.getItem('walletSelected')),
+          });
+        }
+      },
+    );
+  };
+
   return (
-    <TouchableOpacity
-      onPress={() =>
-        showActionSheetWithOptions(
-          {
-            options: ['History Transactions', 'Wallet Settings'],
-            cancelButtonIndex: 99,
-            showSeparators: true,
-          },
-          async (index: number) => {
-            if (index === 0) {
-              navigator.navigate('WalletTransactionHistory');
-            }
-            if (index === 1) {
-              navigator.navigate('WalletSettingsScreen', {
-                wallet: JSON.parse(await AsyncStorage.getItem('walletSelected')),
-              });
-            }
-          },
-        )
-      }>
+    <TouchableOpacity onPress={() => navigation()}>
       <Icon name="menu-outline" style={GlobalStyles.iconRight} fill="#000000" />
     </TouchableOpacity>
   );
