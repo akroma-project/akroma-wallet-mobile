@@ -10,7 +10,7 @@ import { defaultICloudContainerPath } from 'react-native-cloud-store';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { WalletContext } from '../../providers/WalletProvider';
-import { Button, Icon, Input, Text } from '@ui-kitten/components';
+import { Button, Card, Icon, Input, Modal, Text } from '@ui-kitten/components';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
@@ -25,6 +25,8 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
   const wallet: WalletModel = route.params.wallet;
   const path = RNFS.DocumentDirectoryPath;
   const [refreshing] = useState(false);
+  const [visible, setVisible] = React.useState(false);
+  const [message, setMessage] = React.useState<string>();
   const onRefresh = React.useCallback(() => {}, []);
 
   const { displayExport } = useContext(GlobalContext);
@@ -63,6 +65,11 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     return `${sanitizedWalletName}.${wallet.address}`;
   };
 
+  const exportMessage = (message: string) => {
+    setMessage(message);
+    setVisible(true);
+  };
+
   const downloadKeystore = () => {
     const fileName = getKeystoreFileName();
     const fullPath = `${path}/${fileName}.json`;
@@ -71,6 +78,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     // write the keystore file
     RNFS.writeFile(Platform.OS === 'android' ? androidpath : fullPath, wallet.encrypted, 'utf8')
       .then(() => {
+        exportMessage('File downloaded in file system');
         console.debug('file written');
       })
       .catch(err => {
@@ -86,6 +94,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     if (isAvailable) {
       try {
         await CloudStore.writeFile(filePathForWrite, wallet.encrypted, { override: true });
+        exportMessage('File uploaded to Icloud Drive');
         console.debug('file uploaded to Icloud drive');
       } catch (e) {
         console.error(e);
@@ -115,6 +124,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
         .execute()
     ).id;
 
+    exportMessage('File uploaded to Google Drive');
     console.debug('file uploaded to GDrive', id);
   };
 
@@ -155,6 +165,14 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
           </View>
         </View> */}
       </ScrollView>
+      <Modal visible={visible}>
+        <Card disabled={true}>
+          <Text>{message}</Text>
+          <Button style={GlobalStyles.exportModalBtn} onPress={() => setVisible(false)}>
+            Dismiss
+          </Button>
+        </Card>
+      </Modal>
     </SafeAreaView>
   );
 };
