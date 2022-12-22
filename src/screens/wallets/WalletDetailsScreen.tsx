@@ -10,6 +10,7 @@ import { useDatabaseConnection } from '../../data/connection';
 import { WalletModel } from '../../data/entities/wallet';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { WalletActionButtons } from '../../components/WalletActionButtons';
 import formatNumber from '../../extra/numberFormat';
 
 export const WalletDetailsScreen = ({ route }: { route: any }) => {
@@ -78,6 +79,9 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
             <Text>{state.wallet.address}</Text>
           </TouchableOpacity>
         </Card>
+        <View style={GlobalStyles.actions}>
+          <WalletActionButtons />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
