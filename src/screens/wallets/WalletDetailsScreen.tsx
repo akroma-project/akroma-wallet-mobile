@@ -13,7 +13,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletActionButtons } from '../../components/WalletActionButtons';
 import formatNumber from '../../extra/numberFormat';
 
-
 export const WalletDetailsScreen = ({ route }: { route: any }) => {
   const { walletsRepository } = useDatabaseConnection();
   console.debug(route.params.wallet.id);
