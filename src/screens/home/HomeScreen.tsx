@@ -9,6 +9,8 @@ import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, Permissi
 import { HomeHeader } from '../../components/HomeHeader';
 import { HomeResumeAmount } from '../../components/HomeResumeAmount';
 import { WalletContext } from '../../providers/WalletProvider';
+import { TopWallets } from '../../components/TopWallets';
+
 export const HomeScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
 
@@ -48,19 +50,17 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     async function init() {
-      console.log('antes++++++++++');
-      await loadWallets();
       await refreshWallets();
-      console.log('despues++++++++++');
+      await loadWallets();
     }
     init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <HomeHeader />
       <HomeResumeAmount balance={state.totalBalance} />
+      <TopWallets wallets={state.wallets} />
     </SafeAreaView>
   );
 };
