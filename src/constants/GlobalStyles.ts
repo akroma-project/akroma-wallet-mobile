@@ -147,6 +147,11 @@ const GlobalStyles = StyleSheet.create({
   },
   exportBtn: {
     marginTop: 10,
+    marginHorizontal: 5,
+  },
+  exportModalBtn: {
+    marginTop: 15,
+    marginHorizontal: '15%',
   },
 });
 
