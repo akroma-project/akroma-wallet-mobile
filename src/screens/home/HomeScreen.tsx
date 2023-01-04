@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppState, Platform, SafeAreaView } from 'react-native';
+import { AppState, Platform, SafeAreaView, ScrollView } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
@@ -10,6 +10,7 @@ import { HomeHeader } from '../../components/HomeHeader';
 import { HomeResumeAmount } from '../../components/HomeResumeAmount';
 import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
+import { LastTransactions } from '../../components/LastTransactions';
 
 export const HomeScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -52,6 +53,7 @@ export const HomeScreen = () => {
     async function init() {
       await refreshWallets();
       await loadWallets();
+      console.log(state);
     }
     init();
   }, []);
@@ -60,7 +62,10 @@ export const HomeScreen = () => {
     <SafeAreaView style={GlobalStyles.flex}>
       <HomeHeader />
       <HomeResumeAmount balance={state.totalBalance} />
-      <TopWallets wallets={state.wallets} />
+      <ScrollView>
+        <LastTransactions wallets={state.wallets} />
+        <TopWallets wallets={state.wallets} />
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -14,20 +14,17 @@ export const TopWallets = ({ wallets }: Props) => {
     const orderWallets = wallets.sort((a, b) => Number(b.lastBalance) - Number(a.lastBalance));
     const topWallets = orderWallets.slice(0, 3);
     setWalletsState(topWallets);
-    console.log('TOP WALLETS: ', topWallets);
   }, [wallets]);
   return (
     <Layout>
-      <ScrollView>
-        <Text style={styles.title}>Top Wallets</Text>
-        {walletsState &&
-          walletsState.map(wallet => (
-            <Card key={wallet.id}>
-              <Text style={styles.cardText}>Address name: {wallet.name}</Text>
-              <Text style={styles.cardText}>Balance: {wallet.lastBalance.toString()}</Text>
-            </Card>
-          ))}
-      </ScrollView>
+      <Text style={styles.title}>Top Wallets</Text>
+      {walletsState &&
+        walletsState.map(wallet => (
+          <Card key={wallet.id}>
+            <Text style={styles.cardText}>Address name: {wallet.name}</Text>
+            <Text style={styles.cardText}>Balance: {wallet.lastBalance.toString()}</Text>
+          </Card>
+        ))}
     </Layout>
   );
 };

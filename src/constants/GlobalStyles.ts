@@ -152,7 +152,7 @@ const GlobalStyles = StyleSheet.create({
     color: '#fba304',
   },
   headerContainer: {
-    flex: 1,
+    height: '45%',
     maxHeight: '45%',
   },
 });
