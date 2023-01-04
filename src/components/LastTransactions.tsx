@@ -21,7 +21,7 @@ export const LastTransactions = ({ wallets }: Props) => {
         let transactions = await getTransactionsByAddress(wallets[i].address, 0);
         transactions = transactions.length > 2 ? transactions.slice(0, 3) : transactions.slice(0, transactions.length);
 
-        if (transactions !== undefined) {
+        if (transactions.length > 0) {
           transactionsArray.push(transactions);
         }
       }

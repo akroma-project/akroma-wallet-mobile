@@ -63,8 +63,8 @@ export const HomeScreen = () => {
       <HomeHeader />
       <HomeResumeAmount balance={state.totalBalance} />
       <ScrollView>
-        <LastTransactions wallets={state.wallets} />
         <TopWallets wallets={state.wallets} />
+        <LastTransactions wallets={state.wallets} />
       </ScrollView>
     </SafeAreaView>
   );

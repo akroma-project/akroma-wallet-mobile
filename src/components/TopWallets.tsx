@@ -22,7 +22,7 @@ export const TopWallets = ({ wallets }: Props) => {
         walletsState.map(wallet => (
           <Card key={wallet.id}>
             <Text style={styles.cardText}>Address name: {wallet.name}</Text>
-            <Text style={styles.cardText}>Balance: {wallet.lastBalance.toString()}</Text>
+            <Text style={styles.cardText}>Balance: {wallet.lastBalance.toString()} AKA</Text>
           </Card>
         ))}
     </Layout>
@@ -34,8 +34,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingHorizontal: 20,
     paddingTop: 10,
+    color: 'black',
   },
   cardText: {
     color: 'black',
+    fontSize: 15,
   },
 });
