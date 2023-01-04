@@ -145,6 +145,7 @@ const GlobalStyles = StyleSheet.create({
   p10: {
     padding: 10,
   },
+
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -154,6 +155,14 @@ const GlobalStyles = StyleSheet.create({
   headerContainer: {
     height: '45%',
     maxHeight: '45%',
+
+  exportBtn: {
+    marginTop: 10,
+    marginHorizontal: 5,
+  },
+  exportModalBtn: {
+    marginTop: 15,
+    marginHorizontal: '15%',
   },
 });
 

@@ -1806,6 +1806,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.3.0.tgz#9e558170c106bbafaa1ef502bd8e6d4651012bf9"
   integrity sha512-+zDZ20NUnSWghj7Ku5aFphMzuM9JulqCW+aPXT6IfIXFbb8tzYTTOSeRFOtuekJ99ibW2fUCSsjuKNlwDIbHFg==
 
+"@react-native-google-signin/google-signin@^8.2.1":
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-8.2.1.tgz#a37362e630302da9ff820895ab8cf32acedd66dc"
+  integrity sha512-wtSjKXKxxwntE7A98b4ry6rbTDidxF6taAZISLnJ9WYffFvgyreliKjg3e9IDuTBLCDpDYKUOqK9I/h4hMFnjg==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -1902,6 +1907,15 @@
     "@react-navigation/elements" "^1.3.6"
     color "^4.2.3"
     warn-once "^0.1.0"
+
+"@robinbobin/react-native-google-drive-api-wrapper@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@robinbobin/react-native-google-drive-api-wrapper/-/react-native-google-drive-api-wrapper-1.2.3.tgz#c4cfbfb027785589d53841ab667078f69266988c"
+  integrity sha512-WCbkb9zzKIR4Wg5xmX33eDGkfDH6wS1LUhnGET/FNRpJiRC+Lnofnrk7JrrmXg7cLjjJ3J/HkW15bsp2CwbjjQ==
+  dependencies:
+    base64-js "^1.5.1"
+    simple-common-utils "^2.3.0"
+    utf8 "^3.0.0"
 
 "@sentry/browser@6.19.2":
   version "6.19.2"
@@ -7365,6 +7379,11 @@ react-native-cli-bump-version@^1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-cli-bump-version/-/react-native-cli-bump-version-1.5.0.tgz#f078532aef307e5645975e44cf26c397b2f62625"
   integrity sha512-B7eHE5gpVfc5Py90rU+cZsPEbaiz6wsFjxZrPbsKw1oyk/04Ae72ipQbAl/Y8FYK5AcvkyYf/DwQkTcDkKOEPA==
 
+react-native-cloud-store@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-cloud-store/-/react-native-cloud-store-0.9.1.tgz#47c8d9055817ee5f6c1811d6073d76a05d399f2b"
+  integrity sha512-fQG+8yZUU1l43+b//eAvu8bbdApiC+baZmNDJcW8KY3CHtDXkt1sr0bN6rpBmD0ZiiGKralGblkgBban9bUbtg==
+
 react-native-codegen@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.7.tgz#86651c5c5fec67a8077ef7f4e36f7ed459043e14"
@@ -8129,6 +8148,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+simple-common-utils@^2.3.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/simple-common-utils/-/simple-common-utils-2.6.0.tgz#457f126c20c82ba10212427886f4c8ebe86cc6d7"
+  integrity sha512-K0gtyfMQ1+iDQvZKgdY2L+pbaG0MHp1ke6ho7IL6UKR8f59st+QJgw27FADF+3Hut19C3WUb7IhgENdY/OJG8w==
 
 simple-plist@^1.0.0, simple-plist@^1.1.0:
   version "1.3.1"
