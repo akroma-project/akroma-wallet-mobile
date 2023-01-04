@@ -28,7 +28,7 @@ export const LastTransactions = ({ wallets }: Props) => {
       const recentTransactions = transactionsArray.flat();
       const transactionRemoveDuplicate = [...new Map(recentTransactions.map(v => [v.id, v])).values()];
       const transactionsSorted = transactionRemoveDuplicate.sort((a, b) => Number(b.ts) - Number(a.ts));
-      const transactionsSliced = transactionsSorted.slice(0, 3);
+      const transactionsSliced = transactionsSorted.length > 2 ? transactionsSorted.slice(0, 3) : transactionsSorted.slice(0, transactionsSorted.length);
       setLastTransact(transactionsSliced);
     }
   };

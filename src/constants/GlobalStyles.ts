@@ -155,6 +155,7 @@ const GlobalStyles = StyleSheet.create({
   headerContainer: {
     height: '45%',
     maxHeight: '45%',
+  },
 
   exportBtn: {
     marginTop: 10,
