@@ -64,6 +64,7 @@ const WalletProvider = (props: serverProviderProps) => {
     if (wallet === undefined) {
       throw 'setActive: could not find wallet';
     }
+    wallet.address = utils.toChecksumAddress(wallet.address);
     setState({ ...state, wallet: wallet, wallets: state.wallets });
   };
 
