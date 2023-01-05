@@ -69,7 +69,7 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
       </Text>
     </View>
   );
-
+  const isWatchWallet = state.wallet.encrypted === 'watch';
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <ScrollView style={GlobalStyles.container} contentContainerStyle={GlobalStyles.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
@@ -79,9 +79,11 @@ export const WalletDetailsScreen = ({ route }: { route: any }) => {
             <Text>{state.wallet.address}</Text>
           </TouchableOpacity>
         </Card>
-        <View style={GlobalStyles.actions}>
-          <WalletActionButtons />
-        </View>
+        {!isWatchWallet && (
+          <View style={GlobalStyles.actions}>
+            <WalletActionButtons />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
