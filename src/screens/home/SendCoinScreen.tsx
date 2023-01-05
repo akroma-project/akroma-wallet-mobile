@@ -152,7 +152,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
               SEND
             </Button>
             <Text style={GlobalStyles.label}>A confirm dialog will open before sending</Text>
-            <ScrollView contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            <ScrollView style={{ maxHeight: 400 }} contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
               {/* {state.wallets.length < 1 && <NoWallet />} */}
               {state.wallets.length > 0 &&
                 _.sortBy(
