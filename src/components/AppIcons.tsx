@@ -4,6 +4,8 @@ import { ImageStyle } from 'react-native';
 
 export const HomeIcon = (props: any) => <Icon {...props} name="home-outline" />;
 
+export const WalletIcon = (props: any) => <Icon {...props} name="credit-card-outline" />;
+
 export const ShareIcon = (props: any) => <Icon {...props} name="share-outline" />;
 
 export const SendIcon = (props: any) => <Icon {...props} name="diagonal-arrow-right-up-outline" />;

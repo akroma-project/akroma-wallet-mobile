@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
 
 import { HomeStackNavigator } from './HomeStackNavigator';
-import { HomeIcon, SettingsIcon } from '../components/AppIcons';
+import { HomeIcon, SettingsIcon, WalletIcon } from '../components/AppIcons';
 import { WalletsStackNavigator } from './WalletsStackNavigator';
 import { SettingsStackNavigator } from './SettingsStackNavigator';
 
@@ -13,7 +13,7 @@ const ApplicationTable = createBottomTabNavigator();
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation selectedIndex={state.index} onSelect={index => navigation.navigate(state.routeNames[index])}>
     <BottomNavigationTab title="Home" icon={HomeIcon} />
-    <BottomNavigationTab title="Wallets" icon={HomeIcon} />
+    <BottomNavigationTab title="Wallets" icon={WalletIcon} />
     <BottomNavigationTab title="Settings" icon={SettingsIcon} />
   </BottomNavigation>
 );
