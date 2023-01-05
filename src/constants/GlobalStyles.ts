@@ -155,6 +155,7 @@ const GlobalStyles = StyleSheet.create({
   headerContainer: {
     height: '45%',
     maxHeight: '45%',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
 
   exportBtn: {
@@ -164,6 +165,13 @@ const GlobalStyles = StyleSheet.create({
   exportModalBtn: {
     marginTop: 15,
     marginHorizontal: '15%',
+  },
+  generalBackground: {
+    flex: 1,
+    backgroundColor: '#b0b0b0',
+  },
+  bgTransparent: {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
 });
 

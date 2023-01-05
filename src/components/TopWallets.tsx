@@ -1,7 +1,8 @@
 import { Card, Layout } from '@ui-kitten/components';
+import GlobalStyles from '../constants/GlobalStyles';
 import React, { useEffect, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 interface Props {
   wallets: WalletModel[];
@@ -16,7 +17,7 @@ export const TopWallets = ({ wallets }: Props) => {
     setWalletsState(topWallets);
   }, [wallets]);
   return (
-    <Layout>
+    <Layout style={GlobalStyles.bgTransparent}>
       <Text style={styles.title}>Top Wallets</Text>
       {walletsState &&
         walletsState.map(wallet => (
@@ -31,10 +32,15 @@ export const TopWallets = ({ wallets }: Props) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize: 22,
     paddingHorizontal: 20,
-    paddingTop: 10,
-    color: 'black',
+    padding: 5,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  card: {
+    paddingHorizontal: '5%',
+    paddingVertical: 8,
   },
   cardText: {
     color: 'black',

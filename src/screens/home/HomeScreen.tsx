@@ -53,13 +53,12 @@ export const HomeScreen = () => {
     async function init() {
       await refreshWallets();
       await loadWallets();
-      console.log(state);
     }
     init();
   }, []);
 
   return (
-    <SafeAreaView style={GlobalStyles.flex}>
+    <SafeAreaView style={GlobalStyles.generalBackground}>
       <HomeHeader />
       <HomeResumeAmount balance={state.totalBalance} />
       <ScrollView>

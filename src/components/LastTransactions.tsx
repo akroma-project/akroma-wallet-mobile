@@ -1,7 +1,8 @@
 import { Card, Layout, Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { WalletModel } from '../data/entities/wallet';
+import GlobalStyles from '../constants/GlobalStyles';
 import { getTransactionsByAddress } from '../services/AkromaApi';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 
@@ -36,7 +37,7 @@ export const LastTransactions = ({ wallets }: Props) => {
     generateLastTransactions();
   }, [wallets]);
   return (
-    <Layout>
+    <Layout style={GlobalStyles.bgTransparent}>
       <Text style={styles.title}>Last transactions</Text>
 
       {lastTransact &&
@@ -44,7 +45,10 @@ export const LastTransactions = ({ wallets }: Props) => {
           <Card key={`${transaction.id}${id}`}>
             <Text style={styles.cardText}>From: {transaction.from} </Text>
             <Text style={styles.cardText}>To: {transaction.to} </Text>
-            <Text style={styles.cardText}>Value: {parseInt(utils.fromWei(transaction.value ?? 0, 'ether').toString(), 10)} AKA</Text>
+            <View style={styles.dateContainer}>
+              <Text style={styles.cardText}>Value: {parseInt(utils.fromWei(transaction.value ?? 0, 'ether').toString(), 10)} AKA</Text>
+              <Text style={styles.cardText}>{transaction.ts} </Text>
+            </View>
           </Card>
         ))}
     </Layout>
@@ -53,11 +57,22 @@ export const LastTransactions = ({ wallets }: Props) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize: 22,
     paddingHorizontal: 20,
-    paddingTop: 10,
+    padding: 5,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  card: {
+    paddingHorizontal: '5%',
+    paddingVertical: 8,
   },
   cardText: {
-    color: 'black',
+    fontSize: 15,
+  },
+  dateContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
