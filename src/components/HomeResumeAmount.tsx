@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { WalletContext } from '../providers/WalletProvider';
 
 interface Params {
   balance: Number;
@@ -12,11 +11,13 @@ export const HomeResumeAmount = (params: Params) => {
     maximumFractionDigits: 12,
     minimumFractionDigits: 2,
   };
-  console.log(params);
+
   return (
     <LinearGradient colors={['#fba304', '#e60404', '#af0487']} style={styles.resumeContainer} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
-      <Text style={styles.textAmount}>AKA {params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
-      <Text style={styles.label}>Current balance</Text>
+      <View>
+        <Text style={styles.textAmount}>AKA {params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
+        <Text style={styles.label}>Current balance</Text>
+      </View>
     </LinearGradient>
   );
 };
@@ -27,11 +28,14 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     borderRadius: 20,
     width: '80%',
-    height: '15%',
-    alignContent: 'center',
+    height: '12%',
     display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignContent: 'center',
     alignSelf: 'center',
-    marginTop: '-12%',
+    marginTop: '-15%',
+    marginBottom: '2%',
     padding: 15,
     shadowColor: '#000',
     shadowOffset: {
