@@ -153,6 +153,9 @@ const GlobalStyles = StyleSheet.create({
     marginTop: 15,
     marginHorizontal: '15%',
   },
+  walletsList: {
+    maxHeight: 400,
+  },
 });
 
 export default GlobalStyles;
