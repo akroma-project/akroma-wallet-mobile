@@ -16,9 +16,11 @@ import _ from 'lodash';
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
+  console.debug('params', route);
 
   const sendToAddress = route.params?.address ?? '';
   const [address, setAddress] = useState('');
+  // const [addressName, setAddressName] = useState('');
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
   const [showStatus, setShowStatus] = useState(false);
@@ -44,7 +46,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     setAddress(wallet.address);
   };
 
-  const renderWalletRight = (item: WalletModel) => <Text>{item.lastBalance?.toString()}</Text>;
+  // const renderWalletRight = (item: WalletModel) => <Text>{item.lastBalance?.toString()}</Text>;
 
   const [refreshing] = React.useState(false);
   const onRefresh = async () => {
@@ -79,7 +81,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     }
     const sendA = u.toDecimal(amount);
     const minA = u.toDecimal(0.0000001);
-    console.debug(sendA, minA);
+    // console.debug(sendA, minA);
     if (sendA < minA) {
       console.debug('invalid amount');
       return;
@@ -153,7 +155,10 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
             <ScrollView contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
               {/* {state.wallets.length < 1 && <NoWallet />} */}
               {state.wallets.length > 0 &&
-                _.sortBy(state.wallets, x => x.address).map((item, index) => (
+                _.sortBy(
+                  state.wallets.filter(wallet1 => wallet1.address !== state.wallet.address),
+                  x => x.address,
+                ).map((item, index) => (
                   <ListItem
                     key={index}
                     title={item.name}
