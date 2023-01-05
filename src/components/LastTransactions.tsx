@@ -47,7 +47,9 @@ export const LastTransactions = ({ wallets }: Props) => {
             <Text style={styles.cardText}>To: {transaction.to} </Text>
             <View style={styles.dateContainer}>
               <Text style={styles.cardText}>Value: {parseInt(utils.fromWei(transaction.value ?? 0, 'ether').toString(), 10)} AKA</Text>
-              <Text style={styles.cardText}>{transaction.ts} </Text>
+              <Text style={styles.cardText}>
+                {new Date(transaction.ts * 1000).toLocaleTimeString()} {new Date(transaction.ts * 1000).toLocaleDateString()}
+              </Text>
             </View>
           </Card>
         ))}
