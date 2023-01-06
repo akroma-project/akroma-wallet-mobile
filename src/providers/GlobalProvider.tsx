@@ -3,6 +3,8 @@ import React, { createContext, useState } from 'react';
 type Props = {
   displayExport: boolean;
   setDisplayExport: React.Dispatch<React.SetStateAction<boolean>>;
+  newWatchWallet: string;
+  setNewWatchWallet: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const GlobalContext = createContext<Props>({} as Props);

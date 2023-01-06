@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Button, Input } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { ImageOverlay } from '../../extra/image-overlay.component';
 import { isAddress } from 'ethers/lib/utils';
 import Toast from 'react-native-toast-message';
 import { WalletContext } from '../../providers/WalletProvider';
+import { GlobalContext } from '../../providers/GlobalProvider';
 
 export const ImportWalletWatch = () => {
   const { walletsRepository } = useDatabaseConnection();
@@ -16,10 +17,17 @@ export const ImportWalletWatch = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const isValidAddress = isAddress(walletAddress);
   const { addWallet } = useContext(WalletContext);
+  const { newWatchWallet, setNewWatchWallet } = useContext(GlobalContext);
+
+  useEffect(() => {
+    walletAddressChange(newWatchWallet);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSuccessWatchWallet = () => {
     setName('');
     walletAddressChange('');
+    setNewWatchWallet('');
     Toast.show({
       text1: 'The wallet is saved',
       position: 'top',

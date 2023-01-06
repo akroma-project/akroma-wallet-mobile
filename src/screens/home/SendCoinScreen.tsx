@@ -12,11 +12,12 @@ import Toast from 'react-native-toast-message';
 import { TransactionCard } from '../../components/TransactionCard';
 import { WalletModel } from '../../data/entities/wallet';
 import _ from 'lodash';
+import { GlobalContext } from '../../providers/GlobalProvider';
+import { ImportWalletWatch } from './ImportWalletWatch';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
-  console.debug('params', route);
 
   const sendToAddress = route.params?.address ?? '';
   const [address, setAddress] = useState('');
@@ -26,7 +27,13 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
   const [showStatus, setShowStatus] = useState(false);
   const [sending, setSending] = React.useState(false);
   const { send, state, loadWallets } = React.useContext(WalletContext);
+  const { setNewWatchWallet } = React.useContext(GlobalContext);
   const u = new Utils();
+
+  const addToWatchList = () => {
+    setNewWatchWallet(address);
+    navigator.navigate('ImportWalletWatch');
+  };
 
   useEffect(() => {
     setAddress(sendToAddress);
@@ -136,6 +143,10 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     return false;
   };
 
+  const walletExists = (): boolean => {
+    return !!state.wallets.find(wallet1 => wallet1.address === address);
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.container}>
@@ -143,9 +154,11 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
           <View style={GlobalStyles.mt20}>
             <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
             <View style={GlobalStyles.mt20}>{status === 'Successful' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
-            <View style={GlobalStyles.mt20}>
-              <Button onPress={anotherSend}>Add to Watch List</Button>
-            </View>
+            {!walletExists() && (
+              <View style={GlobalStyles.mt20}>
+                <Button onPress={addToWatchList}>Add to Watch List</Button>
+              </View>
+            )}
           </View>
         ) : (
           <View>
