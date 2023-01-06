@@ -35,6 +35,7 @@ export const LastTransactions = ({ wallets }: Props) => {
   };
   useEffect(() => {
     generateLastTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wallets]);
   return (
     <Layout style={styles.bgContainer}>

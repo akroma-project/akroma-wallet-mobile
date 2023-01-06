@@ -55,6 +55,7 @@ export const HomeScreen = () => {
       await loadWallets();
     }
     init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

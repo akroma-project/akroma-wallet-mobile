@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, Image } from 'react-native';
-import { Avatar, Layout, Text } from '@ui-kitten/components';
+import { Layout, Text } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
 import { HomeScreenHeaderRight } from './HomeScreenHeaderRight';
 export const HomeHeader = () => {

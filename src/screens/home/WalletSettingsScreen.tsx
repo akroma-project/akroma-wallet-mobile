@@ -65,8 +65,8 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
     return `${sanitizedWalletName}.${wallet.address}`;
   };
 
-  const exportMessage = (message: string) => {
-    setMessage(message);
+  const exportMessage = (msg: string) => {
+    setMessage(msg);
     setVisible(true);
   };
 

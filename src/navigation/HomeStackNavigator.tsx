@@ -6,14 +6,13 @@ import { ReceiveCoinScreen } from '../screens/home/ReceiveCoinScreen';
 import { ScannerScreen } from '../screens/home/ScannerScreen';
 import { CreateWalletScreen } from '../screens/home/CreateWalletScreen';
 import { WalletSettingsScreen } from '../screens/home/WalletSettingsScreen';
-import { HomeScreenHeaderRight } from '../components/HomeScreenHeaderRight';
 import { ImportWalletKeystore } from '../screens/home/ImportWalletKeystore';
 import { ImportWalletPrivateKey } from '../screens/home/ImportWalletPrivateKey';
 import { ImportWalletSeedPhrase } from '../screens/home/ImportWalletSeedPhrase';
 import { ImportWalletWatch } from '../screens/home/ImportWalletWatch';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletModel } from '../data/entities/wallet';
-import { Image } from 'react-native';
+
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
   SendCoinScreen: { address: string } | undefined;
