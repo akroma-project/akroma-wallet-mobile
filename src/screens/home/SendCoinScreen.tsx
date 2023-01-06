@@ -143,6 +143,9 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
           <View style={GlobalStyles.mt20}>
             <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
             <View style={GlobalStyles.mt20}>{status === 'Successful' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
+            <View style={GlobalStyles.mt20}>
+              <Button onPress={anotherSend}>Add to Watch List</Button>
+            </View>
           </View>
         ) : (
           <View>

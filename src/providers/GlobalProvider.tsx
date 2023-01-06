@@ -13,9 +13,12 @@ interface serverProviderProps {
 
 const GlobalProvider = (props: serverProviderProps) => {
   const [displayExport, setDisplayExport] = useState(false);
+  const [newWatchWallet, setNewWatchWallet] = useState('');
   const initialValue = {
     displayExport,
     setDisplayExport,
+    newWatchWallet,
+    setNewWatchWallet,
   };
 
   return <GlobalContext.Provider value={initialValue}>{props.children}</GlobalContext.Provider>;
