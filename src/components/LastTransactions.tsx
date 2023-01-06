@@ -18,8 +18,9 @@ export const LastTransactions = ({ wallets }: Props) => {
     if (wallets.length > 0) {
       setLastTransact([]);
       let transactionsArray = [];
-      for (let i = 0; i < wallets.length; i++) {
-        let transactions = await getTransactionsByAddress(wallets[i].address, 0);
+      const removeWatchedWallets = wallets.filter(element => element.encrypted !== 'watch');
+      for (let i = 0; i < removeWatchedWallets.length; i++) {
+        let transactions = await getTransactionsByAddress(removeWatchedWallets[i].address, 0);
         transactions = transactions.length > 2 ? transactions.slice(0, 3) : transactions.slice(0, transactions.length);
 
         if (transactions.length > 0) {

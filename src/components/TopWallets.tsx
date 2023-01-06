@@ -12,7 +12,8 @@ export const TopWallets = ({ wallets }: Props) => {
   const [walletsState, setWalletsState] = useState<WalletModel[]>();
 
   useEffect(() => {
-    const orderWallets = wallets.sort((a, b) => Number(b.lastBalance) - Number(a.lastBalance));
+    const removeWatchedWallets = wallets.filter(element => element.encrypted !== 'watch');
+    const orderWallets = removeWatchedWallets.sort((a, b) => Number(b.lastBalance) - Number(a.lastBalance));
     const topWallets = orderWallets.slice(0, 3);
     setWalletsState(topWallets);
   }, [wallets]);

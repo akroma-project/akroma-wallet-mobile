@@ -57,7 +57,7 @@ const WalletProvider = (props: serverProviderProps) => {
   const setWallets = (wallets: WalletModel[]) => {
     console.debug('set wallets called', wallets.length);
     let totalBalance = 0;
-    totalBalance = wallets.reduce((accumulator, wallet) => (wallet.encrypted ? parseFloat(wallet.lastBalance.toString()) + accumulator : accumulator), 0);
+    totalBalance = wallets.reduce((accumulator, wallet) => (wallet.encrypted !== 'watch' ? parseFloat(wallet.lastBalance.toString()) + accumulator : accumulator), 0);
     console.log(totalBalance);
     setState({ ...state, wallets: wallets, totalBalance: totalBalance });
   };
