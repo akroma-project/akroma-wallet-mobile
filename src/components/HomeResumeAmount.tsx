@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   resumeContainer: {
     paddingLeft: 15,
     paddingRight: 15,
+    paddingTop: 10,
     borderRadius: 20,
     width: '80%',
     height: '12%',
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     alignContent: 'center',
+    alignItems: 'center',
     alignSelf: 'center',
     marginTop: '-15%',
     marginBottom: '2%',

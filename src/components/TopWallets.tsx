@@ -2,7 +2,7 @@ import { Card, Layout } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
 import React, { useEffect, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface Props {
   wallets: WalletModel[];
@@ -22,8 +22,15 @@ export const TopWallets = ({ wallets }: Props) => {
       {walletsState &&
         walletsState.map(wallet => (
           <Card key={wallet.id}>
-            <Text style={styles.cardText}>Address name: {wallet.name}</Text>
-            <Text style={styles.cardText}>Balance: {wallet.lastBalance.toString()} AKA</Text>
+            <View style={GlobalStyles.flexRow}>
+              <Text style={[styles.fieldText, styles.cardText]}>Address name: </Text>
+              <Text style={styles.cardText}>{wallet.name}</Text>
+            </View>
+
+            <View style={GlobalStyles.flexRow}>
+              <Text style={[styles.fieldText, styles.cardText]}>Balance:</Text>
+              <Text style={[styles.cardText, styles.balance]}>{wallet.lastBalance.toString()} AKA</Text>
+            </View>
           </Card>
         ))}
     </Layout>
@@ -45,5 +52,12 @@ const styles = StyleSheet.create({
   cardText: {
     color: 'black',
     fontSize: 15,
+  },
+  fieldText: {
+    fontWeight: 'bold',
+  },
+  balance: {
+    color: 'purple',
+    paddingLeft: 5,
   },
 });

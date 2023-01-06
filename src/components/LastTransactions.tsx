@@ -37,17 +37,28 @@ export const LastTransactions = ({ wallets }: Props) => {
     generateLastTransactions();
   }, [wallets]);
   return (
-    <Layout style={GlobalStyles.bgTransparent}>
+    <Layout style={styles.bgContainer}>
       <Text style={styles.title}>Last transactions</Text>
 
       {lastTransact &&
         lastTransact.map((transaction, id) => (
-          <Card key={`${transaction.id}${id}`}>
-            <Text style={styles.cardText}>From: {transaction.from} </Text>
-            <Text style={styles.cardText}>To: {transaction.to} </Text>
+          <Card key={`${transaction.id}${id}`} style={styles.card}>
+            <View>
+              <Text style={styles.fieldText}>From: </Text>
+              <Text style={styles.walletText}>{transaction.from} </Text>
+            </View>
+            <View style={GlobalStyles.flexRow}>
+              <Text style={styles.fieldText}>To: </Text>
+              <Text style={styles.walletText}>{transaction.to} </Text>
+            </View>
+
             <View style={styles.dateContainer}>
-              <Text style={styles.cardText}>Value: {parseInt(utils.fromWei(transaction.value ?? 0, 'ether').toString(), 10)} AKA</Text>
-              <Text style={styles.cardText}>
+              <View style={GlobalStyles.flexRow}>
+                <Text style={styles.fieldText}>Value: </Text>
+                <Text style={styles.numericStyle}>{parseInt(utils.fromWei(transaction.value ?? 0, 'ether').toString(), 10)} AKA</Text>
+              </View>
+
+              <Text style={styles.numericStyle}>
                 {new Date(transaction.ts * 1000).toLocaleTimeString()} {new Date(transaction.ts * 1000).toLocaleDateString()}
               </Text>
             </View>
@@ -58,23 +69,32 @@ export const LastTransactions = ({ wallets }: Props) => {
 };
 
 const styles = StyleSheet.create({
+  bgContainer: {
+    backgroundColor: '#eee',
+  },
   title: {
     fontSize: 22,
     paddingHorizontal: 20,
     padding: 5,
     color: 'white',
     fontWeight: 'bold',
+    backgroundColor: '#b0b0b0',
   },
   card: {
-    paddingHorizontal: '5%',
-    paddingVertical: 8,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    borderRadius: 20,
   },
-  cardText: {
-    fontSize: 15,
-  },
+  numericStyle: { fontSize: 15, color: 'purple' },
+  walletText: { fontSize: 13 },
   dateContainer: {
+    paddingTop: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  fieldText: {
+    fontWeight: 'bold',
+    fontSize: 15,
   },
 });

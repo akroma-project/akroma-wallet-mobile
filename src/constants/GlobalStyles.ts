@@ -173,6 +173,13 @@ const GlobalStyles = StyleSheet.create({
   bgTransparent: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
   },
+  flexRow: {
+    flexDirection: 'row',
+  },
+  flexRowBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 
 export default GlobalStyles;

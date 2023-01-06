@@ -169,7 +169,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
         <Card disabled={true}>
           <Text>{message}</Text>
           <Button style={GlobalStyles.exportModalBtn} onPress={() => setVisible(false)}>
-            Dismiss
+            Ok
           </Button>
         </Card>
       </Modal>
