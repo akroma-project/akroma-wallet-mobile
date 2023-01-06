@@ -13,7 +13,6 @@ import { TransactionCard } from '../../components/TransactionCard';
 import { WalletModel } from '../../data/entities/wallet';
 import _ from 'lodash';
 import { GlobalContext } from '../../providers/GlobalProvider';
-import { ImportWalletWatch } from './ImportWalletWatch';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -174,16 +173,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
                 _.sortBy(
                   state.wallets.filter(wallet1 => wallet1.address !== state.wallet.address),
                   x => x.address,
-                ).map((item, index) => (
-                  <ListItem
-                    key={index}
-                    title={item.name}
-                    description={item.address}
-                    onPress={() => onWalletPress(item)}
-                    // accessoryLeft={renderWalletLeft}
-                    // accessoryRight={() => renderWalletRight(item)}
-                  />
-                ))}
+                ).map((item, index) => <ListItem key={index} title={item.name} description={item.address} onPress={() => onWalletPress(item)} />)}
             </ScrollView>
           </View>
         )}
