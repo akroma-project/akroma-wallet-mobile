@@ -20,7 +20,6 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
 
   const sendToAddress = route.params?.address ?? '';
   const [address, setAddress] = useState('');
-  // const [addressName, setAddressName] = useState('');
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
   const [showStatus, setShowStatus] = useState(false);
@@ -51,8 +50,6 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
   const onWalletPress = async (wallet: WalletModel) => {
     setAddress(wallet.address);
   };
-
-  // const renderWalletRight = (item: WalletModel) => <Text>{item.lastBalance?.toString()}</Text>;
 
   const [refreshing] = React.useState(false);
   const onRefresh = async () => {
