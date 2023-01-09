@@ -22,10 +22,10 @@ target 'AkromaWallet' do
   pod 'RNFS', :path => '../node_modules/react-native-fs'
   pod 'GoogleSignIn'
 
-  # target 'AkromaWalletTests' do
-  #   inherit! :complete
-  #   # Pods for testing
-  # end
+  target 'AkromaWalletTests' do
+    inherit! :complete
+    # Pods for testing
+  end
 
   # Enables Flipper.
   #
