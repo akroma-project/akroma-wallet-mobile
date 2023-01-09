@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { TransactionCard } from '../../components/TransactionCard';
 import { WalletContext } from '../../providers/WalletProvider';
@@ -12,6 +12,11 @@ export const WalletTransactionHistory = () => {
   const [transactions, setTransactions] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const listRef = useRef(null);
+  const handlePage = (newValue: number) => {
+    listRef.current.scrollTo({ y: 0, animated: true });
+    setPage(newValue);
+  };
   useEffect(() => {
     const loadPages = async () => {
       const total = await getTransactionCountByAddress(state.wallet.address);
@@ -28,7 +33,7 @@ export const WalletTransactionHistory = () => {
   }, [page]);
   return (
     <View>
-      <ScrollView style={[GlobalStyles.mt20, styles.walletsList]}>
+      <ScrollView style={[GlobalStyles.mt20, styles.walletsList]} ref={listRef}>
         {transactions.map(({ from, to, blockNumber, value, status }) => (
           <View style={(GlobalStyles.mt20, GlobalStyles.p10)} key={blockNumber}>
             <TransactionCard addressFrom={from} amount={String(value * 0.000000000000000001)} addressTo={to} status={status ? 'Successful' : 'In Progress'} blockNumber={blockNumber} sent={from === state.wallet.address} />
@@ -36,7 +41,7 @@ export const WalletTransactionHistory = () => {
         ))}
       </ScrollView>
       <View style={styles.paginationContainer}>
-        <Pagination currentPage={page} totalPages={totalPage} onPress={setPage} />
+        <Pagination currentPage={page} totalPages={totalPage} onPress={handlePage} />
       </View>
     </View>
   );
