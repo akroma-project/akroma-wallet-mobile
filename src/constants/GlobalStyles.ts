@@ -180,6 +180,9 @@ const GlobalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  walletsList: {
+    maxHeight: 400,
+  },
 });
 
 export default GlobalStyles;
