@@ -4,27 +4,27 @@
 #import <React/RCTLog.h>
 #import <React/RCTRootView.h>
 
-#define TIMEOUT_SECONDS 600
+// #define TIMEOUT_SECONDS 600
 // #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface AkromaWalletTests : XCTestCase
+// @interface AkromaWalletTests : XCTestCase
 
-@end
+// @end
 
-@implementation AkromaWalletTests
+// @implementation AkromaWalletTests
 
-- (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
-{
-  if (test(view)) {
-    return YES;
-  }
-  for (UIView *subview in [view subviews]) {
-    if ([self findSubviewInView:subview matching:test]) {
-      return YES;
-    }
-  }
-  return NO;
-}
+// - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
+// {
+//   if (test(view)) {
+//     return YES;
+//   }
+//   for (UIView *subview in [view subviews]) {
+//     if ([self findSubviewInView:subview matching:test]) {
+//       return YES;
+//     }
+//   }
+//   return NO;
+// }
 
 // - (void)testRendersWelcomeScreen
 // {
@@ -63,4 +63,4 @@
 //   XCTAssertTrue(foundElement, @"Couldn't find element with text '%@' in %d seconds", TEXT_TO_LOOK_FOR, TIMEOUT_SECONDS);
 // }
 
-@end
+// @end
