@@ -1,15 +1,18 @@
 import * as React from 'react';
-import { ActivityIndicator, Alert, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, SafeAreaView, ScrollView, TouchableOpacity, View, RefreshControl } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useEffect, useState } from 'react';
 import { WalletContext } from '../../providers/WalletProvider';
-import { Input, Button, Text, Icon } from '@ui-kitten/components';
+import { Input, Button, Text, Icon, ListItem } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import Toast from 'react-native-toast-message';
 import { TransactionCard } from '../../components/TransactionCard';
+import { WalletModel } from '../../data/entities/wallet';
+import _ from 'lodash';
+import { GlobalContext } from '../../providers/GlobalProvider';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -21,12 +24,37 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
   const [status, setStatus] = useState('');
   const [showStatus, setShowStatus] = useState(false);
   const [sending, setSending] = React.useState(false);
-  const { send, state } = React.useContext(WalletContext);
+  const { send, state, loadWallets } = React.useContext(WalletContext);
+  const { setNewWatchWallet } = React.useContext(GlobalContext);
   const u = new Utils();
+
+  const addToWatchList = () => {
+    setNewWatchWallet(address);
+    navigator.navigate('ImportWalletWatch');
+  };
 
   useEffect(() => {
     setAddress(sendToAddress);
   }, [sendToAddress]);
+
+  useEffect(() => {
+    async function init() {
+      setTimeout(async () => {
+        await loadWallets();
+      }, 500);
+    }
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onWalletPress = async (wallet: WalletModel) => {
+    setAddress(wallet.address);
+  };
+
+  const [refreshing] = React.useState(false);
+  const onRefresh = async () => {
+    await loadWallets();
+  };
 
   const sendAmount = async () => {
     setSending(true);
@@ -56,7 +84,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     }
     const sendA = u.toDecimal(amount);
     const minA = u.toDecimal(0.0000001);
-    console.debug(sendA, minA);
+    // console.debug(sendA, minA);
     if (sendA < minA) {
       console.debug('invalid amount');
       return;
@@ -111,6 +139,10 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     return false;
   };
 
+  const walletExists = (): boolean => {
+    return !!state.wallets.find(wallet1 => wallet1.address === address);
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={GlobalStyles.container}>
@@ -118,16 +150,28 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
           <View style={GlobalStyles.mt20}>
             <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
             <View style={GlobalStyles.mt20}>{status === 'Successful' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
+            {!walletExists() && status === 'Successful' && (
+              <View style={GlobalStyles.mt20}>
+                <Button onPress={addToWatchList}>Add to Watch List</Button>
+              </View>
+            )}
           </View>
         ) : (
           <View>
             <Input style={GlobalStyles.input} onChangeText={setAddress} value={address} placeholder="To" accessoryLeft={ContactIcon} accessoryRight={ScanIcon} />
-
             <Input style={GlobalStyles.input} onChangeText={setAmount} value={amount} placeholder="Amount to send" keyboardType="number-pad" />
             <Button disabled={invalid()} onPress={OnSendPress}>
               SEND
             </Button>
             <Text style={GlobalStyles.label}>A confirm dialog will open before sending</Text>
+            <ScrollView style={GlobalStyles.walletsList} contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+              {/* {state.wallets.length < 1 && <NoWallet />} */}
+              {state.wallets.length > 0 &&
+                _.sortBy(
+                  state.wallets.filter(wallet1 => wallet1.address !== state.wallet.address),
+                  x => x.address,
+                ).map((item, index) => <ListItem key={index} title={item.name} description={item.address} onPress={() => onWalletPress(item)} />)}
+            </ScrollView>
           </View>
         )}
       </View>

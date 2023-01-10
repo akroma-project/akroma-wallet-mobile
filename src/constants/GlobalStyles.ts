@@ -145,6 +145,19 @@ const GlobalStyles = StyleSheet.create({
   p10: {
     padding: 10,
   },
+
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fba304',
+  },
+  headerContainer: {
+    height: '45%',
+    maxHeight: '45%',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+  },
+
   exportBtn: {
     marginTop: 10,
     marginHorizontal: 5,
@@ -152,6 +165,23 @@ const GlobalStyles = StyleSheet.create({
   exportModalBtn: {
     marginTop: 15,
     marginHorizontal: '15%',
+  },
+  generalBackground: {
+    flex: 1,
+    backgroundColor: '#b0b0b0',
+  },
+  bgTransparent: {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+  },
+  flexRow: {
+    flexDirection: 'row',
+  },
+  flexRowBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  walletsList: {
+    maxHeight: 400,
   },
 });
 

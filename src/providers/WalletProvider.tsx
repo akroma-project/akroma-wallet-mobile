@@ -28,6 +28,7 @@ interface serverProviderProps {
 class WalletState {
   wallet: WalletModel = new WalletModel();
   wallets: WalletModel[] = [];
+  totalBalance: number;
 }
 
 const WalletProvider = (props: serverProviderProps) => {
@@ -55,7 +56,10 @@ const WalletProvider = (props: serverProviderProps) => {
 
   const setWallets = (wallets: WalletModel[]) => {
     console.debug('set wallets called', wallets.length);
-    setState({ ...state, wallets: wallets });
+    let totalBalance = 0;
+    totalBalance = wallets.reduce((accumulator, wallet) => (wallet.encrypted !== 'watch' ? parseFloat(wallet.lastBalance.toString()) + accumulator : accumulator), 0);
+    console.log(totalBalance);
+    setState({ ...state, wallets: wallets, totalBalance: totalBalance });
   };
 
   const setActive = (id: string): void => {

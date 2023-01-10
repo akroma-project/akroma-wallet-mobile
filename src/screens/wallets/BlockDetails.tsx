@@ -36,7 +36,7 @@ export const BlockDetails = ({ route }) => {
             <Text style={styles.bold}>Hash:</Text> {block.hash}
           </Text>
           <Text style={styles.pt5}>
-            <Text style={styles.bold}>Timestap:</Text> {new Date(block.timestamp * 1000).toISOString()}
+            <Text style={styles.bold}>Timestamp:</Text> {new Date(block.timestamp * 1000).toISOString()}
           </Text>
           <Text style={styles.pt5}>
             <Text style={styles.bold}>Parent Hash:</Text> {block.parentHash}
