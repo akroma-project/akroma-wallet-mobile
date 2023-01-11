@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { Connection, createConnection } from 'typeorm';
 
 import { WalletModel } from './entities/wallet';
@@ -6,11 +6,12 @@ import { WalletsRepository } from './repositories/walletsRepository';
 
 interface DatabaseConnectionContextData {
   walletsRepository: WalletsRepository;
+  isConnected: boolean | null;
 }
 
 const DatabaseConnectionContext = createContext<DatabaseConnectionContextData>({} as DatabaseConnectionContextData);
 
-export const DatabaseConnectionProvider: React.FC = ({ children }) => {
+export const DatabaseConnectionProvider = ({ children }) => {
   const [connection, setConnection] = useState<Connection | null>(null);
 
   const connect = useCallback(async () => {
@@ -23,24 +24,22 @@ export const DatabaseConnectionProvider: React.FC = ({ children }) => {
       synchronize: true,
       logging: true,
     });
-
     setConnection(createdConnection);
   }, []);
 
-  useEffect(() => {
-    if (connection === null) {
-      setTimeout(() => connect(), 500);
-    }
-  }, [connect, connection]);
+  if (!connection) {
+    (async () => await connect())();
+  }
 
-  return (
-    <DatabaseConnectionContext.Provider
-      value={{
-        walletsRepository: new WalletsRepository(connection),
-      }}>
-      {children}
-    </DatabaseConnectionContext.Provider>
+  const value = useMemo(
+    () => ({
+      walletsRepository: new WalletsRepository(connection),
+      isConnected: connection?.isConnected,
+    }),
+    [connection],
   );
+  console.log('value: ', value);
+  return <DatabaseConnectionContext.Provider value={value}>{children}</DatabaseConnectionContext.Provider>;
 };
 
 export function useDatabaseConnection() {
