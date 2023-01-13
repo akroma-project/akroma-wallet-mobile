@@ -11,8 +11,11 @@ import { HomeResumeAmount } from '../../components/HomeResumeAmount';
 import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
 import { LastTransactions } from '../../components/LastTransactions';
+import { useDatabaseConnection } from '../../data/connection';
 
 export const HomeScreen = () => {
+  const { isConnected } = useDatabaseConnection();
+
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,13 +53,12 @@ export const HomeScreen = () => {
   }, [check]);
 
   useEffect(() => {
-    async function init() {
+    (async () => {
       await refreshWallets();
       await loadWallets();
-    }
-    init();
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isConnected]);
 
   return (
     <SafeAreaView style={GlobalStyles.generalBackground}>
