@@ -25,7 +25,9 @@ const GlobalStyles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  button: {},
+  button: {
+    marginBottom: 20,
+  },
   colorWhite: {
     color: 'white',
   },
