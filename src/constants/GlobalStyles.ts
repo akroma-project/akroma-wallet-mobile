@@ -195,6 +195,36 @@ const GlobalStyles = StyleSheet.create({
   copyIconContainer: {
     width: 22,
   },
+  transferButton: {
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    width: 152,
+    height: 48,
+    color: 'black',
+  },
+  transferButtonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 24,
+    gap: 40,
+    justifyContent: 'space-between',
+    paddingLeft: 34,
+    paddingRight: 34,
+  },
+  textButton: {
+    fontWeight: '700',
+    fontSize: 16,
+    paddingLeft: 10,
+  },
+  buttonIconContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
 });
 
 export default GlobalStyles;

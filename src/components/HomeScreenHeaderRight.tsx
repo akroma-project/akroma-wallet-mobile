@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Icon } from '@ui-kitten/components';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import GlobalStyles from '../constants/GlobalStyles';
 import { HomeStackParamList } from '../navigation/HomeStackNavigator';
 

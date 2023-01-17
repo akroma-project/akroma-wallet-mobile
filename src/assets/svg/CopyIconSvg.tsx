@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-function CopyIconSvg(props) {
+function CopyIconSvg(props: any) {
   return (
     <Svg width={14} height={18} viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <Path

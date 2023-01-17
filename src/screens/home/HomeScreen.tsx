@@ -12,6 +12,7 @@ import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
 import { LastTransactions } from '../../components/LastTransactions';
 import { useDatabaseConnection } from '../../data/connection';
+import { HomeTransferButtons } from '../../components/HomeTransferButtons';
 
 export const HomeScreen = () => {
   const { isConnected } = useDatabaseConnection();
@@ -68,6 +69,7 @@ export const HomeScreen = () => {
     <SafeAreaView style={GlobalStyles.generalBackground}>
       <HomeHeader address={state.wallet.address || ''} name={state.wallet.name || ''} />
       <HomeResumeAmount balance={state.wallet?.lastBalance} />
+      <HomeTransferButtons />
       <ScrollView>
         <TopWallets wallets={state.wallets} />
         <LastTransactions wallets={state.wallets} />

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
-function AkaIcon(props) {
+function AkaIcon(props: any) {
   return (
     <Svg width={33} height={31} viewBox="0 0 33 31" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <G clipPath="url(#clip0_188_1634)">
