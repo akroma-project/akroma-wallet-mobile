@@ -1,53 +1,56 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
 import { HomeScreenHeaderRight } from './HomeScreenHeaderRight';
-export const HomeHeader = () => {
+import { CopyIcon } from './CopyIcon';
+interface Params {
+  address: string;
+  name: string;
+}
+const getAddressFormat = (address: string) => {
+  const addressLength = address.length;
+  return address
+    .substring(0, 7)
+    .concat('...')
+    .concat(address.substring(addressLength - 5, addressLength));
+};
+export const HomeHeader = (params: Params) => {
   return (
-    <Layout style={GlobalStyles.headerContainer} level="3">
-      <ImageBackground source={require('../assets/images/background-grey.png')} resizeMode="cover" imageStyle={styles.bottomRadius} style={styles.backgroundImage}>
-        <View>
-          <View style={styles.menuIconContainer}>
-            <HomeScreenHeaderRight />
-          </View>
-          <Layout style={styles.iconContainer}>
-            <Image source={require('../assets/images/icon.png')} style={styles.icon} />
-          </Layout>
-          <Text style={[GlobalStyles.titleText, styles.titleText]}>AKROMA WALLET</Text>
-        </View>
-      </ImageBackground>
-    </Layout>
+    <View style={GlobalStyles.headerContainer}>
+      <View>
+        <Text style={styles.title}>
+          Wallet: <Text style={styles.text}>{params.name}</Text>
+        </Text>
+        <Text style={styles.title}>
+          Address: <Text style={styles.text}>{getAddressFormat(params.address)} </Text>
+          <CopyIcon value={params.address} />
+        </Text>
+      </View>
+      <View style={styles.menuIconContainer}>
+        <HomeScreenHeaderRight />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-  },
-  icon: {
-    height: 85,
-    width: 85,
-  },
-  bottomRadius: {
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
-  },
   container: {
-    borderBottomLeftRadius: 20,
-  },
-  iconContainer: {
-    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
-
-    backgroundColor: 'transparent',
+    paddingLeft: 20,
   },
   menuIconContainer: {
-    alignSelf: 'flex-end',
-    paddingTop: 20,
+    alignSelf: 'center',
   },
-  titleText: {
-    paddingTop: 20,
+  title: {
+    color: '#B9B9B9',
+    fontWeight: '400',
+    fontSize: 14,
+  },
+  text: {
+    color: 'white',
   },
 });

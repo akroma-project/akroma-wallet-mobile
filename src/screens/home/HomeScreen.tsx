@@ -25,7 +25,7 @@ export const HomeScreen = () => {
     settings: {},
     status: 'unavailable',
   });
-  const { state, loadWallets, refreshWallets } = React.useContext(WalletContext);
+  const { state, loadWallets, refreshWallets, setActive } = React.useContext(WalletContext);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { SIRI, ...PERMISSIONS_IOS } = PERMISSIONS.IOS; // remove siri (certificate required)
@@ -59,11 +59,15 @@ export const HomeScreen = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
-
+  React.useEffect(() => {
+    if (!state.wallet.address && state.wallets.length > 0) {
+      setActive(state.wallets[0].id);
+    }
+  }, [state, setActive]);
   return (
     <SafeAreaView style={GlobalStyles.generalBackground}>
-      <HomeHeader />
-      <HomeResumeAmount balance={state.totalBalance} />
+      <HomeHeader address={state.wallet.address || ''} name={state.wallet.name || ''} />
+      <HomeResumeAmount balance={state.wallet?.lastBalance} />
       <ScrollView>
         <TopWallets wallets={state.wallets} />
         <LastTransactions wallets={state.wallets} />

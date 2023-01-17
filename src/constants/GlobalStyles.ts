@@ -42,6 +42,7 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+
   card: {
     marginLeft: 0,
     marginRight: 0,
@@ -153,9 +154,12 @@ const GlobalStyles = StyleSheet.create({
     color: '#fba304',
   },
   headerContainer: {
-    height: '45%',
-    maxHeight: '45%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 20,
+    paddingTop: 15,
   },
 
   exportBtn: {
@@ -168,10 +172,10 @@ const GlobalStyles = StyleSheet.create({
   },
   generalBackground: {
     flex: 1,
-    backgroundColor: '#b0b0b0',
+    backgroundColor: '#1C1C1E',
   },
   bgTransparent: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: '#1C1C1E',
   },
   flexRow: {
     flexDirection: 'row',
@@ -182,6 +186,14 @@ const GlobalStyles = StyleSheet.create({
   },
   walletsList: {
     maxHeight: 400,
+  },
+  copyIcon: {
+    height: 23,
+    with: 22,
+    flex: 1,
+  },
+  copyIconContainer: {
+    width: 22,
   },
 });
 

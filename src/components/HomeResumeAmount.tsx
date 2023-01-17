@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { Text } from '@ui-kitten/components';
+import AkaIcon from '../assets/svg/AkaIconSvg';
 
 interface Params {
   balance: Number;
@@ -13,49 +15,49 @@ export const HomeResumeAmount = (params: Params) => {
   };
 
   return (
-    <LinearGradient colors={['#fba304', '#e60404', '#af0487']} style={styles.resumeContainer} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
+    <LinearGradient colors={['#A60000', '#F20000']} style={styles.resumeContainer} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
+      <AkaIcon style={styles.icon} />
       <View>
-        <Text style={styles.textAmount}>AKA {params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
-        <Text style={styles.label}>Current balance</Text>
+        <Text style={styles.title}>AKA Balance</Text>
+        <Text style={styles.textAmount}>{params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
+        <Text style={styles.label}>$ 15.04</Text>
       </View>
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  icon: {
+    height: 30,
+    width: 32,
+    position: 'absolute',
+    top: -15,
+  },
   resumeContainer: {
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingTop: 10,
-    borderRadius: 20,
-    width: '80%',
-    height: '12%',
-    display: 'flex',
+    marginTop: 40,
+    borderRadius: 24,
+    minWidth: 344,
+    minHeight: 125,
     justifyContent: 'center',
-    flexDirection: 'row',
-    alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: '-15%',
-    marginBottom: '2%',
-    padding: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 13.16,
-
-    elevation: 20,
   },
   textAmount: {
     color: 'white',
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   label: {
+    fontSize: 16,
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
+    color: 'white',
   },
 });
