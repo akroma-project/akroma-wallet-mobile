@@ -23,6 +23,7 @@ export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
   const containerOpacity = useRef(new Animated.Value(1)).current;
   const imageSize = useRef(new Animated.Value(120)).current;
   const textToUp = useRef(new Animated.Value(-30)).current;
+  const textHidden = useRef(new Animated.Value(1)).current;
 
   const [state, setState] = useState<typeof LOADING_IMAGE | typeof IMAGE_INCREMENT | typeof IMAGE_DECREMENT | typeof IMAGE_BIG | typeof WAIT_FOR_APP_TO_BE_READY | typeof FADE_OUT | typeof HIDDEN>(LOADING_IMAGE);
 
@@ -51,12 +52,19 @@ export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
       }).start();
     } else if (state === IMAGE_BIG) {
       Animated.timing(imageSize, {
-        toValue: 10000,
-        duration: 1000,
+        toValue: 14000,
+        delay: 500,
+        duration: 700,
         useNativeDriver: false,
       }).start(() => {
         setState(WAIT_FOR_APP_TO_BE_READY);
       });
+      Animated.timing(textHidden, {
+        toValue: 0,
+        delay: 500,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
     }
   }, [imageSize, state]);
 
@@ -79,7 +87,7 @@ export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
         setState(HIDDEN);
       });
     }
-  }, [containerOpacity, state]);
+  }, [containerOpacity, imageSize, state]);
 
   if (state === HIDDEN) return null;
 
@@ -94,7 +102,7 @@ export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
         style={[style.image, { width: imageSize, height: imageSize }]}
         resizeMode="contain"
       />
-      <Animated.Text style={[style.appNameText, { bottom: textToUp }]}>AKROMA</Animated.Text>
+      <Animated.Text style={[style.appNameText, { bottom: textToUp, opacity: textHidden }]}>AKROMA</Animated.Text>
     </Animated.View>
   );
 };
@@ -102,7 +110,7 @@ export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
 const style = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#F20000',
+    backgroundColor: '#DB0000',
     alignItems: 'center',
     justifyContent: 'center',
   },
