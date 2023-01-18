@@ -16,7 +16,7 @@ export const HomeResumeAmount = (params: Params) => {
 
   return (
     <View style={styles.resumeContainer}>
-      <LinearGradient style={styles.resumeCard} colors={['#A60000', '#F20000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
+      <LinearGradient style={styles.resumeCard} colors={['#8F0000', '#DB0000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
         <AkaIcon style={styles.icon} />
         <View>
           <Text style={styles.title}>AKA Balance</Text>
