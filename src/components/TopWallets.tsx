@@ -44,7 +44,7 @@ export const TopWallets = ({ wallets }: Props) => {
       <SafeAreaView>
         <ScrollView>
           <WalletsSection title={'My Wallets'} wallets={walletsState} />
-          {watchWallets.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />}
+          {watchWallets?.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />}
         </ScrollView>
       </SafeAreaView>
     </View>
