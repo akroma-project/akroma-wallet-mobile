@@ -148,10 +148,10 @@ const GlobalStyles = StyleSheet.create({
   },
 
   titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '600',
     textAlign: 'center',
-    color: '#fba304',
+    color: '#1C1C1E',
   },
   headerContainer: {
     display: 'flex',
@@ -216,14 +216,6 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
   },
-  buttonIconContent: {
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
   walletsContainer: {
     display: 'flex',
     borderTopLeftRadius: 24,
@@ -249,6 +241,28 @@ const GlobalStyles = StyleSheet.create({
     paddingHorizontal: 24,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  backArrow: {
+    top: 10,
+    left: 24,
+  },
+  alingItemsCenter: {
+    alignItems: 'center',
+  },
+  pt8: {
+    paddingTop: 8,
+  },
+  pt10: {
+    paddingTop: 10,
+  },
+  pv24: {
+    paddingVertical: 24,
+  },
+  displayFlex: {
+    display: 'flex',
+  },
+  alingItemsStart: {
+    alignItems: 'flex-start',
   },
 });
 
