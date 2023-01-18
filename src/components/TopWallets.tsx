@@ -2,8 +2,9 @@ import { Divider } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
 import React, { useEffect, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView } from 'react-native';
 import { WalletCard } from './WalletCard';
+import { SafeAreaView } from 'react-native-safe-area-context';
 interface Props {
   wallets: WalletModel[];
 }
@@ -40,8 +41,12 @@ export const TopWallets = ({ wallets }: Props) => {
   return (
     <View style={[GlobalStyles.walletsContainer]}>
       <Text style={styles.title}>Wallets</Text>
-      <WalletsSection title={'My Wallets'} wallets={walletsState} />
-      {watchWallets.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />}
+      <SafeAreaView>
+        <ScrollView>
+          <WalletsSection title={'My Wallets'} wallets={walletsState} />
+          {watchWallets.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />}
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };

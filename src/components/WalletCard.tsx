@@ -13,7 +13,7 @@ export const WalletCard = (params: Params) => {
     <View style={[GlobalStyles.walletCard, GlobalStyles.flexRowBetween]}>
       <View>
         <Text style={[GlobalStyles.generalText, GlobalStyles.textBold]}>{params.wallet.name}</Text>
-        <Text style={[GlobalStyles.generalText]}>{getAddressFormat(params.wallet.address)}</Text>
+        <Text style={[GlobalStyles.smallText]}>{getAddressFormat(params.wallet.address)}</Text>
       </View>
       <View>
         <Text style={[GlobalStyles.generalText, GlobalStyles.textBold]}>{params.wallet.lastBalance.toString()}</Text>

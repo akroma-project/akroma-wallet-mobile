@@ -236,11 +236,16 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1C1C1E',
   },
+  smallText: {
+    fontSize: 12,
+    color: '#676768',
+    fontWeight: '400',
+  },
   textBold: {
     fontWeight: '700',
   },
   walletCard: {
-    minHeight: 56,
+    minHeight: 70,
     paddingHorizontal: 24,
     alignItems: 'center',
     justifyContent: 'center',
