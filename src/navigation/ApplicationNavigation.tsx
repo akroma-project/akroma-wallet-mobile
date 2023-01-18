@@ -21,7 +21,7 @@ const BottomTabBar = ({ navigation, state }) => (
 export const ApplicationNavigation = () => {
   return (
     <NavigationContainer>
-      <ApplicationTable.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home" tabBar={props => <BottomTabBar {...props} />}>
+      <ApplicationTable.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home" tabBar={() => undefined}>
         <ApplicationTable.Screen name="Home" component={HomeStackNavigator} />
         <ApplicationTable.Screen name="Wallet" component={WalletsStackNavigator} />
         <ApplicationTable.Screen name="Settings" component={SettingsStackNavigator} />

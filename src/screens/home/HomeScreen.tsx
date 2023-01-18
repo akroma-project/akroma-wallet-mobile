@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppState, Platform, SafeAreaView, ScrollView } from 'react-native';
+import { AppState, Platform, SafeAreaView } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
@@ -12,6 +12,7 @@ import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
 import { LastTransactions } from '../../components/LastTransactions';
 import { useDatabaseConnection } from '../../data/connection';
+import { HomeTransferButtons } from '../../components/HomeTransferButtons';
 
 export const HomeScreen = () => {
   const { isConnected } = useDatabaseConnection();
@@ -59,15 +60,14 @@ export const HomeScreen = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
-
+  const resumeBalance = state.wallet.address ? state.wallet.lastBalance : state.totalBalance;
   return (
-    <SafeAreaView style={GlobalStyles.generalBackground}>
-      <HomeHeader />
-      <HomeResumeAmount balance={state.totalBalance} />
-      <ScrollView>
-        <TopWallets wallets={state.wallets} />
-        <LastTransactions wallets={state.wallets} />
-      </ScrollView>
+    <SafeAreaView style={[GlobalStyles.generalBackground, GlobalStyles.flex]}>
+      <HomeHeader address={state.wallet.address || ''} name={state.wallet.name || ''} />
+      <HomeResumeAmount balance={resumeBalance} />
+      {state.wallet.address && <HomeTransferButtons />}
+      <TopWallets wallets={state.wallets} />
+      {/* <LastTransactions wallets={state.wallets} /> */}
     </SafeAreaView>
   );
 };

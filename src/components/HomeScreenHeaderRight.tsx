@@ -41,7 +41,7 @@ export const HomeScreenHeaderRight = () => {
           },
         )
       }>
-      <Icon name="menu-outline" style={GlobalStyles.iconRight} fill="#e60404" />
+      <Icon name="more-vertical-outline" style={GlobalStyles.iconRight} fill="#fff" />
     </TouchableOpacity>
   );
 };

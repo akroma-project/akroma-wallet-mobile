@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Dimensions } from 'react-native';
+const height = Dimensions.get('screen').height;
 // $akroma-gold-darker: 	#E25D00;
 // $akroma-gold-dark: 		#F17100;
 // $akroma-gold-base: 		#FFA600;
@@ -42,6 +42,7 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+
   card: {
     marginLeft: 0,
     marginRight: 0,
@@ -153,9 +154,12 @@ const GlobalStyles = StyleSheet.create({
     color: '#fba304',
   },
   headerContainer: {
-    height: '45%',
-    maxHeight: '45%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 20,
+    height: '12%',
   },
 
   exportBtn: {
@@ -168,10 +172,10 @@ const GlobalStyles = StyleSheet.create({
   },
   generalBackground: {
     flex: 1,
-    backgroundColor: '#b0b0b0',
+    backgroundColor: '#1C1C1E',
   },
   bgTransparent: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: '#1C1C1E',
   },
   flexRow: {
     flexDirection: 'row',
@@ -182,6 +186,69 @@ const GlobalStyles = StyleSheet.create({
   },
   walletsList: {
     maxHeight: 400,
+  },
+  copyIcon: {
+    height: 23,
+    with: 22,
+    flex: 1,
+  },
+  copyIconContainer: {
+    width: 22,
+  },
+  transferButton: {
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    width: 152,
+    height: 48,
+    color: 'black',
+  },
+  transferButtonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 40,
+    justifyContent: 'space-between',
+    paddingLeft: 34,
+    paddingRight: 34,
+    height: '13%',
+  },
+  textButton: {
+    fontWeight: '700',
+    fontSize: 16,
+    paddingLeft: 10,
+  },
+  buttonIconContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  walletsContainer: {
+    display: 'flex',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    backgroundColor: '#fff',
+    height: 'auto',
+    minHeight: height * 0.61,
+  },
+  generalText: {
+    fontSize: 14,
+    color: '#1C1C1E',
+  },
+  smallText: {
+    fontSize: 12,
+    color: '#676768',
+    fontWeight: '400',
+  },
+  textBold: {
+    fontWeight: '700',
+  },
+  walletCard: {
+    minHeight: 70,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
