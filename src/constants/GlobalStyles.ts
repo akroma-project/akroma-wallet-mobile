@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Dimensions } from 'react-native';
+const height = Dimensions.get('screen').height;
 // $akroma-gold-darker: 	#E25D00;
 // $akroma-gold-dark: 		#F17100;
 // $akroma-gold-base: 		#FFA600;
@@ -159,7 +159,7 @@ const GlobalStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 20,
-    paddingTop: 15,
+    height: '12%',
   },
 
   exportBtn: {
@@ -205,12 +205,11 @@ const GlobalStyles = StyleSheet.create({
   transferButtonsContainer: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 24,
     gap: 40,
     justifyContent: 'space-between',
     paddingLeft: 34,
     paddingRight: 34,
+    height: '13%',
   },
   textButton: {
     fontWeight: '700',
@@ -224,6 +223,27 @@ const GlobalStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+  },
+  walletsContainer: {
+    display: 'flex',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    backgroundColor: '#fff',
+    height: 'auto',
+    minHeight: height * 0.61,
+  },
+  generalText: {
+    fontSize: 14,
+    color: '#1C1C1E',
+  },
+  textBold: {
+    fontWeight: '700',
+  },
+  walletCard: {
+    minHeight: 56,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

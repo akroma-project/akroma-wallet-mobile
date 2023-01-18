@@ -4,28 +4,27 @@ import { Text } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
 import { HomeScreenHeaderRight } from './HomeScreenHeaderRight';
 import { CopyIcon } from './CopyIcon';
+import { getAddressFormat } from '../utils/Wallet';
 interface Params {
   address: string;
   name: string;
 }
-const getAddressFormat = (address: string) => {
-  const addressLength = address.length;
-  return address
-    .substring(0, 7)
-    .concat('...')
-    .concat(address.substring(addressLength - 5, addressLength));
-};
+
 export const HomeHeader = (params: Params) => {
   return (
     <View style={GlobalStyles.headerContainer}>
       <View>
-        <Text style={styles.title}>
-          Wallet: <Text style={styles.text}>{params.name}</Text>
-        </Text>
-        <Text style={styles.title}>
-          Address: <Text style={styles.text}>{getAddressFormat(params.address)} </Text>
-          <CopyIcon value={params.address} />
-        </Text>
+        {params.address && (
+          <View>
+            <Text style={styles.title}>
+              Wallet: <Text style={styles.text}>{params.name}</Text>
+            </Text>
+            <Text style={styles.title}>
+              Address: <Text style={styles.text}>{getAddressFormat(params.address)} </Text>
+              <CopyIcon value={params.address} />
+            </Text>
+          </View>
+        )}
       </View>
       <View style={styles.menuIconContainer}>
         <HomeScreenHeaderRight />

@@ -15,14 +15,16 @@ export const HomeResumeAmount = (params: Params) => {
   };
 
   return (
-    <LinearGradient colors={['#A60000', '#F20000']} style={styles.resumeContainer} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
-      <AkaIcon style={styles.icon} />
-      <View>
-        <Text style={styles.title}>AKA Balance</Text>
-        <Text style={styles.textAmount}>{params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
-        <Text style={styles.label}>$ 15.04</Text>
-      </View>
-    </LinearGradient>
+    <View style={styles.resumeContainer}>
+      <LinearGradient style={styles.resumeCard} colors={['#A60000', '#F20000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
+        <AkaIcon style={styles.icon} />
+        <View>
+          <Text style={styles.title}>AKA Balance</Text>
+          <Text style={styles.textAmount}>{params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
+          <Text style={styles.label}>$ 15.04</Text>
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 
@@ -34,7 +36,11 @@ const styles = StyleSheet.create({
     top: -15,
   },
   resumeContainer: {
-    marginTop: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '24%',
+  },
+  resumeCard: {
     borderRadius: 24,
     minWidth: 344,
     minHeight: 125,

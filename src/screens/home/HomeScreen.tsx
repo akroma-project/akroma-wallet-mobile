@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppState, Platform, SafeAreaView, ScrollView } from 'react-native';
+import { AppState, Platform, SafeAreaView } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
@@ -26,7 +26,7 @@ export const HomeScreen = () => {
     settings: {},
     status: 'unavailable',
   });
-  const { state, loadWallets, refreshWallets, setActive } = React.useContext(WalletContext);
+  const { state, loadWallets, refreshWallets } = React.useContext(WalletContext);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { SIRI, ...PERMISSIONS_IOS } = PERMISSIONS.IOS; // remove siri (certificate required)
@@ -60,20 +60,14 @@ export const HomeScreen = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
-  React.useEffect(() => {
-    if (!state.wallet.address && state.wallets.length > 0) {
-      setActive(state.wallets[0].id);
-    }
-  }, [state, setActive]);
+  const resumeBalance = state.wallet.address ? state.wallet.lastBalance : state.totalBalance;
   return (
-    <SafeAreaView style={GlobalStyles.generalBackground}>
+    <SafeAreaView style={[GlobalStyles.generalBackground, GlobalStyles.flex]}>
       <HomeHeader address={state.wallet.address || ''} name={state.wallet.name || ''} />
-      <HomeResumeAmount balance={state.wallet?.lastBalance} />
-      <HomeTransferButtons />
-      <ScrollView>
-        <TopWallets wallets={state.wallets} />
-        <LastTransactions wallets={state.wallets} />
-      </ScrollView>
+      <HomeResumeAmount balance={resumeBalance} />
+      {state.wallet.address && <HomeTransferButtons />}
+      <TopWallets wallets={state.wallets} />
+      {/* <LastTransactions wallets={state.wallets} /> */}
     </SafeAreaView>
   );
 };
