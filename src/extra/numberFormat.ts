@@ -1,5 +1,10 @@
+const localStringOptions = {
+  maximumFractionDigits: 12,
+  minimumFractionDigits: 2,
+};
+
 const formatNumber: (value: number) => string = (value: number) => {
-  return new Intl.NumberFormat('en-US').format(value);
+  return value?.toLocaleString('en-US', localStringOptions);
 };
 
 export default formatNumber;

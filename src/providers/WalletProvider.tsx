@@ -79,7 +79,7 @@ const WalletProvider = (props: serverProviderProps) => {
     const success = await provider.getBalance(wallet.address);
     let balance = 0;
     if (success.ok) {
-      balance = parseInt(utils.fromWei(success.data ?? 0, 'ether').toString(), 10);
+      balance = parseFloat(utils.fromWei(success.data ?? 0, 'ether').toString());
     }
 
     const updated: WalletModel = {
