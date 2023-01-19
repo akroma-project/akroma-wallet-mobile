@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StyleSheet } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 export function WithSplashScreen({ children, isAppReady }: { isAppReady: boolean; children: React.ReactNode }) {
   return (
@@ -93,16 +94,20 @@ export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
 
   return (
     <Animated.View collapsable={false} style={[style.container, { opacity: containerOpacity }]}>
-      <Animated.Image
-        source={require('../assets/images/icon.png')}
-        fadeDuration={0}
-        onLoad={() => {
-          setState(IMAGE_INCREMENT);
-        }}
-        style={[style.image, { width: imageSize, height: imageSize }]}
-        resizeMode="contain"
-      />
-      <Animated.Text style={[style.appNameText, { bottom: textToUp, opacity: textHidden }]}>AKROMA</Animated.Text>
+      <LinearGradient colors={['#DB0000', '#750000']} style={style.gradientContainer}>
+        <Animated.View collapsable={false} style={style.innerContainer}>
+          <Animated.Image
+            source={require('../assets/images/icon.png')}
+            fadeDuration={0}
+            onLoad={() => {
+              setState(IMAGE_INCREMENT);
+            }}
+            style={[style.image, { width: imageSize, height: imageSize }]}
+            resizeMode="contain"
+          />
+          <Animated.Text style={[style.appNameText, { bottom: textToUp, opacity: textHidden }]}>AKROMA</Animated.Text>
+        </Animated.View>
+      </LinearGradient>
     </Animated.View>
   );
 };
@@ -110,7 +115,13 @@ export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
 const style = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#DB0000',
+    flex: 1,
+    backgroundColor: 'rbga(0,0,0,0)',
+  },
+  innerContainer: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1,
+    backgroundColor: 'rbga(0,0,0,0)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -123,5 +134,8 @@ const style = StyleSheet.create({
     fontSize: 25,
     color: 'white',
     bottom: -30,
+  },
+  gradientContainer: {
+    flex: 1,
   },
 });
