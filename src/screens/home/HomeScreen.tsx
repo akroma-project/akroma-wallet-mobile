@@ -1,24 +1,19 @@
 import * as React from 'react';
-import { AppState, Platform, SafeAreaView } from 'react-native';
-import GlobalStyles from '../../constants/GlobalStyles';
+import { AppState, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useCallback, useEffect, useState } from 'react';
 
 import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
-import { HomeHeader } from '../../components/HomeHeader';
-import { HomeResumeAmount } from '../../components/HomeResumeAmount';
 import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
-import { LastTransactions } from '../../components/LastTransactions';
 import { useDatabaseConnection } from '../../data/connection';
-import { HomeTransferButtons } from '../../components/HomeTransferButtons';
+import MainLayout from '../../layout/MainLayout';
 
 export const HomeScreen = () => {
   const { isConnected } = useDatabaseConnection();
 
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [statuses, setStatuses] = useState<Partial<Record<Permission, PermissionStatus>>>({});
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -60,14 +55,9 @@ export const HomeScreen = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
-  const resumeBalance = state.wallet.address ? state.wallet.lastBalance : state.totalBalance;
   return (
-    <SafeAreaView style={[GlobalStyles.generalBackground, GlobalStyles.flex]}>
-      <HomeHeader address={state.wallet.address || ''} name={state.wallet.name || ''} />
-      <HomeResumeAmount balance={resumeBalance} />
-      {state.wallet.address && <HomeTransferButtons />}
+    <MainLayout>
       <TopWallets wallets={state.wallets} />
-      {/* <LastTransactions wallets={state.wallets} /> */}
-    </SafeAreaView>
+    </MainLayout>
   );
 };

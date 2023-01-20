@@ -6,7 +6,7 @@ export const getTransactionsByAddress = async (address: string, page: number) =>
     const json = await res.json();
     return json;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
@@ -17,7 +17,7 @@ export const getBlockByNumber = async (blockNumber: string) => {
     const json = await res.json();
     return json;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
