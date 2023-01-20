@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text, Avatar, Layout, Card } from '@ui-kitten/components';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { Text, Card } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { WalletsStackParamList } from '../navigation/WalletsStackNavigator';
+import GlobalStyles from '../constants/GlobalStyles';
+import { getAddressFormat } from '../utils/Wallet';
 interface Props {
   addressFrom: string;
   addressTo: string;
@@ -12,18 +14,9 @@ interface Props {
   blockNumber?: string;
   sent?: boolean;
 }
-const bannerColor = (status: string) => {
-  if (status === 'In Progress') {
-    return 'blue';
-  } else if (status === 'Successful') {
-    return 'green';
-  } else {
-    return 'red';
-  }
-};
 
 export const TransactionCard = (props: Props) => {
-  const { addressFrom, addressTo, status, amount, blockNumber, sent } = props;
+  const { addressFrom, addressTo, amount, blockNumber, sent } = props;
   type walletScreenProp = StackNavigationProp<WalletsStackParamList, 'BlockNumber'>;
   const navigator = useNavigation<walletScreenProp>();
   const goDetailts = (block: string) => {
@@ -33,56 +26,28 @@ export const TransactionCard = (props: Props) => {
       });
     }
   };
+  const sentReceivedLabel = sent ? 'Sent' : 'Received';
+  const address = sent ? addressTo : addressFrom;
   return (
-    <View>
-      <Layout style={bannerStyle(bannerColor(status)).bannerContainer}>
-        <Text style={styles.banner}>{status}</Text>
-      </Layout>
-      <Card onPress={() => goDetailts(blockNumber)} style={styles.card}>
-        <Layout style={styles.container} level="1">
-          <Layout style={styles.avatarContainer}>
-            <Avatar source={require('../assets/images/icon.png')} />
-          </Layout>
-
-          <Layout style={styles.bodyContainer}>
-            <Text style={styles.textAddress}>
-              <Text style={styles.textBold}>From: </Text>
-              {addressFrom}
+    <Card style={styles.card}>
+      <TouchableWithoutFeedback onPress={() => goDetailts(blockNumber)}>
+        <View style={[GlobalStyles.flexRowBetween]}>
+          <View>
+            <Text style={[GlobalStyles.generalText, GlobalStyles.textBold]}>{sentReceivedLabel}</Text>
+            <Text style={[GlobalStyles.smallText]}>{getAddressFormat(address)}</Text>
+          </View>
+          <View>
+            <Text style={[GlobalStyles.generalText, GlobalStyles.textBold, !sent && GlobalStyles.greenColor]}>
+              {sent ? '-' : '+'} {amount}
             </Text>
-            <Text style={styles.textAddress}>
-              <Text style={styles.textBold}>To: </Text>
-              {addressTo}
-            </Text>
-            {blockNumber && (
-              <Text style={styles.textAddress}>
-                <Text style={styles.textBold}>#Block: </Text>
-                {blockNumber}
-              </Text>
-            )}
-            <Text style={[sent ? styles.sent : styles.received, styles.textBold]}>
-              {sent ? '-' : '+'} {amount} AKA
-            </Text>
-          </Layout>
-        </Layout>
-      </Card>
-    </View>
+            <Text style={GlobalStyles.textRight}>Fecha</Text>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </Card>
   );
 };
 
-const bannerStyle = (color: string) =>
-  StyleSheet.create({
-    bannerContainer: {
-      top: -10,
-      right: 15,
-      position: 'absolute',
-      zIndex: 2,
-      alignItems: 'baseline',
-      alignSelf: 'flex-end',
-      backgroundColor: color,
-      borderRadius: 4,
-      marginBottom: 8,
-    },
-  });
 const styles = StyleSheet.create({
   sent: {
     color: 'red',
@@ -119,6 +84,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   card: {
-    borderRadius: 20,
+    borderRadius: 0,
+    borderWidth: 0,
+    paddingHorizontal: 0,
+    justifyContent: 'center',
+    height: 72,
   },
 });

@@ -6,7 +6,7 @@ import ArrowupSvg from '../assets/svg/ArrowupSvg';
 import GlobalStyles from '../constants/GlobalStyles';
 export const HomeTransferButtons = () => {
   return (
-    <View style={GlobalStyles.transferButtonsContainer}>
+    <View style={[GlobalStyles.transferButtonsContainer]}>
       <Button accessoryLeft={() => <ArrowupSvg />} style={GlobalStyles.transferButton} status="control">
         {() => <Text style={GlobalStyles.textButton}>Send</Text>}
       </Button>

@@ -18,10 +18,11 @@ interface WalletsSectionParams {
   style?: any;
 }
 const WalletsSection = (params: WalletsSectionParams) => {
-  const { setActive } = React.useContext(WalletContext);
+  const { setActive, updateBalance } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
   const handleSelect = (id: string) => {
+    updateBalance(id);
     setActive(id);
     navigator.navigate('TransactionScreen');
   };

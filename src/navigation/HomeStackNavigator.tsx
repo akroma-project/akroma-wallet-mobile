@@ -35,6 +35,8 @@ export function HomeStackNavigator() {
     <HomeStack.Navigator
       screenOptions={() => ({
         headerShown: true,
+        gestureDirection: 'horizontal',
+        gestureEnabled: true,
       })}>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="TransactionScreen" component={TransactionScreen} options={{ headerShown: false }} />

@@ -238,7 +238,7 @@ const GlobalStyles = StyleSheet.create({
   },
   walletCard: {
     minHeight: 70,
-    paddingHorizontal: 24,
+    maxHeight: 70,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -263,6 +263,15 @@ const GlobalStyles = StyleSheet.create({
   },
   alingItemsStart: {
     alignItems: 'flex-start',
+  },
+  greenColor: {
+    color: '#0F8400',
+  },
+  textRight: {
+    textAlign: 'right',
+  },
+  ph24: {
+    paddingHorizontal: 24,
   },
 });
 

@@ -10,7 +10,7 @@ interface Params {
 export const WalletCard = (params: Params) => {
   console.log(params);
   return (
-    <View style={[GlobalStyles.walletCard, GlobalStyles.flexRowBetween]}>
+    <View style={[GlobalStyles.walletCard, GlobalStyles.flexRowBetween, GlobalStyles.ph24]}>
       <View>
         <Text style={[GlobalStyles.generalText, GlobalStyles.textBold]}>{params.wallet.name}</Text>
         <Text style={[GlobalStyles.smallText]}>{getAddressFormat(params.wallet.address)}</Text>
