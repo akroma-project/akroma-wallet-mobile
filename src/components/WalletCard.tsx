@@ -8,7 +8,10 @@ interface Params {
   wallet: WalletModel;
 }
 export const WalletCard = (params: Params) => {
-  console.log(params);
+  const localStringOptions = {
+    maximumFractionDigits: 12,
+    minimumFractionDigits: 2,
+  };
   return (
     <View style={[GlobalStyles.walletCard, GlobalStyles.flexRowBetween, GlobalStyles.ph24]}>
       <View>
@@ -16,7 +19,7 @@ export const WalletCard = (params: Params) => {
         <Text style={[GlobalStyles.smallText]}>{getAddressFormat(params.wallet.address)}</Text>
       </View>
       <View>
-        <Text style={[GlobalStyles.generalText, GlobalStyles.textBold]}>{params.wallet.lastBalance.toString()}</Text>
+        <Text style={[GlobalStyles.generalText, GlobalStyles.textBold]}>{params.wallet.lastBalance.toLocaleString('en-US', localStringOptions)}</Text>
       </View>
     </View>
   );

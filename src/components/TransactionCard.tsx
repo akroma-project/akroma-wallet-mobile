@@ -9,8 +9,8 @@ import { getAddressFormat } from '../utils/Wallet';
 interface Props {
   addressFrom: string;
   addressTo: string;
-  status: string;
-  amount: string;
+  status?: string;
+  amount: number;
   blockNumber?: string;
   sent?: boolean;
 }
@@ -28,6 +28,10 @@ export const TransactionCard = (props: Props) => {
   };
   const sentReceivedLabel = sent ? 'Sent' : 'Received';
   const address = sent ? addressTo : addressFrom;
+  const localStringOptions = {
+    maximumFractionDigits: 12,
+    minimumFractionDigits: 2,
+  };
   return (
     <Card style={styles.card}>
       <TouchableWithoutFeedback onPress={() => goDetailts(blockNumber)}>
@@ -38,7 +42,7 @@ export const TransactionCard = (props: Props) => {
           </View>
           <View>
             <Text style={[GlobalStyles.generalText, GlobalStyles.textBold, !sent && GlobalStyles.greenColor]}>
-              {sent ? '-' : '+'} {amount}
+              {sent ? '-' : '+'} {amount.toLocaleString('en-US', localStringOptions)}
             </Text>
             <Text style={GlobalStyles.textRight}>Fecha</Text>
           </View>

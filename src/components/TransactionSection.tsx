@@ -1,6 +1,6 @@
 import GlobalStyles from '../constants/GlobalStyles';
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView, FlatList } from 'react-native';
+import { SafeAreaView, FlatList } from 'react-native';
 
 import { TransactionSectionTop } from './TransactionSectionTop';
 import { getTransactionsByAddress } from '../services/AkromaApi';
@@ -8,10 +8,9 @@ import { TransactionCard } from './TransactionCard';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import { WalletContext } from '../providers/WalletProvider';
 import { Divider } from '@ui-kitten/components';
-const screenHeight = Dimensions.get('window').height;
 
 export const TransactionSection = ({ setDisplayButtons }) => {
-  const { getTransactionCountByAddress, state } = React.useContext(WalletContext);
+  const { state } = React.useContext(WalletContext);
 
   const [transactions, setTransactions] = useState([]);
   const [page, setPage] = useState(1);
@@ -32,10 +31,7 @@ export const TransactionSection = ({ setDisplayButtons }) => {
   const loadMoreTransactions = () => {
     setPage(page + 1);
   };
-  const onViewableItemsChanged = ({ viewableItems, changed }) => {
-    console.log('Visible items are', viewableItems);
-    console.log('Changed in this iteration', changed);
-  };
+
   return (
     <SafeAreaView style={[GlobalStyles.walletsContainer]}>
       <TransactionSectionTop />
@@ -43,7 +39,7 @@ export const TransactionSection = ({ setDisplayButtons }) => {
         ref={listRef}
         keyExtractor={({ id }) => id}
         data={transactions}
-        renderItem={({ item }) => <TransactionCard addressFrom={item.from} amount={String(item.value * 0.000000000000000001)} addressTo={item.to} sent={item.from === sumAddress} />}
+        renderItem={({ item }) => <TransactionCard addressFrom={item.from} amount={item.value * 0.000000000000000001} addressTo={item.to} sent={item.from === sumAddress} />}
         onEndReached={loadMoreTransactions}
         ItemSeparatorComponent={() => <Divider />}
         onScrollBeginDrag={() => console.log('start')}
@@ -60,24 +56,3 @@ export const TransactionSection = ({ setDisplayButtons }) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  walletsList: {
-    maxHeight: screenHeight - 206,
-    minHeight: screenHeight - 206,
-  },
-  walletsSection: {
-    paddingTop: 30,
-    textAlign: 'center',
-  },
-  subTitle: {
-    paddingHorizontal: 20,
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1C1C1E',
-  },
-  container: {
-    height: '29%',
-    backgroundColor: 'red',
-  },
-});
