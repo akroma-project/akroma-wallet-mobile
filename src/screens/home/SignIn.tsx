@@ -1,9 +1,9 @@
 import React from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ButtonDesign } from '../../components/ButtonDesign';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { ImageOverlay } from '../../extra/image-overlay.component';
+import AkaIcon from '../../assets/svg/AkaIconSvg';
 
 export const SignIn = () => {
   return (
@@ -12,7 +12,7 @@ export const SignIn = () => {
         <LinearGradient colors={['#4C4C52', '#050505']} style={{ flex: 1 }}>
           <View style={Style.containerCenter}>
             <View style={Style.flexCenter}>
-              <Image style={Style.akromaIcon} source={require('../../assets/images/icon.png')} />
+              <AkaIcon size={180} />
               <Text style={Style.mainText}>Welcome to Akroma</Text>
               <ButtonDesign colorBtn={'#DB0000'} colorText={'white'} textBtn={'Create Wallet'} />
               <View style={Style.dividerContainer}>
@@ -32,10 +32,6 @@ export const SignIn = () => {
 };
 
 const Style = StyleSheet.create({
-  akromaIcon: {
-    height: 180,
-    width: 180,
-  },
   containerCenter: {
     flex: 1,
     justifyContent: 'center',
