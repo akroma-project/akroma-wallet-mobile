@@ -58,7 +58,6 @@ const WalletProvider = (props: serverProviderProps) => {
     console.debug('set wallets called', wallets.length);
     let totalBalance = 0;
     totalBalance = wallets.reduce((accumulator, wallet) => (wallet.encrypted !== 'watch' ? parseFloat(wallet.lastBalance.toString()) + accumulator : accumulator), 0);
-    console.log(totalBalance);
     setState({ ...state, wallets: wallets, totalBalance: totalBalance });
   };
 
@@ -68,7 +67,6 @@ const WalletProvider = (props: serverProviderProps) => {
     if (wallet === undefined) {
       throw 'setActive: could not find wallet';
     }
-    wallet.address = utils.toChecksumAddress(wallet.address);
     setState({ ...state, wallet: wallet, wallets: state.wallets });
   };
 
@@ -107,10 +105,10 @@ const WalletProvider = (props: serverProviderProps) => {
       throw 'send: could not find active wallet';
     }
     const akromaRn = new AkromaRn();
-    await akromaRn.loadWallet(wallet.encrypted, wallet.pin);
+    const walletSigned = await akromaRn.loadWallet(wallet.encrypted, wallet.pin);
     // wallet must be loaded first
-    console.debug('from:', wallet.address, 'to:', to);
-    const txid = await akromaRn.sendFunds(wallet.address, wallet.pin, to, parseInt(value, 10), EthUnits.eth);
+    console.debug('from:', walletSigned.address, 'to:', to);
+    const txid = await akromaRn.sendFunds(walletSigned.address, wallet.pin, to, parseInt(value, 10), EthUnits.eth);
     console.debug('txid:', txid);
     return txid;
   };
