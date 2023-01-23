@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, Platform, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Platform, SafeAreaView, TouchableWithoutFeedback, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState } from 'react';
 import { Button, Input } from '@ui-kitten/components';
@@ -110,36 +110,38 @@ export const ImportWalletKeystore = () => {
     }
   };
   return (
-    <SafeAreaView style={GlobalStyles.flex}>
-      <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
-        {loading ? (
-          <ActivityIndicator size="large" />
-        ) : (
-          <View style={GlobalStyles.container}>
-            <View>
-              <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-              <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Current Wallet Password" disabled={loading} />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={GlobalStyles.flex}>
+        <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <View style={GlobalStyles.container}>
+              <View>
+                <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
+                <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Current Wallet Password" disabled={loading} />
 
-              <Input multiline={true} style={GlobalStyles.button} value={walletJson} numberOfLines={14} placeholder="Wallet JSON" disabled={true} />
+                <Input multiline={true} style={GlobalStyles.button} value={walletJson} numberOfLines={14} placeholder="Wallet JSON" disabled={true} />
 
-              {loading ? (
-                <ActivityIndicator size="large" />
-              ) : (
-                <View>
-                  <View style={GlobalStyles.input}>
-                    <Button style={GlobalStyles.input} onPress={async () => await loadJson()}>
-                      Load JSON
+                {loading ? (
+                  <ActivityIndicator size="large" />
+                ) : (
+                  <View>
+                    <View style={GlobalStyles.input}>
+                      <Button style={GlobalStyles.input} onPress={async () => await loadJson()}>
+                        Load JSON
+                      </Button>
+                    </View>
+                    <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
+                      IMPORT
                     </Button>
                   </View>
-                  <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
-                    IMPORT
-                  </Button>
-                </View>
-              )}
+                )}
+              </View>
             </View>
-          </View>
-        )}
-      </ImageOverlay>
-    </SafeAreaView>
+          )}
+        </ImageOverlay>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };

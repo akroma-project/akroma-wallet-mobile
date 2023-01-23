@@ -16,8 +16,9 @@ export const HomeResumeAmount = (params: Params) => {
 
   return (
     <View style={styles.resumeContainer}>
+      <AkaIcon style={styles.icon} />
+
       <LinearGradient style={styles.resumeCard} colors={['#8F0000', '#DB0000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
-        <AkaIcon style={styles.icon} />
         <View>
           <Text style={styles.title}>AKA Balance</Text>
           <Text style={styles.textAmount}>{params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
@@ -33,7 +34,8 @@ const styles = StyleSheet.create({
     height: 30,
     width: 32,
     position: 'absolute',
-    top: -15,
+    top: 15,
+    zIndex: 99,
   },
   resumeContainer: {
     alignItems: 'center',

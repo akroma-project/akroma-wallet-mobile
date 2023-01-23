@@ -14,6 +14,7 @@ type Props = {
   updateBalance: (id: string) => Promise<WalletModel>;
   setWallets: (wallets: WalletModel[]) => void;
   setActive: (id: string) => void;
+  cleanWalletActive: () => void;
   send: (to: string, value: string) => Promise<string>;
   getTransactionCountByAddress: (address: string) => Promise<number>;
   refreshWallets: () => Promise<void>;
@@ -69,7 +70,10 @@ const WalletProvider = (props: serverProviderProps) => {
     }
     setState({ ...state, wallet: wallet, wallets: state.wallets });
   };
-
+  const cleanWalletActive = (): void => {
+    const cleanWallet = new WalletModel();
+    setState({ ...state, wallet: cleanWallet, wallets: state.wallets });
+  };
   const updateBalance = async (id: string): Promise<WalletModel> => {
     console.debug('update balance called', id);
     const wallet = state.wallets.find(x => x.id === id);
@@ -150,6 +154,7 @@ const WalletProvider = (props: serverProviderProps) => {
     send: send,
     getTransactionCountByAddress: getTransactionCountByAddress,
     refreshWallets,
+    cleanWalletActive: cleanWalletActive,
   };
 
   return <WalletContext.Provider value={initalValue}>{props.children}</WalletContext.Provider>;

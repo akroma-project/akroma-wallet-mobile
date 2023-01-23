@@ -13,10 +13,12 @@ import { ImportWalletWatch } from '../screens/home/ImportWalletWatch';
 import { SignIn } from '../screens/home/SignIn';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletModel } from '../data/entities/wallet';
+import { TransactionScreen } from '../screens/home/TransactionScreen';
 
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
   SignIn: undefined;
+  TransactionScreen: undefined;
   SendCoinScreen: { address: string } | undefined;
   ScannerScreen: undefined;
   ReceiveCoinScreen: undefined;
@@ -35,9 +37,12 @@ export function HomeStackNavigator() {
     <HomeStack.Navigator
       screenOptions={() => ({
         headerShown: true,
+        gestureDirection: 'horizontal',
+        gestureEnabled: true,
       })}>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+      <HomeStack.Screen name="TransactionScreen" component={TransactionScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create' }} />
       <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />
       <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />

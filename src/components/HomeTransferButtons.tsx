@@ -6,22 +6,12 @@ import ArrowupSvg from '../assets/svg/ArrowupSvg';
 import GlobalStyles from '../constants/GlobalStyles';
 export const HomeTransferButtons = () => {
   return (
-    <View style={GlobalStyles.transferButtonsContainer}>
-      <Button style={GlobalStyles.transferButton} status="control">
-        {() => (
-          <View style={GlobalStyles.buttonIconContent}>
-            <ArrowupSvg />
-            <Text style={GlobalStyles.textButton}>Send</Text>
-          </View>
-        )}
+    <View style={[GlobalStyles.transferButtonsContainer]}>
+      <Button accessoryLeft={() => <ArrowupSvg />} style={GlobalStyles.transferButton} status="control">
+        {() => <Text style={GlobalStyles.textButton}>Send</Text>}
       </Button>
-      <Button style={GlobalStyles.transferButton} status="control">
-        {() => (
-          <View style={GlobalStyles.buttonIconContent}>
-            <ArrowdownSvg />
-            <Text style={GlobalStyles.textButton}>Receive</Text>
-          </View>
-        )}
+      <Button accessoryLeft={() => <ArrowdownSvg />} style={GlobalStyles.transferButton} status="control">
+        {() => <Text style={GlobalStyles.textButton}>Receive</Text>}
       </Button>
     </View>
   );
