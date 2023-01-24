@@ -6,9 +6,10 @@ import AkaIcon from '../assets/svg/AkaIconSvg';
 
 interface Params {
   balance: Number;
+  usdBalance: number;
 }
 
-export const HomeResumeAmount = (params: Params) => {
+export const HomeResumeAmount = ({ balance, usdBalance }: Params) => {
   const localStringOptions = {
     maximumFractionDigits: 12,
     minimumFractionDigits: 2,
@@ -21,8 +22,8 @@ export const HomeResumeAmount = (params: Params) => {
       <LinearGradient style={styles.resumeCard} colors={['#8F0000', '#DB0000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
         <View>
           <Text style={styles.title}>AKA Balance</Text>
-          <Text style={styles.textAmount}>{params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
-          <Text style={styles.label}>$ 15.04</Text>
+          <Text style={styles.textAmount}>{balance?.toLocaleString('en-US', localStringOptions)}</Text>
+          <Text style={styles.label}>$ {usdBalance?.toLocaleString('en-US', localStringOptions)}</Text>
         </View>
       </LinearGradient>
     </View>

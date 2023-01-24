@@ -1,10 +1,22 @@
 const urlAkromaApi = 'https://api.akroma.org';
+const urlExternalApi = 'https://api.coingecko.com/api/v3';
 
 export const getTransactionsByAddress = async (address: string, page: number) => {
   try {
     const res = await fetch(`${urlAkromaApi}/addresses/${address}/transactions/${page}`);
     const json = await res.json();
     return json;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const getAkromaPrice = async () => {
+  try {
+    const res = await fetch(`${urlExternalApi}/simple/price?ids=akroma&vs_currencies=usd`);
+    const json = await res.json();
+    return json.akroma.usd;
   } catch (error) {
     console.error(error);
     return [];
