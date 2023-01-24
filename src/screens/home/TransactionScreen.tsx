@@ -1,18 +1,18 @@
-import React, { useRef } from 'react';
-import { useEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
-import { Animated } from 'react-native';
+import { View } from 'react-native';
 import { HomeTransferButtons } from '../../components/HomeTransferButtons';
 import { TransactionSection } from '../../components/TransactionSection';
 import MainLayout from '../../layout/MainLayout';
 
 export const TransactionScreen = () => {
-  const [displayButtons, setDisplayButtons] = useState(undefined);
-  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const [displayButtons, setDisplayButtons] = useState<'flex' | 'none'>('flex');
 
   return (
     <MainLayout>
-      <HomeTransferButtons />
+      <View style={{ display: displayButtons }}>
+        <HomeTransferButtons />
+      </View>
 
       <TransactionSection setDisplayButtons={setDisplayButtons} />
     </MainLayout>

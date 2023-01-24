@@ -5,7 +5,7 @@ import { Text } from '@ui-kitten/components';
 import AkaIcon from '../assets/svg/AkaIconSvg';
 
 interface Params {
-  balance: Number;
+  balance: number;
 }
 
 export const HomeResumeAmount = (params: Params) => {
@@ -22,7 +22,7 @@ export const HomeResumeAmount = (params: Params) => {
         <View>
           <Text style={styles.title}>AKA Balance</Text>
           <Text style={styles.textAmount}>{params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
-          <Text style={styles.label}>$ 15.04</Text>
+          <Text style={styles.label}>$ {(params.balance * 0.00085).toLocaleString('en-US', localStringOptions)}</Text>
         </View>
       </LinearGradient>
     </View>
@@ -31,9 +31,6 @@ export const HomeResumeAmount = (params: Params) => {
 
 const styles = StyleSheet.create({
   icon: {
-    height: 30,
-    width: 32,
-    position: 'absolute',
     top: 15,
     zIndex: 99,
   },

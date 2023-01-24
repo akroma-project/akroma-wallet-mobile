@@ -13,10 +13,11 @@ interface Props {
   amount: number;
   blockNumber?: string;
   sent?: boolean;
+  id?: string;
 }
 
 export const TransactionCard = (props: Props) => {
-  const { addressFrom, addressTo, amount, blockNumber, sent } = props;
+  const { addressFrom, addressTo, amount, blockNumber, sent, id } = props;
   type walletScreenProp = StackNavigationProp<WalletsStackParamList, 'BlockNumber'>;
   const navigator = useNavigation<walletScreenProp>();
   const goDetailts = (block: string) => {
@@ -33,7 +34,7 @@ export const TransactionCard = (props: Props) => {
     minimumFractionDigits: 2,
   };
   return (
-    <Card style={styles.card}>
+    <Card style={styles.card} key={id}>
       <TouchableWithoutFeedback onPress={() => goDetailts(blockNumber)}>
         <View style={[GlobalStyles.flexRowBetween]}>
           <View>
@@ -44,7 +45,7 @@ export const TransactionCard = (props: Props) => {
             <Text style={[GlobalStyles.generalText, GlobalStyles.textBold, !sent && GlobalStyles.greenColor]}>
               {sent ? '-' : '+'} {amount.toLocaleString('en-US', localStringOptions)}
             </Text>
-            <Text style={GlobalStyles.textRight}>Fecha</Text>
+            <Text style={GlobalStyles.textRight}>Date</Text>
           </View>
         </View>
       </TouchableWithoutFeedback>

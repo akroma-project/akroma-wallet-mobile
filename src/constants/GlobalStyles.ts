@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+
 const height = Dimensions.get('screen').height;
 // $akroma-gold-darker: 	#E25D00;
 // $akroma-gold-dark: 		#F17100;
@@ -203,15 +204,16 @@ const GlobalStyles = StyleSheet.create({
     width: 152,
     height: 48,
     color: 'black',
+    paddingHorizontal: 20,
   },
   transferButtonsContainer: {
     display: 'flex',
     flexDirection: 'row',
     gap: 40,
     justifyContent: 'space-between',
-    paddingLeft: 34,
-    paddingRight: 34,
+    alignSelf: 'center',
     height: '13%',
+    width: 344,
   },
   textButton: {
     fontWeight: '700',
@@ -277,4 +279,15 @@ const GlobalStyles = StyleSheet.create({
   },
 });
 
+export const DymanicStyles = ({ viewHeight }) =>
+  StyleSheet.create({
+    walletsContainer: {
+      display: 'flex',
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+      backgroundColor: '#fff',
+      height: 'auto',
+      minHeight: viewHeight * 0.61,
+    },
+  });
 export default GlobalStyles;
