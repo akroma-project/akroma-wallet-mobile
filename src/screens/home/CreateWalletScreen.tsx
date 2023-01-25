@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, SafeAreaView, Text, View } from 'react-native';
+import { ActivityIndicator, Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useContext, useState } from 'react';
 import { Avatar, Button, Input } from '@ui-kitten/components';
@@ -68,25 +68,27 @@ export const CreateWalletScreen = () => {
   };
 
   return (
-    <SafeAreaView style={GlobalStyles.flex}>
-      <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
-        <View style={GlobalStyles.logoContainer}>
-          <Avatar style={GlobalStyles.logoImage} source={require('../../assets/images/icon.png')} />
-        </View>
-        {loading ? (
-          <ActivityIndicator size="large" />
-        ) : (
-          <View style={GlobalStyles.container}>
-            <View>
-              <Input style={GlobalStyles.input} onChangeText={validateName} value={name} placeholder="Enter a Wallet name" disabled={loading} caption={renderCaption('Should contain at least 5 characters', !isNameValid)} />
-              <Input style={GlobalStyles.input} onChangeText={validatePin} value={pin} placeholder="Enter a Pin" disabled={loading} keyboardType="number-pad" caption={renderCaption('Should contain at least 4 numbers', !isPinValid)} />
-              <Button style={GlobalStyles.button} disabled={loading || invalid()} onPress={async () => await OnCreateWalletPress()}>
-                CREATE WALLET
-              </Button>
-            </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={GlobalStyles.flex}>
+        <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+          <View style={GlobalStyles.logoContainer}>
+            <Avatar style={GlobalStyles.logoImage} source={require('../../assets/images/icon.png')} />
           </View>
-        )}
-      </ImageOverlay>
-    </SafeAreaView>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <View style={GlobalStyles.container}>
+              <View>
+                <Input style={GlobalStyles.input} onChangeText={validateName} value={name} placeholder="Enter a Wallet name" disabled={loading} caption={renderCaption('Should contain at least 5 characters', !isNameValid)} />
+                <Input style={GlobalStyles.input} onChangeText={validatePin} value={pin} placeholder="Enter a Pin" disabled={loading} keyboardType="number-pad" caption={renderCaption('Should contain at least 4 numbers', !isPinValid)} />
+                <Button style={GlobalStyles.button} disabled={loading || invalid()} onPress={async () => await OnCreateWalletPress()}>
+                  CREATE WALLET
+                </Button>
+              </View>
+            </View>
+          )}
+        </ImageOverlay>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };

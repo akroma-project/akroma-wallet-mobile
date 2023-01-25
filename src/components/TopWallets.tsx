@@ -5,6 +5,10 @@ import { WalletModel } from '../data/entities/wallet';
 import { StyleSheet, Text, View, TouchableHighlight, ScrollView } from 'react-native';
 import { WalletCard } from './WalletCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { WalletContext } from '../providers/WalletProvider';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeStackParamList } from '../navigation/HomeStackNavigator';
+import { useNavigation } from '@react-navigation/core';
 interface Props {
   wallets: WalletModel[];
 }
@@ -13,19 +17,29 @@ interface WalletsSectionParams {
   wallets: WalletModel[];
   style?: any;
 }
-const WalletsSection = (params: WalletsSectionParams) => (
-  <View style={params.style}>
-    <Text style={styles.subTitle}>{params.title}</Text>
-    {params.wallets?.map(wallet => (
-      <TouchableHighlight underlayColor="#DDDDDD" key={wallet.id} onPress={() => console.log(wallet.address)}>
-        <View>
-          <WalletCard wallet={wallet} />
-          <Divider />
-        </View>
-      </TouchableHighlight>
-    ))}
-  </View>
-);
+const WalletsSection = (params: WalletsSectionParams) => {
+  const { setActive, updateBalance } = React.useContext(WalletContext);
+  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
+  const navigator = useNavigation<homeScreenProp>();
+  const handleSelect = (id: string) => {
+    updateBalance(id);
+    setActive(id);
+    navigator.navigate('TransactionScreen');
+  };
+  return (
+    <View style={params.style}>
+      <Text style={styles.subTitle}>{params.title}</Text>
+      {params.wallets?.map(wallet => (
+        <TouchableHighlight underlayColor="#DDDDDD" key={wallet.id} onPress={() => handleSelect(wallet.id)}>
+          <View>
+            <WalletCard wallet={wallet} />
+            <Divider />
+          </View>
+        </TouchableHighlight>
+      ))}
+    </View>
+  );
+};
 export const TopWallets = ({ wallets }: Props) => {
   const [walletsState, setWalletsState] = useState<WalletModel[]>();
   const [watchWallets, setWatchWallets] = useState<WalletModel[]>();
@@ -40,7 +54,7 @@ export const TopWallets = ({ wallets }: Props) => {
   }, [wallets]);
   return (
     <View style={[GlobalStyles.walletsContainer]}>
-      <Text style={styles.title}>Wallets</Text>
+      <Text style={[GlobalStyles.titleText, GlobalStyles.pv24]}>Wallets</Text>
       <SafeAreaView>
         <ScrollView>
           <WalletsSection title={'My Wallets'} wallets={walletsState} />
@@ -54,14 +68,6 @@ export const TopWallets = ({ wallets }: Props) => {
 const styles = StyleSheet.create({
   walletsSection: {
     paddingTop: 30,
-  },
-  title: {
-    fontSize: 18,
-    paddingHorizontal: 20,
-    paddingVertical: 24,
-    fontWeight: '600',
-    textAlign: 'center',
-    color: '#1C1C1E',
   },
   subTitle: {
     paddingHorizontal: 20,
