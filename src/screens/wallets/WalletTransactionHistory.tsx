@@ -38,7 +38,7 @@ export const WalletTransactionHistory = () => {
   return (
     <View>
       <ScrollView style={[GlobalStyles.mt20, styles.walletsList]} ref={listRef}>
-        {transactions.map(({ from, to, blockNumber, value, status }) => (
+        {transactions?.map?.(({ from, to, blockNumber, value, status }) => (
           <View style={(GlobalStyles.mt20, GlobalStyles.p10)} key={blockNumber}>
             <TransactionCard addressFrom={from} amount={String(value * 0.000000000000000001)} addressTo={to} status={status ? 'Successful' : 'In Progress'} blockNumber={blockNumber} sent={from === sumAddress} />
           </View>
