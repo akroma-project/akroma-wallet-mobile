@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Text } from '@ui-kitten/components';
 import AkaIcon from '../assets/svg/AkaIconSvg';
+import { getAkromaPrice } from '../services/AkromaApi';
+import { WalletContext } from '../providers/WalletProvider';
 
-interface Params {
-  balance: Number;
-  usdBalance: number;
-}
-
-export const HomeResumeAmount = ({ balance, usdBalance }: Params) => {
+export const HomeResumeAmount = () => {
   const localStringOptions = {
     maximumFractionDigits: 12,
     minimumFractionDigits: 2,
   };
+
+  const { state } = useContext(WalletContext);
+  const [usdBalance, setUsdBalance] = useState(0);
+  const mainBalance = state.wallet.address ? state.wallet.lastBalance : state.totalBalance;
+
+  useEffect(() => {
+    (async () => {
+      const getPrice = (await getAkromaPrice()) as number;
+      setUsdBalance(getPrice);
+    })();
+  }, []);
 
   return (
     <View style={styles.resumeContainer}>
@@ -22,8 +30,8 @@ export const HomeResumeAmount = ({ balance, usdBalance }: Params) => {
       <LinearGradient style={styles.resumeCard} colors={['#8F0000', '#DB0000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
         <View>
           <Text style={styles.title}>AKA Balance</Text>
-          <Text style={styles.textAmount}>{balance?.toLocaleString('en-US', localStringOptions)}</Text>
-          <Text style={styles.label}>$ {usdBalance?.toLocaleString('en-US', localStringOptions)}</Text>
+          <Text style={styles.textAmount}>{mainBalance?.toLocaleString('en-US', localStringOptions)}</Text>
+          <Text style={styles.label}>$ {(usdBalance * (mainBalance as number)).toLocaleString('en-US', localStringOptions)}</Text>
         </View>
       </LinearGradient>
     </View>

@@ -1,5 +1,6 @@
 const urlAkromaApi = 'https://api.akroma.org';
-const urlExternalApi = 'https://api.coingecko.com/api/v3';
+const urlStexAPI = 'https://api3.stex.com/public'; // endpoint /ticker/374 /ticker/406
+// const urlCoingeckoAPI = 'https://api.coingecko.com/api/v3'; // endpoint /simple/price?ids=akroma&vs_currencies=usd
 
 export const getTransactionsByAddress = async (address: string, page: number) => {
   try {
@@ -14,9 +15,15 @@ export const getTransactionsByAddress = async (address: string, page: number) =>
 
 export const getAkromaPrice = async () => {
   try {
-    const res = await fetch(`${urlExternalApi}/simple/price?ids=akroma&vs_currencies=usd`);
-    const json = await res.json();
-    return json.akroma.usd;
+    const akromaBTC = await fetch(`${urlStexAPI}/ticker/374`);
+    const akromaJson = await akromaBTC.json();
+
+    const btcUSDT = await fetch(`${urlStexAPI}/ticker/406`);
+    const btcJson = await btcUSDT.json();
+
+    const akromaValue = akromaJson.data.last * btcJson.data.last;
+
+    return akromaValue;
   } catch (error) {
     console.error(error);
     return [];
