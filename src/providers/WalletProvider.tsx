@@ -5,9 +5,12 @@ import { Transaction } from 'typesafe-web3/dist/lib/model/transaction';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import { AkromaRn, EthUnits } from '@akroma-project/akroma-react-native';
 import { useDatabaseConnection } from '../data/connection';
+import { AkaModel } from '../data/entities/akaInfo';
+import { getAkromaPrice } from '../services/AkromaApi';
 
 type Props = {
   state: WalletState;
+  akaState: AkaPriceInterface;
   loadWallets: () => Promise<void>;
   addWallet: (wallet: WalletModel) => void;
   removeWallet: (wallet: WalletModel) => void;
@@ -18,6 +21,8 @@ type Props = {
   send: (to: string, value: string) => Promise<string>;
   getTransactionCountByAddress: (address: string) => Promise<number>;
   refreshWallets: () => Promise<void>;
+  getAkaPrice: () => Promise<number>;
+  updateAkaPrice: (price) => Promise<void>;
 };
 
 const WalletContext = createContext<Props>({} as Props);
@@ -32,16 +37,53 @@ class WalletState {
   totalBalance: number;
 }
 
+interface AkaPriceInterface {
+  akaPrice: number;
+}
+
 const WalletProvider = (props: serverProviderProps) => {
-  const { walletsRepository } = useDatabaseConnection();
+  const { walletsRepository, akaInfoRepository } = useDatabaseConnection();
   const [state, setState] = useState(new WalletState());
+  const [akaState, setAkaState] = useState<AkaPriceInterface>();
   const address = 'https://boot2.akroma.org';
   const provider = new TypeSafeWeb3(address);
   const utils = new Utils();
+
   const loadWallets = async () => {
     const wallets = await walletsRepository.getAll();
     console.debug(`wallets:: ${JSON.stringify(wallets)}`);
     setWallets(wallets);
+  };
+
+  const getAkaPrice = async () => {
+    const aka: AkaModel[] = await akaInfoRepository.getAll();
+    let currentPrice = 0;
+    if (aka.length < 1) {
+      currentPrice = (await getAkromaPrice()) as number;
+    } else {
+      currentPrice = aka[0].lastValueUsd as number;
+    }
+    setAkaState({ akaPrice: currentPrice });
+
+    return currentPrice;
+  };
+
+  const updateAkaPrice = async newPrice => {
+    console.debug('update AKA price called');
+    const aka = akaState.akaPrice;
+    if (aka === undefined) {
+      return;
+    }
+
+    const akaInfo = await akaInfoRepository.getAll();
+
+    const updateAkaValue: AkaModel = {
+      id: akaInfo[0].id,
+      name: 'akroma',
+      lastValueUsd: newPrice,
+    };
+    const newAkaPrice = await akaInfoRepository.update(updateAkaValue);
+    console.debug('New aka price', newAkaPrice);
   };
 
   const addWallet = (wallet: WalletModel) => {
@@ -145,6 +187,7 @@ const WalletProvider = (props: serverProviderProps) => {
 
   const initalValue = {
     state,
+    akaState,
     loadWallets,
     addWallet: addWallet,
     removeWallet: removeWallet,
@@ -155,6 +198,8 @@ const WalletProvider = (props: serverProviderProps) => {
     getTransactionCountByAddress: getTransactionCountByAddress,
     refreshWallets,
     cleanWalletActive: cleanWalletActive,
+    getAkaPrice: getAkaPrice,
+    updateAkaPrice: updateAkaPrice,
   };
 
   return <WalletContext.Provider value={initalValue}>{props.children}</WalletContext.Provider>;

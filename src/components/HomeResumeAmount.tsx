@@ -3,8 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Text } from '@ui-kitten/components';
 import AkaIcon from '../assets/svg/AkaIconSvg';
-import { getAkromaPrice } from '../services/AkromaApi';
 import { WalletContext } from '../providers/WalletProvider';
+import { useDatabaseConnection } from '../data/connection';
 
 export const HomeResumeAmount = () => {
   const localStringOptions = {
@@ -12,14 +12,37 @@ export const HomeResumeAmount = () => {
     minimumFractionDigits: 2,
   };
 
-  const { state } = useContext(WalletContext);
+  const { state, akaState, getAkaPrice } = useContext(WalletContext);
   const [usdBalance, setUsdBalance] = useState(0);
   const mainBalance = state.wallet.address ? state.wallet.lastBalance : state.totalBalance;
+  const { akaInfoRepository } = useDatabaseConnection();
+
+  const createAkaPrice = async price => {
+    console.log('EN CREATE AKA PRICE');
+    try {
+      setTimeout(async () => {
+        const newAkaPrice = await akaInfoRepository.create({
+          name: 'akroma',
+          lastValueUsd: price,
+        });
+        console.debug('New aka price', newAkaPrice);
+      }, 1500);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     (async () => {
-      const getPrice = (await getAkromaPrice()) as number;
-      setUsdBalance(getPrice);
+      const akaPrice = await getAkaPrice();
+      setUsdBalance(akaPrice);
+
+      if (!akaState) {
+        console.log('En crear');
+        createAkaPrice(akaPrice);
+      }
+      const aka = await akaInfoRepository.getAll();
+      console.log('BASE DE DATOS', akaState, akaPrice, aka);
     })();
   }, []);
 

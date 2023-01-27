@@ -3,7 +3,7 @@ import { AkaModel } from '../entities/akaInfo';
 
 interface IAkaCreate {
   name: string;
-  lastValueUsd: Number;
+  lastValueUsd: number;
 }
 
 export class AkaInfoRepository {
@@ -31,20 +31,23 @@ export class AkaInfoRepository {
     return [];
   }
 
-  public async create({ name, lastValueUsd }: IAkaCreate): Promise<AkaModel> {
+  public async create({ name, lastValueUsd }: IAkaCreate): Promise<AkaModel | false> {
     const n: Partial<AkaModel> = {
       name,
       lastValueUsd,
     };
-    const akaInfo = this._orm.create(n);
+    if (this._orm) {
+      const akaInfo = this._orm.create(n);
+      const saved = await this._orm.save(akaInfo);
+      return saved;
+    }
 
-    const saved = await this._orm.save(akaInfo);
-    console.debug('saved AkaInfo: ', saved);
-    return saved;
+    console.log('NO SE CREO NADA');
+    return false;
   }
 
   public async update(akaInfo: AkaModel): Promise<AkaModel> {
-    const updated = await this._orm.update(akaInfo.id, akaInfo);
+    const updated = await this._orm.update(akaInfo.id.toString(), akaInfo);
     console.debug(`updated: ${JSON.stringify(updated)}`);
     return akaInfo;
   }
