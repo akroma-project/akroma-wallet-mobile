@@ -2,14 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface Params {
+  route: () => void;
   colorBtn: string;
   colorText: string;
   textBtn: string;
 }
 
-export const ButtonDesign = ({ colorBtn, colorText, textBtn }: Params) => {
+export const ButtonDesign = ({ route, colorBtn, colorText, textBtn }: Params) => {
   return (
-    <TouchableOpacity style={[{ backgroundColor: colorBtn }, Styles.btn]}>
+    <TouchableOpacity onPress={() => route()} style={[{ backgroundColor: colorBtn }, Styles.btn]}>
       <Text style={[{ color: colorText }, Styles.btnText]}>{textBtn}</Text>
     </TouchableOpacity>
   );

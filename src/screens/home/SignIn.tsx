@@ -1,11 +1,19 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { CreateStackParamList } from '../../navigation/CreateStackNavigator';
+
 import LinearGradient from 'react-native-linear-gradient';
 import { ButtonDesign } from '../../components/ButtonDesign';
 import GlobalStyles from '../../constants/GlobalStyles';
 import AkaIcon from '../../assets/svg/AkaIconSvg';
 
 export const SignIn = () => {
+  type createWalletProp = StackNavigationProp<CreateStackParamList, 'CreateWalletScreen'>;
+  const navigator = useNavigation<createWalletProp>();
+  const navigationCreateWallet = () => navigator.navigate('CreateWalletScreen');
+
   return (
     <SafeAreaView style={GlobalStyles.flex}>
       <View style={{ flex: 1 }}>
@@ -14,15 +22,15 @@ export const SignIn = () => {
             <View style={Style.flexCenter}>
               <AkaIcon size={180} />
               <Text style={Style.mainText}>Welcome to Akroma</Text>
-              <ButtonDesign colorBtn={'#DB0000'} colorText={'white'} textBtn={'Create Wallet'} />
-              <View style={Style.dividerContainer}>
+              <ButtonDesign route={navigationCreateWallet} colorBtn={'#DB0000'} colorText={'white'} textBtn={'Create Wallet'} />
+              {/* <View style={Style.dividerContainer}>
                 <View style={Style.lineDivider} />
                 <View style={{ width: '16%' }}>
                   <Text style={Style.textDivider}>or</Text>
                 </View>
                 <View style={Style.lineDivider} />
               </View>
-              <ButtonDesign colorBtn={'white'} colorText={'black'} textBtn={'Import Key'} />
+              <ButtonDesign colorBtn={'white'} colorText={'black'} textBtn={'Import Key'} /> */}
             </View>
           </View>
         </LinearGradient>
