@@ -48,6 +48,7 @@ const Style = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    paddingHorizontal: '5%',
   },
   mainText: {
     color: 'white',

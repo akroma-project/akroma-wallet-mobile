@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { ActivityIndicator, Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useContext, useState } from 'react';
-import { Avatar, Input } from '@ui-kitten/components';
+import { Input } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletContext } from '../../providers/WalletProvider';
 import { AkromaRn } from '@akroma-project/akroma-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ButtonDesign } from '../../components/ButtonDesign';
+import AkaIcon from '../../assets/svg/AkaIconSvg';
 
 export const CreateWalletScreen = () => {
   const { walletsRepository } = useDatabaseConnection();
@@ -72,22 +73,49 @@ export const CreateWalletScreen = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={GlobalStyles.flex}>
         <LinearGradient colors={['#4C4C52', '#050505']} style={{ flex: 1 }}>
-          <View style={GlobalStyles.logoContainer}>
-            <Avatar style={GlobalStyles.logoImage} source={require('../../assets/images/icon.png')} />
-          </View>
-          {loading ? (
-            <ActivityIndicator size="large" />
-          ) : (
-            <View style={GlobalStyles.container}>
-              <View>
-                <Input style={GlobalStyles.input} onChangeText={validateName} value={name} placeholder="Enter a Wallet name" disabled={loading} caption={renderCaption('Should contain at least 5 characters', !isNameValid)} />
-                <Input style={GlobalStyles.input} onChangeText={validatePin} value={pin} placeholder="Enter a Pin" disabled={loading} keyboardType="number-pad" caption={renderCaption('Should contain at least 4 numbers', !isPinValid)} />
-                <ButtonDesign disabled={loading || invalid()} pressioned={OnCreateWalletPress} textBtn={'Create Wallet'} />
-              </View>
+          <View style={Styles.containerCenter}>
+            <View style={Styles.flexCenter}>
+              <AkaIcon size={180} />
+              {loading ? (
+                <ActivityIndicator size="large" />
+              ) : (
+                <View style={Styles.inputsContainer}>
+                  <Input style={GlobalStyles.input} onChangeText={validateName} value={name} placeholder="Enter a Wallet name" disabled={loading} caption={renderCaption('Should contain at least 5 characters', !isNameValid)} />
+                  <Input
+                    style={[GlobalStyles.input, Styles.paddingBottom]}
+                    onChangeText={validatePin}
+                    value={pin}
+                    placeholder="Enter a Pin"
+                    disabled={loading}
+                    keyboardType="number-pad"
+                    caption={renderCaption('Should contain at least 4 numbers', !isPinValid)}
+                  />
+                  <ButtonDesign disabled={loading || invalid()} pressioned={OnCreateWalletPress} textBtn={'Create Wallet'} />
+                </View>
+              )}
             </View>
-          )}
+          </View>
         </LinearGradient>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
+
+const Styles = StyleSheet.create({
+  containerCenter: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  flexCenter: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  inputsContainer: {
+    width: '90%',
+    marginTop: '10%',
+  },
+  paddingBottom: {
+    paddingBottom: '10%',
+  },
+});
