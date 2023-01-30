@@ -2,16 +2,26 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface Params {
-  route: () => void;
-  colorBtn: string;
-  colorText: string;
+  pressioned: () => void;
   textBtn: string;
+  disabled?: boolean;
+  colorBtn?: string;
+  colorText?: string;
 }
 
-export const ButtonDesign = ({ route, colorBtn, colorText, textBtn }: Params) => {
+export const ButtonDesign = ({ pressioned, colorBtn, colorText, textBtn, disabled }: Params) => {
+  let bgStyle = {};
+  let textStyle = {};
+  if (disabled) {
+    bgStyle = { backgroundColor: '#8F0000' };
+    textStyle = { color: 'gray' };
+  } else {
+    bgStyle = { backgroundColor: colorBtn ? colorBtn : '#DB0000' };
+    textStyle = { color: colorText ? colorText : 'white' };
+  }
   return (
-    <TouchableOpacity onPress={() => route()} style={[{ backgroundColor: colorBtn }, Styles.btn]}>
-      <Text style={[{ color: colorText }, Styles.btnText]}>{textBtn}</Text>
+    <TouchableOpacity disabled={disabled ? disabled : false} onPress={() => pressioned()} style={[bgStyle, Styles.btn]}>
+      <Text style={[textStyle, Styles.btnText]}>{textBtn}</Text>
     </TouchableOpacity>
   );
 };

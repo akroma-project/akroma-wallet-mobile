@@ -22,7 +22,7 @@ export const SignIn = () => {
             <View style={Style.flexCenter}>
               <AkaIcon size={180} />
               <Text style={Style.mainText}>Welcome to Akroma</Text>
-              <ButtonDesign route={navigationCreateWallet} colorBtn={'#DB0000'} colorText={'white'} textBtn={'Create Wallet'} />
+              <ButtonDesign pressioned={navigationCreateWallet} textBtn={'Create Wallet'} />
               {/* <View style={Style.dividerContainer}>
                 <View style={Style.lineDivider} />
                 <View style={{ width: '16%' }}>

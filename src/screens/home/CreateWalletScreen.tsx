@@ -2,11 +2,12 @@ import * as React from 'react';
 import { ActivityIndicator, Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useContext, useState } from 'react';
-import { Avatar, Button, Input } from '@ui-kitten/components';
+import { Avatar, Input } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { WalletContext } from '../../providers/WalletProvider';
 import { AkromaRn } from '@akroma-project/akroma-react-native';
-import { ImageOverlay } from '../../extra/image-overlay.component';
+import LinearGradient from 'react-native-linear-gradient';
+import { ButtonDesign } from '../../components/ButtonDesign';
 
 export const CreateWalletScreen = () => {
   const { walletsRepository } = useDatabaseConnection();
@@ -70,7 +71,7 @@ export const CreateWalletScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={GlobalStyles.flex}>
-        <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+        <LinearGradient colors={['#4C4C52', '#050505']} style={{ flex: 1 }}>
           <View style={GlobalStyles.logoContainer}>
             <Avatar style={GlobalStyles.logoImage} source={require('../../assets/images/icon.png')} />
           </View>
@@ -81,13 +82,11 @@ export const CreateWalletScreen = () => {
               <View>
                 <Input style={GlobalStyles.input} onChangeText={validateName} value={name} placeholder="Enter a Wallet name" disabled={loading} caption={renderCaption('Should contain at least 5 characters', !isNameValid)} />
                 <Input style={GlobalStyles.input} onChangeText={validatePin} value={pin} placeholder="Enter a Pin" disabled={loading} keyboardType="number-pad" caption={renderCaption('Should contain at least 4 numbers', !isPinValid)} />
-                <Button style={GlobalStyles.button} disabled={loading || invalid()} onPress={async () => await OnCreateWalletPress()}>
-                  CREATE WALLET
-                </Button>
+                <ButtonDesign disabled={loading || invalid()} pressioned={OnCreateWalletPress} textBtn={'Create Wallet'} />
               </View>
             </View>
           )}
-        </ImageOverlay>
+        </LinearGradient>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
