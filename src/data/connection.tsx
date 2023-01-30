@@ -38,7 +38,7 @@ export const DatabaseConnectionProvider = ({ children }) => {
     }),
     [connection],
   );
-  console.log('value: ', value);
+
   return <DatabaseConnectionContext.Provider value={value}>{children}</DatabaseConnectionContext.Provider>;
 };
 

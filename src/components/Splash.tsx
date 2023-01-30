@@ -20,7 +20,7 @@ const WAIT_FOR_APP_TO_BE_READY = 'Wait for app to be ready';
 const FADE_OUT = 'Fade out';
 const HIDDEN = 'Hidden';
 
-export const Splash = ({ isAppReady }: { isAppReady: boolean }) => {
+export const Splash = (_: { isAppReady: boolean }) => {
   const containerOpacity = useRef(new Animated.Value(1)).current;
   const imageSize = useRef(new Animated.Value(120)).current;
   const textToUp = useRef(new Animated.Value(-30)).current;

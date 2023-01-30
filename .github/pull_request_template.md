@@ -13,7 +13,7 @@
 
 ## Closes
 <!--
-add the issues close when the PR is merged. For example:
+add the issues to close when the PR is merged. For example:
 
 - #123
 - #325

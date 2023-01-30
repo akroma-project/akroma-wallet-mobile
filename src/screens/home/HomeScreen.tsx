@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { AppState, Platform } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useCallback, useEffect, useState } from 'react';
 
 import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
@@ -13,7 +11,6 @@ import MainLayout from '../../layout/MainLayout';
 export const HomeScreen = () => {
   const { isConnected } = useDatabaseConnection();
 
-  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [statuses, setStatuses] = useState<Partial<Record<Permission, PermissionStatus>>>({});
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
