@@ -2,10 +2,13 @@ import React, { createContext, useCallback, useContext, useMemo, useState } from
 import { Connection, createConnection } from 'typeorm';
 
 import { WalletModel } from './entities/wallet';
+import { AkaModel } from './entities/akaInfo';
 import { WalletsRepository } from './repositories/walletsRepository';
+import { AkaInfoRepository } from './repositories/akaInfoRepository';
 
 interface DatabaseConnectionContextData {
   walletsRepository: WalletsRepository;
+  akaInfoRepository: AkaInfoRepository;
   isConnected: boolean | null;
 }
 
@@ -20,7 +23,7 @@ export const DatabaseConnectionProvider = ({ children }) => {
       type: 'react-native',
       database: 'akroma6.db',
       location: 'default',
-      entities: [WalletModel],
+      entities: [WalletModel, AkaModel],
       synchronize: true,
       logging: true,
     });
@@ -34,6 +37,7 @@ export const DatabaseConnectionProvider = ({ children }) => {
   const value = useMemo(
     () => ({
       walletsRepository: new WalletsRepository(connection),
+      akaInfoRepository: new AkaInfoRepository(connection),
       isConnected: connection?.isConnected,
     }),
     [connection],
