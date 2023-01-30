@@ -1,13 +1,16 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('akaInfo')
 export class AkaModel {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  id: string;
 
   @Column({ nullable: true })
-  name?: string;
+  name: string;
 
   @Column({ nullable: true })
-  lastValueUsd?: number;
+  lastValueUsd: number;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

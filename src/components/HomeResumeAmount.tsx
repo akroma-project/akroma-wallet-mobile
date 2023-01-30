@@ -5,6 +5,8 @@ import { Text } from '@ui-kitten/components';
 import AkaIcon from '../assets/svg/AkaIconSvg';
 import { WalletContext } from '../providers/WalletProvider';
 import { useDatabaseConnection } from '../data/connection';
+import { getAkromaPrice } from '../services/AkromaApi';
+import { AkaModel } from '../data/entities/akaInfo';
 
 export const HomeResumeAmount = () => {
   const localStringOptions = {
@@ -12,39 +14,55 @@ export const HomeResumeAmount = () => {
     minimumFractionDigits: 2,
   };
 
-  const { state, akaState, getAkaPrice } = useContext(WalletContext);
+  const { state } = useContext(WalletContext);
   const [usdBalance, setUsdBalance] = useState(0);
   const mainBalance = state.wallet.address ? state.wallet.lastBalance : state.totalBalance;
   const { akaInfoRepository } = useDatabaseConnection();
 
-  const createAkaPrice = async price => {
-    console.log('EN CREATE AKA PRICE');
+  const createAkaPrice = async () => {
+    const currentPrice = (await getAkromaPrice()) as number;
+    setUsdBalance(currentPrice);
     try {
-      setTimeout(async () => {
-        const newAkaPrice = await akaInfoRepository.create({
-          name: 'akroma',
-          lastValueUsd: price,
-        });
-        console.debug('New aka price', newAkaPrice);
-      }, 1500);
+      const newAkaPrice = await akaInfoRepository.create({
+        name: 'akroma',
+        lastValueUsd: currentPrice,
+        updated_at: new Date(),
+      });
+      console.debug('New aka price', newAkaPrice);
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      const akaPrice = await getAkaPrice();
-      setUsdBalance(akaPrice);
+  const checkForUpdatePrice = async aka => {
+    const currentDate = new Date();
+    const difference = (currentDate.getTime() - aka[0].updated_at.getTime()) / 60000;
 
-      if (!akaState) {
-        console.log('En crear');
-        createAkaPrice(akaPrice);
+    if (difference > 5) {
+      const newPrice = (await getAkromaPrice()) as number;
+      setUsdBalance(newPrice);
+      const updateAkaValue: AkaModel = {
+        id: aka[0].id,
+        name: aka[0].name,
+        lastValueUsd: newPrice,
+        updated_at: new Date(),
+      };
+      const newAkaPrice = await akaInfoRepository.update(updateAkaValue);
+    }
+  };
+
+  useEffect(() => {
+    console.log('main Balance ', mainBalance, state.wallet.address, state.wallet.lastBalance);
+    (async () => {
+      const aka: AkaModel[] = await akaInfoRepository.getAll();
+      if (aka.length > 0) {
+        setUsdBalance(aka[0].lastValueUsd);
+        checkForUpdatePrice(aka);
+      } else {
+        createAkaPrice();
       }
-      const aka = await akaInfoRepository.getAll();
-      console.log('BASE DE DATOS', akaState, akaPrice, aka);
     })();
-  }, []);
+  }, [usdBalance]);
 
   return (
     <View style={styles.resumeContainer}>

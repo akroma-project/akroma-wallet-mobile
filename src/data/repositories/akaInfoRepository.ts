@@ -4,6 +4,7 @@ import { AkaModel } from '../entities/akaInfo';
 interface IAkaCreate {
   name: string;
   lastValueUsd: number;
+  updated_at: Date;
 }
 
 export class AkaInfoRepository {
@@ -31,18 +32,17 @@ export class AkaInfoRepository {
     return [];
   }
 
-  public async create({ name, lastValueUsd }: IAkaCreate): Promise<AkaModel | false> {
+  public async create({ name, lastValueUsd, updated_at }: IAkaCreate): Promise<AkaModel | false> {
     const n: Partial<AkaModel> = {
       name,
       lastValueUsd,
+      updated_at,
     };
     if (this._orm) {
       const akaInfo = this._orm.create(n);
       const saved = await this._orm.save(akaInfo);
       return saved;
     }
-
-    console.log('NO SE CREO NADA');
     return false;
   }
 
