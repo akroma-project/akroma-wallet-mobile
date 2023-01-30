@@ -94,6 +94,25 @@ const GlobalStyles = StyleSheet.create({
   px1: {
     paddingHorizontal: 10,
   },
+  monthSelectorContainer: {
+    position: 'absolute',
+    width: '100%',
+    bottom: -400,
+    paddingVertical: 20,
+  },
+  monthButton: {
+    color: '#49494B',
+    backgroundColor: 'white',
+    borderColor: '#49494B',
+    borderWidth: 1,
+  },
+  monthButtonSelected: {
+    color: '#DB0000',
+    backgroundColor: '#DB00000D',
+    borderColor: '#DB0000',
+    borderWidth: 1,
+  },
+  monthButtonContainer: {},
   fullWidth: {
     width: '100%',
   },
@@ -193,7 +212,6 @@ const GlobalStyles = StyleSheet.create({
     paddingLeft: 20,
     height: '12%',
   },
-
   exportBtn: {
     marginTop: 10,
     marginHorizontal: 5,
@@ -258,6 +276,7 @@ const GlobalStyles = StyleSheet.create({
     backgroundColor: '#fff',
     height: 'auto',
     minHeight: height * 0.61,
+    width: '100%',
   },
   generalText: {
     fontSize: 14,
@@ -267,6 +286,9 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 12,
     color: '#676768',
     fontWeight: '400',
+  },
+  greyText: {
+    color: '#676768',
   },
   textBold: {
     fontWeight: '700',

@@ -7602,6 +7602,13 @@ react-native-screens@^3.9.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-simple-bottom-sheet@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-simple-bottom-sheet/-/react-native-simple-bottom-sheet-1.0.4.tgz#7f3780079dc273a9d1897e59db15cbec0c05c93a"
+  integrity sha512-yvSId8GFZ/Kb1VmF7BAFJqlT33Ub0HLIo6NAnBT94CENdfxYjEYpq0eaq/VQYSfvU+GgNfP68AH+mgOK9/VQ1Q==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-sqlite-storage@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/react-native-sqlite-storage/-/react-native-sqlite-storage-6.0.1.tgz#ce6a6b852f07abbea68658d5363818c8bef45dfb"

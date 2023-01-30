@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Text as KittenText } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
 import { Text, View } from 'react-native';
@@ -10,14 +10,20 @@ import { useNavigation } from '@react-navigation/core';
 import { WalletContext } from '../providers/WalletProvider';
 import CalendarSvg from '../assets/svg/CalendarSvg';
 import ArrowDownTransparentSvg from '../assets/svg/ArrowDownTransparentSvg';
+import { GlobalContext } from '../providers/GlobalProvider';
 
 export const TransactionSectionTop = () => {
+  const { setShowSelectMonth } = React.useContext(GlobalContext);
   const { cleanWalletActive } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
+
   const handleBack = () => {
     cleanWalletActive();
     navigator.navigate('HomeScreen');
+  };
+  const showDateSelector = () => {
+    setShowSelectMonth(true);
   };
   return (
     <View style={GlobalStyles.pt8}>
@@ -35,7 +41,7 @@ export const TransactionSectionTop = () => {
           <View style={GlobalStyles.transactionSpacer} />
         </View>
         <View style={[GlobalStyles.displayFlex, GlobalStyles.justifyCenter, GlobalStyles.alignCenter, GlobalStyles.fullWidth]}>
-          <Button onPress={handleBack} appearance="ghost" accessoryLeft={<CalendarSvg />} accessoryRight={<ArrowDownTransparentSvg />}>
+          <Button onPress={showDateSelector} appearance="ghost" accessoryLeft={<CalendarSvg />} accessoryRight={<ArrowDownTransparentSvg />}>
             {evaProps => (
               <Text {...evaProps} style={{ ...GlobalStyles.smallText, ...GlobalStyles.px1 }}>
                 Jan 2023
