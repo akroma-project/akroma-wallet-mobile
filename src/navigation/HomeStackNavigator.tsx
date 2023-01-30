@@ -28,6 +28,8 @@ export type HomeStackParamList = {
   ImportWalletPrivateKey: undefined;
   ImportWalletSeedPhrase: undefined;
   ImportWalletWatch: undefined;
+  WalletScreen: { wallet: WalletModel };
+  WalletTransactionHistory: undefined;
 };
 
 const HomeStack = createStackNavigator<HomeStackParamList>();

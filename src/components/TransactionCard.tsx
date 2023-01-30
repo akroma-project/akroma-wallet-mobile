@@ -6,11 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import { WalletsStackParamList } from '../navigation/WalletsStackNavigator';
 import GlobalStyles from '../constants/GlobalStyles';
 import { getAddressFormat } from '../utils/Wallet';
+
 interface Props {
   addressFrom: string;
   addressTo: string;
   status?: string;
-  amount: number;
+  amount: number | string;
   blockNumber?: string;
   sent?: boolean;
 }
