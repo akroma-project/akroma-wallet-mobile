@@ -67,6 +67,36 @@ const GlobalStyles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  displayFlex: {
+    display: 'flex',
+  },
+  justifyCenter: {
+    justifyContent: 'center',
+  },
+  alignCenter: {
+    alignItems: 'center',
+  },
+  justifyAround: {
+    justifyContent: 'space-around',
+  },
+  justifyBetween: {
+    justifyContent: 'space-between',
+  },
+  textWhite: {
+    color: 'white',
+  },
+  transactionSpacer: {
+    width: 10,
+  },
+  p1: {
+    padding: 10,
+  },
+  px1: {
+    paddingHorizontal: 10,
+  },
+  fullWidth: {
+    width: '100%',
+  },
   header: {
     backgroundColor: '#343a40',
   },
@@ -182,6 +212,9 @@ const GlobalStyles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
   },
+  flexColumn: {
+    flexDirection: 'column',
+  },
   flexRowBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -259,9 +292,6 @@ const GlobalStyles = StyleSheet.create({
   },
   pv24: {
     paddingVertical: 24,
-  },
-  displayFlex: {
-    display: 'flex',
   },
   alingItemsStart: {
     alignItems: 'flex-start',
