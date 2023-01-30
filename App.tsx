@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
+import { WithSplashScreen } from './src/components/Splash';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { ApplicationNavigation } from './src/navigation/ApplicationNavigation';
 import 'react-native-get-random-values';
@@ -14,20 +15,28 @@ import { ActionSheetProvider, connectActionSheet } from '@expo/react-native-acti
 import { GlobalProvider } from './src/providers/GlobalProvider';
 
 const App = () => {
+  const [isAppReady, setIsAppReady] = useState(false);
+
+  useEffect(() => {
+    setIsAppReady(true);
+  }, []);
+
   return (
-    <DatabaseConnectionProvider>
-      <GlobalProvider>
-        <ApplicationProvider {...eva} theme={{ ...eva.light, ...AkromaTheme }}>
-          <IconRegistry icons={EvaIconsPack} />
-          <ActionSheetProvider>
-            <WalletProvider>
-              <ApplicationNavigation />
-              <Toast />
-            </WalletProvider>
-          </ActionSheetProvider>
-        </ApplicationProvider>
-      </GlobalProvider>
-    </DatabaseConnectionProvider>
+    <WithSplashScreen isAppReady={isAppReady}>
+      <DatabaseConnectionProvider>
+        <GlobalProvider>
+          <ApplicationProvider {...eva} theme={{ ...eva.light, ...AkromaTheme }}>
+            <IconRegistry icons={EvaIconsPack} />
+            <ActionSheetProvider>
+              <WalletProvider>
+                <ApplicationNavigation />
+                <Toast />
+              </WalletProvider>
+            </ActionSheetProvider>
+          </ApplicationProvider>
+        </GlobalProvider>
+      </DatabaseConnectionProvider>
+    </WithSplashScreen>
   );
 };
 const ConnectedApp = connectActionSheet(App);

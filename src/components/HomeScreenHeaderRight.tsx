@@ -17,8 +17,9 @@ export const HomeScreenHeaderRight = () => {
       onPress={() =>
         showActionSheetWithOptions(
           {
-            options: ['Create Wallet', 'Import Keystore', 'Import Private Key', 'Import Seed Phrase', 'Watch Wallet'],
-            cancelButtonIndex: 99,
+            options: ['Create Wallet', 'Import Keystore', 'Import Private Key', 'Import Seed Phrase', 'Watch Wallet', 'Cancel'],
+            cancelButtonIndex: 5 || 99,
+            destructiveButtonIndex: 5,
             showSeparators: true,
           },
           (index: number) => {
@@ -35,13 +36,12 @@ export const HomeScreenHeaderRight = () => {
               navigator.navigate('ImportWalletSeedPhrase');
             }
             if (index === 4) {
-              console.debug('watch called');
               navigator.navigate('ImportWalletWatch');
             }
           },
         )
       }>
-      <Icon name="menu-outline" style={GlobalStyles.iconRight} fill="#e60404" />
+      <Icon name="more-vertical-outline" style={GlobalStyles.iconRight} fill="#fff" />
     </TouchableOpacity>
   );
 };

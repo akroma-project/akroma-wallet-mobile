@@ -1,23 +1,19 @@
 import * as React from 'react';
-import { AppState, Platform, SafeAreaView, ScrollView } from 'react-native';
-import GlobalStyles from '../../constants/GlobalStyles';
+import { AppState, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useCallback, useEffect, useState } from 'react';
 
 import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
-import { HomeHeader } from '../../components/HomeHeader';
-import { HomeResumeAmount } from '../../components/HomeResumeAmount';
 import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
-import { LastTransactions } from '../../components/LastTransactions';
 import { useDatabaseConnection } from '../../data/connection';
+import MainLayout from '../../layout/MainLayout';
 
 export const HomeScreen = () => {
   const { isConnected } = useDatabaseConnection();
 
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [statuses, setStatuses] = useState<Partial<Record<Permission, PermissionStatus>>>({});
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -59,15 +55,9 @@ export const HomeScreen = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
-
   return (
-    <SafeAreaView style={GlobalStyles.generalBackground}>
-      <HomeHeader />
-      <HomeResumeAmount balance={state.totalBalance} />
-      <ScrollView>
-        <TopWallets wallets={state.wallets} />
-        <LastTransactions wallets={state.wallets} />
-      </ScrollView>
-    </SafeAreaView>
+    <MainLayout>
+      <TopWallets wallets={state.wallets} />
+    </MainLayout>
   );
 };

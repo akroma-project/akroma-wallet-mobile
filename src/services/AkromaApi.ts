@@ -1,5 +1,5 @@
 // const urlAkromaApi = 'https://api.akroma.org';
-const urlAkromaApi = 'http://192.168.1.2:3000';
+const urlAkromaApi = 'http://192.168.0.8:3000';
 
 export const getTransactionsByAddress = async (address: string, page: number) => {
   try {
@@ -8,7 +8,7 @@ export const getTransactionsByAddress = async (address: string, page: number) =>
     const json = await res.json();
     return json;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
@@ -19,7 +19,7 @@ export const getBlockByNumber = async (blockNumber: string) => {
     const json = await res.json();
     return json;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };

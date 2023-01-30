@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, Keyboard, SafeAreaView, TouchableWithoutFeedback, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState, useContext, useEffect } from 'react';
 import { Button, Input } from '@ui-kitten/components';
@@ -59,22 +59,24 @@ export const ImportWalletWatch = () => {
   };
 
   return (
-    <SafeAreaView style={GlobalStyles.flex}>
-      <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
-        {loading ? (
-          <ActivityIndicator size="large" />
-        ) : (
-          <View style={GlobalStyles.container}>
-            <View>
-              <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-              <Input style={GlobalStyles.input} onChangeText={walletAddressChange} value={walletAddress} placeholder="Wallet Address" disabled={loading} />
-              <Button disabled={loading} onPress={async () => await OnImportPress()}>
-                IMPORT
-              </Button>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={GlobalStyles.flex}>
+        <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <View style={GlobalStyles.container}>
+              <View>
+                <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
+                <Input style={GlobalStyles.input} onChangeText={walletAddressChange} value={walletAddress} placeholder="Wallet Address" disabled={loading} />
+                <Button disabled={loading} onPress={async () => await OnImportPress()}>
+                  IMPORT
+                </Button>
+              </View>
             </View>
-          </View>
-        )}
-      </ImageOverlay>
-    </SafeAreaView>
+          )}
+        </ImageOverlay>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
