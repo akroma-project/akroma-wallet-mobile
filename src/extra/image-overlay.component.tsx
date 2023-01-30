@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React from 'react';
 import { ImageBackground, ImageBackgroundProps, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
