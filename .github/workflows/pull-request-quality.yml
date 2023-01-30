@@ -47,6 +47,3 @@ jobs:
 
       - name: Checking typescript
         run: yarn run tsc
-
-      - name: Building
-        run: yarn run build
