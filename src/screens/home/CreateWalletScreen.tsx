@@ -9,9 +9,7 @@ import { AkromaRn } from '@akroma-project/akroma-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ButtonDesign } from '../../components/ButtonDesign';
 import AkaIcon from '../../assets/svg/AkaIconSvg';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 import ArrowleftSvg from '../../assets/svg/ArrowleftSvg';
 
 export const CreateWalletScreen = ({ navigation }) => {
@@ -23,9 +21,6 @@ export const CreateWalletScreen = ({ navigation }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isNameValid, setIsNameValid] = useState<boolean>(false);
   const [isPinValid, setIsPinValid] = useState<boolean>(false);
-
-  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
-  const navigator = useNavigation<homeScreenProp>();
 
   const OnCreateWalletPress = async () => {
     setLoading(true);
@@ -46,11 +41,11 @@ export const CreateWalletScreen = ({ navigation }) => {
         encrypted: s,
       });
       addWallet(created);
-      navigator.navigate('HomeScreen');
       setLoading(false);
       pinChange('');
       setName('');
-    }, 600);
+      navigation.navigate('SuccessScreen');
+    }, 200);
   };
 
   const validateName = (newName: string) => {

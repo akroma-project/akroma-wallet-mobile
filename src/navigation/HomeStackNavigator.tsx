@@ -14,6 +14,7 @@ import { SignIn } from '../screens/home/SignIn';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletModel } from '../data/entities/wallet';
 import { TransactionScreen } from '../screens/home/TransactionScreen';
+import { SuccessScreen } from '../screens/home/SuccessScreen';
 
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
@@ -22,6 +23,8 @@ export type HomeStackParamList = {
   SendCoinScreen: { address: string } | undefined;
   ScannerScreen: undefined;
   ReceiveCoinScreen: undefined;
+  SuccessScreen: undefined;
+
   CreateWalletScreen: undefined;
   WalletSettingsScreen: { wallet: WalletModel };
   ImportWalletKeystore: undefined;
@@ -47,6 +50,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />
       <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />
       <HomeStack.Screen name="ReceiveCoinScreen" component={ReceiveCoinScreen} options={{ title: 'Receive' }} />
+      <HomeStack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown: false }} />
 
       <HomeStack.Screen name="WalletSettingsScreen" component={WalletSettingsScreen} options={{ title: 'Settings', headerRight: () => <WalletSettingsHeaderRight /> }} />
       <HomeStack.Screen name="ImportWalletKeystore" component={ImportWalletKeystore} options={{ title: 'Import Keystore' }} />
