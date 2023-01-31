@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CreateStackParamList } from '../../navigation/CreateStackNavigator';
+import { useDatabaseConnection } from '../../data/connection';
 
 import LinearGradient from 'react-native-linear-gradient';
 import { ButtonDesign } from '../../components/ButtonDesign';
 import GlobalStyles from '../../constants/GlobalStyles';
 import AkaIcon from '../../assets/svg/AkaIconSvg';
+import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 
 export const SignIn = () => {
-  type createWalletProp = StackNavigationProp<CreateStackParamList, 'CreateWalletScreen'>;
-  const navigator = useNavigation<createWalletProp>();
+  const { walletsRepository, isConnected } = useDatabaseConnection();
+
+  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
+  const navigator = useNavigation<homeScreenProp>();
   const navigationCreateWallet = () => navigator.navigate('CreateWalletScreen');
+
+  useEffect(() => {
+    (async () => {
+      const wallets = await walletsRepository.any();
+      if (wallets) {
+        navigator.navigate('HomeScreen');
+      }
+    })();
+  }, [isConnected]);
 
   return (
     <SafeAreaView style={GlobalStyles.flex}>

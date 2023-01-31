@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
+import { ActivityIndicator, Keyboard, SafeAreaView, Text, TouchableWithoutFeedback, View, StyleSheet, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useContext, useState } from 'react';
 import { Input } from '@ui-kitten/components';
@@ -9,8 +9,12 @@ import { AkromaRn } from '@akroma-project/akroma-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ButtonDesign } from '../../components/ButtonDesign';
 import AkaIcon from '../../assets/svg/AkaIconSvg';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import ArrowleftSvg from '../../assets/svg/ArrowleftSvg';
 
-export const CreateWalletScreen = () => {
+export const CreateWalletScreen = ({ navigation }) => {
   const { walletsRepository } = useDatabaseConnection();
   const { addWallet } = useContext(WalletContext);
 
@@ -19,6 +23,9 @@ export const CreateWalletScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isNameValid, setIsNameValid] = useState<boolean>(false);
   const [isPinValid, setIsPinValid] = useState<boolean>(false);
+
+  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
+  const navigator = useNavigation<homeScreenProp>();
 
   const OnCreateWalletPress = async () => {
     setLoading(true);
@@ -39,6 +46,7 @@ export const CreateWalletScreen = () => {
         encrypted: s,
       });
       addWallet(created);
+      navigator.navigate('HomeScreen');
       setLoading(false);
       pinChange('');
       setName('');
@@ -69,10 +77,22 @@ export const CreateWalletScreen = () => {
     );
   };
 
+  const goBack = () => {
+    navigation.dispatch(CommonActions.goBack());
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={GlobalStyles.flex}>
         <LinearGradient colors={['#4C4C52', '#050505']} style={{ flex: 1 }}>
+          <View style={Styles.headContainer}>
+            <TouchableOpacity onPress={() => goBack()} style={Styles.goBackBtn}>
+              <ArrowleftSvg color="white" size={22} />
+            </TouchableOpacity>
+            <Text style={Styles.titleScreen}>Create Wallet</Text>
+            <View style={{ paddingHorizontal: 12 }} />
+          </View>
+
           <View style={Styles.containerCenter}>
             <View style={Styles.flexCenter}>
               <AkaIcon size={180} />
@@ -117,5 +137,24 @@ const Styles = StyleSheet.create({
   },
   paddingBottom: {
     paddingBottom: '10%',
+  },
+
+  titleScreen: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 20,
+  },
+  goBackBtn: {
+    width: 24,
+  },
+
+  headContainer: {
+    paddingTop: 20,
+    paddingHorizontal: '5%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
   },
 });
