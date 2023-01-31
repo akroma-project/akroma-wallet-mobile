@@ -7,7 +7,6 @@ import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
 import { useDatabaseConnection } from '../../data/connection';
 import MainLayout from '../../layout/MainLayout';
-
 export const HomeScreen = () => {
   const { isConnected } = useDatabaseConnection();
 
@@ -50,7 +49,6 @@ export const HomeScreen = () => {
       await refreshWallets();
       await loadWallets();
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
   return (
     <MainLayout>
