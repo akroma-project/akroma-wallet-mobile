@@ -38,6 +38,7 @@ const WalletProvider = (props: serverProviderProps) => {
   const address = 'https://boot2.akroma.org';
   const provider = new TypeSafeWeb3(address);
   const utils = new Utils();
+
   const loadWallets = async () => {
     const wallets = await walletsRepository.getAll();
     console.debug(`wallets:: ${JSON.stringify(wallets)}`);

@@ -1,18 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Text } from '@ui-kitten/components';
 import AkaIcon from '../assets/svg/AkaIconSvg';
+import { WalletContext } from '../providers/WalletProvider';
+import { useDatabaseConnection } from '../data/connection';
+import { getAkromaPrice } from '../services/AkromaApi';
+import { AkaModel } from '../data/entities/akaInfo';
 
-interface Params {
-  balance: number;
-}
-
-export const HomeResumeAmount = (params: Params) => {
+export const HomeResumeAmount = () => {
   const localStringOptions = {
     maximumFractionDigits: 12,
     minimumFractionDigits: 2,
   };
+
+  const { state } = useContext(WalletContext);
+  const [usdBalance, setUsdBalance] = useState(0);
+  const mainBalance = state.wallet.address ? state.wallet.lastBalance : state.totalBalance;
+  const { akaInfoRepository } = useDatabaseConnection();
+
+  const createAkaPrice = async () => {
+    const currentPrice = (await getAkromaPrice()) as number;
+    setUsdBalance(currentPrice);
+    try {
+      const newAkaPrice = await akaInfoRepository.create({
+        name: 'akroma',
+        lastValueUsd: currentPrice,
+        updated_at: new Date(),
+      });
+      console.debug('New aka price', newAkaPrice);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const checkForUpdatePrice = async aka => {
+    const currentDate = new Date();
+    const difference = (currentDate.getTime() - aka[0].updated_at.getTime()) / 60000;
+
+    if (difference > 5) {
+      const newPrice = (await getAkromaPrice()) as number;
+      setUsdBalance(newPrice);
+      const updateAkaValue: AkaModel = {
+        id: aka[0].id,
+        name: aka[0].name,
+        lastValueUsd: newPrice,
+        updated_at: new Date(),
+      };
+      await akaInfoRepository.update(updateAkaValue);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      const aka: AkaModel[] = await akaInfoRepository.getAll();
+      if (aka.length > 0) {
+        setUsdBalance(aka[0].lastValueUsd);
+        checkForUpdatePrice(aka);
+      } else {
+        createAkaPrice();
+      }
+    })();
+  }, [usdBalance]);
 
   return (
     <View style={styles.resumeContainer}>
@@ -21,8 +70,8 @@ export const HomeResumeAmount = (params: Params) => {
       <LinearGradient style={styles.resumeCard} colors={['#8F0000', '#DB0000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
         <View>
           <Text style={styles.title}>AKA Balance</Text>
-          <Text style={styles.textAmount}>{params.balance?.toLocaleString('en-US', localStringOptions)}</Text>
-          <Text style={styles.label}>$ {(params.balance * 0.00085).toLocaleString('en-US', localStringOptions)}</Text>
+          <Text style={styles.textAmount}>{mainBalance?.toLocaleString('en-US', localStringOptions)}</Text>
+          <Text style={styles.label}>$ {(usdBalance * (mainBalance as number)).toLocaleString('en-US', localStringOptions)}</Text>
         </View>
       </LinearGradient>
     </View>

@@ -3,7 +3,7 @@ import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
 function AkaIcon(props: any) {
   return (
-    <Svg width={33} height={31} viewBox="0 0 33 31" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <Svg width={props.size ? props.size : 33} height={props.size ? props.size : 33} viewBox="0 0 33 31" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <G clipPath="url(#clip0_188_1634)">
         <Path d="M.97.065L.219 2.128l5.27 22.512 1.14-1.47L1.698.784.97.064z" fill="#D5D5D5" />
         <Path d="M5.489 24.64l25.068 5.565 1.78-1.063-1.74-.781-23.902-5.316-1.206 1.595z" fill="#E7E7E7" />
