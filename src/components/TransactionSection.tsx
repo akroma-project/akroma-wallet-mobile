@@ -1,6 +1,6 @@
-import GlobalStyles from '../constants/GlobalStyles';
+import { DymanicStyles } from '../constants/GlobalStyles';
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, FlatList } from 'react-native';
+import { SafeAreaView, FlatList, Dimensions } from 'react-native';
 
 import { TransactionSectionTop } from './TransactionSectionTop';
 import { getTransactionsByAddress } from '../services/AkromaApi';
@@ -11,14 +11,10 @@ import { Divider } from '@ui-kitten/components';
 
 export const TransactionSection = ({ setDisplayButtons }) => {
   const { state } = React.useContext(WalletContext);
-
+  const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
   const [transactions, setTransactions] = useState([]);
   const [page, setPage] = useState(1);
   const listRef = useRef(null);
-  // const handlePage = (newValue: number) => {
-  //   listRef.current.scrollTo({ y: 0, animated: true });
-  //   setPage(newValue);
-  // };
   const utils = new Utils();
   const sumAddress = utils.toChecksumAddress(state.wallet.address);
 
@@ -31,28 +27,30 @@ export const TransactionSection = ({ setDisplayButtons }) => {
   const loadMoreTransactions = () => {
     setPage(page + 1);
   };
-
+  Dimensions.addEventListener('change', () => {
+    setViewHeight(Dimensions.get('screen').height);
+  });
+  const hanldeDisplayButtons = event => {
+    let currentOffset = event.nativeEvent.contentOffset.y;
+    if (currentOffset > 200) {
+      setDisplayButtons('none');
+    } else {
+      setDisplayButtons('flex');
+    }
+  };
   return (
-    <SafeAreaView style={[GlobalStyles.walletsContainer]}>
+    <SafeAreaView style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <TransactionSectionTop />
-      <FlatList
-        ref={listRef}
-        keyExtractor={({ id }) => id}
-        data={transactions}
-        renderItem={({ item }) => <TransactionCard addressFrom={item.from} amount={item.value * 0.000000000000000001} addressTo={item.to} sent={item.from === sumAddress} />}
-        onEndReached={loadMoreTransactions}
-        ItemSeparatorComponent={() => <Divider />}
-        onScrollBeginDrag={() => console.log('start')}
-        nestedScrollEnabled={true}
-        onScroll={event => {
-          let currentOffset = event.nativeEvent.contentOffset.y;
-          if (currentOffset > 200) {
-            setDisplayButtons('none');
-          } else {
-            setDisplayButtons('flex');
-          }
-        }}
-      />
+      {transactions.length > 0 && (
+        <FlatList
+          ref={listRef}
+          data={transactions}
+          renderItem={({ item }) => <TransactionCard id={item.id} addressFrom={item.from} amount={item.value * 0.000000000000000001} addressTo={item.to} sent={item.from === sumAddress} />}
+          onEndReached={loadMoreTransactions}
+          ItemSeparatorComponent={() => <Divider />}
+          onScroll={hanldeDisplayButtons}
+        />
+      )}
     </SafeAreaView>
   );
 };

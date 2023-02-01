@@ -3,13 +3,8 @@ import { Animated, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export function WithSplashScreen({ children, isAppReady }: { isAppReady: boolean; children: React.ReactNode }) {
-  return (
-    <>
-      {isAppReady && children}
-
-      <Splash isAppReady={isAppReady} />
-    </>
-  );
+  const content = isAppReady ? children : <Splash isAppReady={isAppReady} />;
+  return <>{content}</>;
 }
 
 const LOADING_IMAGE = 'Loading image';
