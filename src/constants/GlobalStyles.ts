@@ -22,6 +22,36 @@ const GlobalStyles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'flex-end',
   },
+  transparentHeaderContainer: {
+    backgroundColor: '#00000000',
+    position: 'absolute',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowBackContainer: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
+    paddingLeft: 10,
+    paddingTop: 20,
+  },
+  titleTransparentContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  transparentHeaderTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
   backdrop: {},
   body: {
     flex: 1,
@@ -45,7 +75,9 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-
+  pt100: {
+    paddingTop: 100,
+  },
   card: {
     marginLeft: 0,
     marginRight: 0,
@@ -167,7 +199,6 @@ const GlobalStyles = StyleSheet.create({
   p10: {
     padding: 10,
   },
-
   titleText: {
     fontSize: 18,
     fontWeight: '600',
@@ -210,7 +241,7 @@ const GlobalStyles = StyleSheet.create({
   },
   copyIcon: {
     height: 23,
-    with: 22,
+    width: 22,
     flex: 1,
   },
   copyIconContainer: {
@@ -255,12 +286,18 @@ const GlobalStyles = StyleSheet.create({
     fontWeight: '400',
   },
   smallTextWhite: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#FFFFFF',
     fontWeight: '400',
   },
   mb5: {
     marginBottom: 5,
+  },
+  mb10: {
+    marginBottom: 10,
+  },
+  mb15: {
+    marginBottom: 15,
   },
   textBold: {
     fontWeight: '700',
@@ -280,9 +317,6 @@ const GlobalStyles = StyleSheet.create({
   },
   pt8: {
     paddingTop: 8,
-  },
-  pt10: {
-    paddingTop: 10,
   },
   pv24: {
     paddingVertical: 24,

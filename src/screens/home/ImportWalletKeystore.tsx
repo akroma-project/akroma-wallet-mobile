@@ -112,7 +112,7 @@ export const ImportWalletKeystore = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={GlobalStyles.flex}>
-        <ImageOverlay style={[GlobalStyles.container, GlobalStyles.pt50]} source={require('../../assets/images/background.png')}>
+        <ImageOverlay style={[GlobalStyles.container, GlobalStyles.pt100]} source={require('../../assets/images/background.png')}>
           {loading ? (
             <ActivityIndicator size="large" />
           ) : (
@@ -120,13 +120,15 @@ export const ImportWalletKeystore = () => {
               <View>
                 <View style={GlobalStyles.input}>
                   <Input style={[GlobalStyles.mb5]} onChangeText={setName} value={name} placeholder="Wallet name" disabled={loading} />
-                  <Text style={GlobalStyles.smallTextWhite}>Must contain at least 5 characters</Text>
+                  <Text style={[GlobalStyles.smallTextWhite, GlobalStyles.mb15]}>Must contain at least 5 characters</Text>
                 </View>
                 <View style={GlobalStyles.input}>
                   <Input style={GlobalStyles.mb5} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Current Wallet Password" disabled={loading} />
-                  <Text style={GlobalStyles.smallTextWhite}>Must contain at least 4 numbers</Text>
+                  <Text style={[GlobalStyles.smallTextWhite, GlobalStyles.mb15]}>Must contain at least 4 numbers</Text>
                 </View>
-                <Input multiline={true} style={GlobalStyles.button} value={walletJson} numberOfLines={5} placeholder="Wallet JSON" disabled={true} />
+                <View style={GlobalStyles.mb15}>
+                  <Input multiline={true} style={GlobalStyles.button} value={walletJson} numberOfLines={5} placeholder="Wallet JSON" disabled={true} />
+                </View>
 
                 {loading ? (
                   <ActivityIndicator size="large" />

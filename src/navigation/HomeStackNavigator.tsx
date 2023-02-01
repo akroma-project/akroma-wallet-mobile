@@ -14,6 +14,8 @@ import { SignIn } from '../screens/home/SignIn';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletModel } from '../data/entities/wallet';
 import { TransactionScreen } from '../screens/home/TransactionScreen';
+import { Text } from 'react-native';
+import { TransparentHeader } from '../components/TransparentHeader';
 
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
@@ -51,7 +53,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="ReceiveCoinScreen" component={ReceiveCoinScreen} options={{ title: 'Receive' }} />
 
       <HomeStack.Screen name="WalletSettingsScreen" component={WalletSettingsScreen} options={{ title: 'Settings', headerRight: () => <WalletSettingsHeaderRight /> }} />
-      <HomeStack.Screen name="ImportWalletKeystore" component={ImportWalletKeystore} options={{ title: 'Import Keystore' }} />
+      <HomeStack.Screen name="ImportWalletKeystore" component={ImportWalletKeystore} options={{ header: () => <TransparentHeader title={'Import Key Store'} /> }} />
       <HomeStack.Screen name="ImportWalletPrivateKey" component={ImportWalletPrivateKey} options={{ title: 'Import Private Key' }} />
       <HomeStack.Screen name="ImportWalletSeedPhrase" component={ImportWalletSeedPhrase} options={{ title: 'Import Seed Phrase' }} />
       <HomeStack.Screen name="ImportWalletWatch" component={ImportWalletWatch} options={{ title: 'Watch Wallet' }} />

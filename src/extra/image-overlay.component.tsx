@@ -20,7 +20,7 @@ export const ImageOverlay = (props?: ImageOverlayProps): React.ReactElement<Imag
   const { overlayColor, ...imageBackgroundStyle } = StyleSheet.flatten(style);
 
   return (
-    <LinearGradient colors={['#4C4C52', '#050505']} {...imageBackgroundProps} style={imageBackgroundStyle}>
+    <LinearGradient colors={['#4C4C5280', '#050505']} {...imageBackgroundProps} style={imageBackgroundStyle}>
       <View style={[StyleSheet.absoluteFill, { backgroundColor: overlayColor || DEFAULT_OVERLAY_COLOR }]} />
       {children}
     </LinearGradient>
