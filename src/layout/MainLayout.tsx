@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native';
 import GlobalStyles from '../constants/GlobalStyles';
 
