@@ -13,7 +13,7 @@ import { GlobalContext } from '../providers/GlobalProvider';
 
 export const TransactionSection = ({ setDisplayButtons }) => {
   const { state } = React.useContext(WalletContext);
-  const { selectedMonthYear, showSelectMonth, setShowSelectMonth } = React.useContext(GlobalContext);
+  const { selectedMonthYear, panelRef } = React.useContext(GlobalContext);
 
   const [transactions, setTransactions] = useState([]);
   const [page, setPage] = useState(1);

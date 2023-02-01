@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useRef, useState } from 'react';
 
 type Props = {
   displayExport: boolean;
@@ -26,6 +26,7 @@ const GlobalProvider = (props: serverProviderProps) => {
     year: date.getFullYear,
   });
   const [showSelectMonth, setShowSelectMonth] = useState(false);
+  const panelRef = useRef(null);
   const initialValue = {
     displayExport,
     setDisplayExport,
@@ -35,6 +36,7 @@ const GlobalProvider = (props: serverProviderProps) => {
     setSelectedMonthYear,
     showSelectMonth,
     setShowSelectMonth,
+    panelRef,
   };
 
   return <GlobalContext.Provider value={initialValue}>{props.children}</GlobalContext.Provider>;
