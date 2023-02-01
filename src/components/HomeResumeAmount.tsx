@@ -47,12 +47,11 @@ export const HomeResumeAmount = () => {
         lastValueUsd: newPrice,
         updated_at: new Date(),
       };
-      const newAkaPrice = await akaInfoRepository.update(updateAkaValue);
+      await akaInfoRepository.update(updateAkaValue);
     }
   };
 
   useEffect(() => {
-    console.log('main Balance ', mainBalance, state.wallet.address, state.wallet.lastBalance);
     (async () => {
       const aka: AkaModel[] = await akaInfoRepository.getAll();
       if (aka.length > 0) {
@@ -81,9 +80,6 @@ export const HomeResumeAmount = () => {
 
 const styles = StyleSheet.create({
   icon: {
-    height: 30,
-    width: 32,
-    position: 'absolute',
     top: 15,
     zIndex: 99,
   },
