@@ -1,8 +1,8 @@
 import { Divider } from '@ui-kitten/components';
-import GlobalStyles from '../constants/GlobalStyles';
+import GlobalStyles, { DymanicStyles } from '../constants/GlobalStyles';
 import React, { useEffect, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
-import { StyleSheet, Text, View, TouchableHighlight, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
 import { WalletCard } from './WalletCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WalletContext } from '../providers/WalletProvider';
@@ -44,6 +44,7 @@ export const TopWallets = ({ wallets }: Props) => {
   const [walletsState, setWalletsState] = useState<WalletModel[]>();
   const [watchWallets, setWatchWallets] = useState<WalletModel[]>();
 
+  const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
   useEffect(() => {
     const removeWatchedWallets = wallets.filter(element => element.encrypted !== 'watch');
     const orderWallets = removeWatchedWallets.sort((a, b) => Number(b.lastBalance) - Number(a.lastBalance));
@@ -52,8 +53,11 @@ export const TopWallets = ({ wallets }: Props) => {
     const tempWatchwallet = wallets.filter(element => element.encrypted === 'watch');
     setWatchWallets(tempWatchwallet);
   }, [wallets]);
+  Dimensions.addEventListener('change', () => {
+    setViewHeight(Dimensions.get('screen').height);
+  });
   return (
-    <View style={[GlobalStyles.walletsContainer]}>
+    <View style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <Text style={[GlobalStyles.titleText, GlobalStyles.pv24]}>Wallets</Text>
       <SafeAreaView>
         <ScrollView>
