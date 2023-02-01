@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { color } from 'react-native-reanimated';
 const height = Dimensions.get('screen').height;
 // $akroma-gold-darker: 	#E25D00;
 // $akroma-gold-dark: 		#F17100;
@@ -86,6 +87,18 @@ const GlobalStyles = StyleSheet.create({
   input: {
     paddingBottom: 20,
   },
+  akromaRedButton: {
+    borderRadius: 8,
+    backgroundColor: '#DB0000',
+    color: 'white',
+    borderColor: '#DB0000',
+  },
+  akromaRedButtonDisabled: {
+    borderRadius: 8,
+    backgroundColor: '#DC9A9A',
+    color: 'white',
+    borderColor: '#DC9A9A',
+  },
   label: {
     paddingVertical: 5,
     paddingLeft: 5,
@@ -123,6 +136,12 @@ const GlobalStyles = StyleSheet.create({
   },
   p: {
     paddingBottom: 10,
+  },
+  pt10: {
+    paddingTop: 10,
+  },
+  pt50: {
+    paddingTop: 50,
   },
   rowSpaceBetween: {
     flexDirection: 'row',
@@ -234,6 +253,14 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 12,
     color: '#676768',
     fontWeight: '400',
+  },
+  smallTextWhite: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '400',
+  },
+  mb5: {
+    marginBottom: 5,
   },
   textBold: {
     fontWeight: '700',

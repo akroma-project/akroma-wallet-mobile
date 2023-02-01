@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { ActivityIndicator, Keyboard, Platform, SafeAreaView, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Platform, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState } from 'react';
-import { Button, Input } from '@ui-kitten/components';
+import { Input, Button } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { AkromaRn } from '@akroma-project/akroma-react-native';
 import { ImageOverlay } from '../../extra/image-overlay.component';
@@ -112,27 +112,32 @@ export const ImportWalletKeystore = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={GlobalStyles.flex}>
-        <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+        <ImageOverlay style={[GlobalStyles.container, GlobalStyles.pt50]} source={require('../../assets/images/background.png')}>
           {loading ? (
             <ActivityIndicator size="large" />
           ) : (
             <View style={GlobalStyles.container}>
               <View>
-                <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-                <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Current Wallet Password" disabled={loading} />
-
-                <Input multiline={true} style={GlobalStyles.button} value={walletJson} numberOfLines={14} placeholder="Wallet JSON" disabled={true} />
+                <View style={GlobalStyles.input}>
+                  <Input style={[GlobalStyles.mb5]} onChangeText={setName} value={name} placeholder="Wallet name" disabled={loading} />
+                  <Text style={GlobalStyles.smallTextWhite}>Must contain at least 5 characters</Text>
+                </View>
+                <View style={GlobalStyles.input}>
+                  <Input style={GlobalStyles.mb5} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Current Wallet Password" disabled={loading} />
+                  <Text style={GlobalStyles.smallTextWhite}>Must contain at least 4 numbers</Text>
+                </View>
+                <Input multiline={true} style={GlobalStyles.button} value={walletJson} numberOfLines={5} placeholder="Wallet JSON" disabled={true} />
 
                 {loading ? (
                   <ActivityIndicator size="large" />
                 ) : (
                   <View>
                     <View style={GlobalStyles.input}>
-                      <Button style={GlobalStyles.input} onPress={async () => await loadJson()}>
+                      <Button style={GlobalStyles.akromaRedButton} onPress={async () => await loadJson()}>
                         Load JSON
                       </Button>
                     </View>
-                    <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
+                    <Button style={loading || invalid() ? GlobalStyles.akromaRedButtonDisabled : GlobalStyles.akromaRedButton} disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
                       IMPORT
                     </Button>
                   </View>

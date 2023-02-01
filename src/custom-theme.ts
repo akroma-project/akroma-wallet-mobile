@@ -49,4 +49,5 @@ export const AkromaTheme = {
   'color-danger-800': '#920F1F',
   'color-danger-900': '#78091F',
   'color-primary-disabled': '#AD3F00',
+  'text-disabled-color': 'white',
 };
