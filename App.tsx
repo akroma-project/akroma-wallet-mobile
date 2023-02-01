@@ -18,7 +18,9 @@ const App = () => {
   const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
-    setIsAppReady(true);
+    setTimeout(() => {
+      setIsAppReady(true);
+    }, 3000);
   }, []);
 
   return (
@@ -29,8 +31,8 @@ const App = () => {
             <IconRegistry icons={EvaIconsPack} />
             <ActionSheetProvider>
               <WalletProvider>
-                <ApplicationNavigation />
                 <Toast />
+                <ApplicationNavigation />
               </WalletProvider>
             </ActionSheetProvider>
           </ApplicationProvider>
