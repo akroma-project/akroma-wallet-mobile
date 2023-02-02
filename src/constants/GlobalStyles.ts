@@ -138,8 +138,12 @@ const GlobalStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
     alignItems: 'center',
+    paddingVertical: 10,
+    marginBottom: 15,
+  },
+  akromaButtonIcon: {
+    height: 20,
   },
   grayTextAkromaButton: {
     color: '#676768',
@@ -157,6 +161,15 @@ const GlobalStyles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     position: 'absolute',
+  },
+  grayTextAkromaButtonContainerSelected: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+    paddingLeft: 60,
+    paddingRight: 10,
   },
   ml20: {
     marginLeft: 20,

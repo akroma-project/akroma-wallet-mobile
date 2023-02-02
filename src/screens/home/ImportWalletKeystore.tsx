@@ -25,6 +25,7 @@ export const ImportWalletKeystore = () => {
   const { walletsRepository } = useDatabaseConnection();
   const [walletJson, walletJsonChange] = useState('');
   const [walletPassword, walletPasswordChange] = useState('');
+  const [fileName, setFileName] = useState('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   React.useEffect(() => {
@@ -99,6 +100,10 @@ export const ImportWalletKeystore = () => {
     }
   };
   const loadJson = async () => {
+    if (fileName) {
+      setFileName('');
+      return;
+    }
     try {
       const pickerResult = await DocumentPicker.pickSingle({
         presentationStyle: 'fullScreen',
@@ -106,6 +111,7 @@ export const ImportWalletKeystore = () => {
         // type: DocumentPicker.types.plainText,
       });
       pickerResult.uri;
+      setFileName(pickerResult.name);
       const res = await RNFS.readFile(pickerResult.fileCopyUri);
       walletJsonChange(res);
     } catch (e) {
@@ -134,11 +140,11 @@ export const ImportWalletKeystore = () => {
                   <ActivityIndicator size="large" />
                 ) : (
                   <View>
-                    <View style={GlobalStyles.input}>
+                    <View style={[GlobalStyles.input, GlobalStyles.mb15]}>
                       <TouchableOpacity style={GlobalStyles.akromaWhiteButton} onPress={async () => await loadJson()}>
-                        <View style={[GlobalStyles.ml20]}>{loading || invalid() ? <CloudSvg /> : <RedCrossSvg />}</View>
-                        <View style={GlobalStyles.grayTextAkromaButtonContainer}>
-                          <Text style={GlobalStyles.grayTextAkromaButton}>Load JSON</Text>
+                        <View style={[GlobalStyles.ml20, GlobalStyles.akromaButtonIcon]}>{fileName ? <RedCrossSvg /> : <CloudSvg />}</View>
+                        <View style={fileName ? GlobalStyles.grayTextAkromaButtonContainerSelected : GlobalStyles.grayTextAkromaButtonContainer}>
+                          {fileName ? <Text style={GlobalStyles.grayTextAkromaButtonSelected}>{fileName}</Text> : <Text style={GlobalStyles.grayTextAkromaButton}>Load JSON</Text>}
                         </View>
                       </TouchableOpacity>
                     </View>
