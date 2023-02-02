@@ -130,6 +130,37 @@ const GlobalStyles = StyleSheet.create({
     color: 'white',
     borderColor: '#DC9A9A',
   },
+  akromaWhiteButton: {
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    color: 'white',
+    borderColor: '#FFFFFF',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  grayTextAkromaButton: {
+    color: '#676768',
+    fontSize: 16,
+    fontWeight: '400',
+  },
+  grayTextAkromaButtonSelected: {
+    color: '#1C1C1E',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  grayTextAkromaButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+  },
+  ml20: {
+    marginLeft: 20,
+  },
   label: {
     paddingVertical: 5,
     paddingLeft: 5,
