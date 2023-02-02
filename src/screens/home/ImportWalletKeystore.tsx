@@ -37,6 +37,7 @@ export const ImportWalletKeystore = () => {
     walletJsonChange('');
     walletPasswordChange('');
     setName('');
+    setFileName('');
   };
   const OnImportPress = async () => {
     setLoading(true);
