@@ -139,8 +139,7 @@ const GlobalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
-    marginBottom: 15,
+    paddingVertical: 13,
   },
   akromaButtonIcon: {
     height: 20,
@@ -342,6 +341,15 @@ const GlobalStyles = StyleSheet.create({
   },
   mb15: {
     marginBottom: 15,
+  },
+  mb20: {
+    marginBottom: 20,
+  },
+  mb25: {
+    marginBottom: 25,
+  },
+  mb30: {
+    marginBottom: 30,
   },
   textBold: {
     fontWeight: '700',
