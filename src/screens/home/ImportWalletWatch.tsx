@@ -13,29 +13,26 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/core';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 
-export const ImportWalletWatch = () => {
+export const ImportWalletWatch = ({ route }: { route: any }) => {
+  const walletDirection = route.params?.address ?? '';
   const { walletsRepository } = useDatabaseConnection();
-  const [walletAddress, walletAddressChange] = useState('');
+  const [walletAddress, setWalletAddress] = useState('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [address, setAddress] = useState('');
 
   const isValidAddress = isAddress(walletAddress);
   const { addWallet } = useContext(WalletContext);
-  const { newWatchWallet, setNewWatchWallet } = useContext(GlobalContext);
 
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
 
   useEffect(() => {
-    walletAddressChange(newWatchWallet);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setWalletAddress(walletDirection);
+  }, [walletDirection]);
 
   const onSuccessWatchWallet = () => {
     setName('');
-    walletAddressChange('');
-    setNewWatchWallet('');
+    setWalletAddress('');
     Toast.show({
       text1: 'The wallet is saved',
       position: 'top',
@@ -68,7 +65,7 @@ export const ImportWalletWatch = () => {
 
   const ScanIcon = (props: any) => {
     return (
-      <TouchableOpacity onPress={() => navigator.navigate('ScannerScreen')}>
+      <TouchableOpacity onPress={() => navigator.navigate('ScannerScreen', { watchedWallet: true })}>
         <Icon {...props} name="video" />
       </TouchableOpacity>
     );
@@ -84,9 +81,8 @@ export const ImportWalletWatch = () => {
             <View style={GlobalStyles.container}>
               <View style={{ marginTop: 30 }}>
                 <Text style={{ color: 'white', fontSize: 14, paddingBottom: 8 }}>Address</Text>
-                <Input style={GlobalStyles.input} onChangeText={setAddress} value={address} placeholder="To" accessoryRight={ScanIcon} />
+                <Input style={GlobalStyles.input} onChangeText={setWalletAddress} value={walletAddress} placeholder="Enter address or Scan QR code" disabled={loading} accessoryRight={ScanIcon} />
                 <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-                <Input style={GlobalStyles.input} onChangeText={walletAddressChange} value={walletAddress} placeholder="Enter address or Scan QR code" disabled={loading} />
                 <Button disabled={loading} onPress={async () => await OnImportPress()}>
                   IMPORT
                 </Button>

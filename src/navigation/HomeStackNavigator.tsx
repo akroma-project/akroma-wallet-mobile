@@ -14,7 +14,6 @@ import { SignIn } from '../screens/home/SignIn';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletModel } from '../data/entities/wallet';
 import { TransactionScreen } from '../screens/home/TransactionScreen';
-import { Text } from 'react-native';
 import { TransparentHeader } from '../components/TransparentHeader';
 
 export type HomeStackParamList = {
@@ -22,14 +21,14 @@ export type HomeStackParamList = {
   SignIn: undefined;
   TransactionScreen: undefined;
   SendCoinScreen: { address: string } | undefined;
-  ScannerScreen: undefined;
+  ScannerScreen: { watchedWallet: boolean } | undefined;
   ReceiveCoinScreen: undefined;
   CreateWalletScreen: undefined;
   WalletSettingsScreen: { wallet: WalletModel };
   ImportWalletKeystore: undefined;
   ImportWalletPrivateKey: undefined;
   ImportWalletSeedPhrase: undefined;
-  ImportWalletWatch: undefined;
+  ImportWalletWatch: { address: string } | undefined;
   WalletScreen: { wallet: WalletModel };
   WalletTransactionHistory: undefined;
 };
