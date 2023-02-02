@@ -140,7 +140,7 @@ export const ImportWalletKeystore = () => {
                   <ActivityIndicator size="large" />
                 ) : (
                   <View>
-                    <View style={[GlobalStyles.input, {marginBottom: 30}]}>
+                    <View style={[GlobalStyles.input, GlobalStyles.mb30]}>
                       <TouchableOpacity style={GlobalStyles.akromaWhiteButton} onPress={async () => await loadJson()}>
                         <View style={[GlobalStyles.ml20, GlobalStyles.akromaButtonIcon]}>{fileName ? <RedCrossSvg /> : <CloudSvg />}</View>
                         <View style={fileName ? GlobalStyles.grayTextAkromaButtonContainerSelected : GlobalStyles.grayTextAkromaButtonContainer}>
