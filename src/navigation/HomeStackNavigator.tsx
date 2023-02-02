@@ -14,7 +14,6 @@ import { SignIn } from '../screens/home/SignIn';
 import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRight';
 import { WalletModel } from '../data/entities/wallet';
 import { TransactionScreen } from '../screens/home/TransactionScreen';
-import { Text } from 'react-native';
 import { TransparentHeader } from '../components/TransparentHeader';
 
 export type HomeStackParamList = {
