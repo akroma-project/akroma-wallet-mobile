@@ -2,13 +2,16 @@ import { Divider } from '@ui-kitten/components';
 import GlobalStyles, { DymanicStyles } from '../constants/GlobalStyles';
 import React, { useEffect, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
-import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions, Alert, TouchableOpacity, Animated } from 'react-native';
 import { WalletCard } from './WalletCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WalletContext } from '../providers/WalletProvider';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import Trash from '../assets/svg/Trash';
+
 interface Props {
   wallets: WalletModel[];
 }
@@ -18,51 +21,151 @@ interface WalletsSectionParams {
   style?: any;
 }
 const WalletsSection = (params: WalletsSectionParams) => {
-  const { setActive, updateBalance } = React.useContext(WalletContext);
+  const { setActive, updateBalance, removeWallet } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
+
   const navigator = useNavigation<homeScreenProp>();
   const handleSelect = (id: string) => {
     updateBalance(id);
     setActive(id);
     navigator.navigate('TransactionScreen');
   };
-  return (
-    <View style={params.style}>
-      <Text style={styles.subTitle}>{params.title}</Text>
-      {params.wallets?.map(wallet => (
-        <TouchableHighlight underlayColor="#DDDDDD" key={wallet.id} onPress={() => handleSelect(wallet.id)}>
-          <View>
-            <WalletCard wallet={wallet} />
+
+  const closeRow = (rowMap, rowKey) => {
+    const row = rowMap[rowKey.key];
+    if (row) {
+      row.closeRow();
+    }
+  };
+
+  const deleteRow = (rowMap, wallet: WalletModel) => {
+    closeRow(rowMap, wallet);
+    removeWallet(wallet);
+  };
+
+  const confirmationModal = (rowMap, wallet: WalletModel) => {
+    Alert.alert('Are you sure you want to remove this wallet?', null, [
+      {
+        text: 'Yes',
+        onPress: () => {
+          closeRow(rowMap, wallet);
+          setTimeout(() => deleteRow(rowMap, wallet), 1000);
+        },
+      },
+      {
+        text: 'No',
+      },
+    ]);
+  };
+
+  const VisibleItem = props => {
+    const { rowHeightAnimatedValue, rightActionState, data, removeRow } = props;
+
+    if (rightActionState) {
+      Animated.timing(rowHeightAnimatedValue, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: false,
+      }).start(() => {
+        removeRow();
+      });
+    }
+
+    return (
+      <Animated.View>
+        <TouchableHighlight underlayColor="#DDDDDD" key={data.item.id} onPress={() => handleSelect(data.item.id)}>
+          <View style={styles.rowFront}>
+            <WalletCard wallet={data.item} />
             <Divider />
           </View>
         </TouchableHighlight>
-      ))}
+      </Animated.View>
+    );
+  };
+
+  const renderItem = (data, rowMap) => {
+    const rowHeightAnimatedValue = new Animated.Value(50);
+    return <VisibleItem rowHeightAnimatedValue={rowHeightAnimatedValue} data={data} removeRow={() => confirmationModal(rowMap, data.item)} />;
+  };
+
+  const HiddenItemWithActions = props => {
+    const { leftActionActivated, rightActionActivated, rowActionAnimatedValue, rowHeightAnimatedValue, data, rowMap } = props;
+
+    if (rightActionActivated) {
+      Animated.spring(rowActionAnimatedValue, {
+        toValue: 500,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      Animated.spring(rowActionAnimatedValue, {
+        toValue: 75,
+        useNativeDriver: false,
+      }).start();
+    }
+
+    return (
+      <Animated.View style={[styles.rowBack, { height: rowHeightAnimatedValue }, leftActionActivated]}>
+        {!leftActionActivated && (
+          <Animated.View style={[styles.backRightBtn, styles.backRightBtnRight]}>
+            <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={() => confirmationModal(rowMap, data.item)}>
+              <Trash />
+            </TouchableOpacity>
+          </Animated.View>
+        )}
+      </Animated.View>
+    );
+  };
+
+  const renderHiddenItem = (data, rowMap) => {
+    const rowActionAnimatedValue = new Animated.Value(75);
+    const rowHeightAnimatedValue = new Animated.Value(50);
+    return <HiddenItemWithActions data={data} rowMap={rowMap} rowActionAnimatedValue={rowActionAnimatedValue} rowHeightAnimatedValue={rowHeightAnimatedValue} onClose={() => closeRow(rowMap, data)} />;
+  };
+
+  return (
+    <View style={params.style}>
+      <Text style={styles.subTitle}>{params.title}</Text>
+      <SwipeListView
+        data={params.wallets}
+        renderItem={renderItem}
+        renderHiddenItem={renderHiddenItem}
+        leftOpenValue={75}
+        rightOpenValue={-100}
+        leftActivationValue={100}
+        rightActivationValue={-100}
+        leftActionValue={0}
+        rightActionValue={-500}
+        disableRightSwipe
+      />
     </View>
   );
 };
 export const TopWallets = ({ wallets }: Props) => {
-  const [walletsState, setWalletsState] = useState<WalletModel[]>();
-  const [watchWallets, setWatchWallets] = useState<WalletModel[]>();
+  const [walletsState, setWalletsState] = useState<WalletModel[]>([]);
+  const [watchWallets, setWatchWallets] = useState<WalletModel[]>([]);
 
   const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
+
   useEffect(() => {
     const removeWatchedWallets = wallets.filter(element => element.encrypted !== 'watch');
     const orderWallets = removeWatchedWallets.sort((a, b) => Number(b.lastBalance) - Number(a.lastBalance));
-    const topWallets = orderWallets.slice(0, 3);
-    setWalletsState(topWallets);
+    setWalletsState(orderWallets);
     const tempWatchwallet = wallets.filter(element => element.encrypted === 'watch');
     setWatchWallets(tempWatchwallet);
   }, [wallets]);
   Dimensions.addEventListener('change', () => {
     setViewHeight(Dimensions.get('screen').height);
   });
+
+  const WatchedWallets = watchWallets?.length ? <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} /> : null;
+
   return (
     <View style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <Text style={[GlobalStyles.titleText, GlobalStyles.pv24]}>Wallets</Text>
       <SafeAreaView>
         <ScrollView>
           <WalletsSection title={'My Wallets'} wallets={walletsState} />
-          {watchWallets?.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />}
+          {WatchedWallets}
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -81,6 +184,39 @@ const styles = StyleSheet.create({
   },
   container: {
     height: '29%',
-    backgroundColor: 'red',
+    backgroundColor: '#DB0000',
+  },
+  rowFront: {
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    height: 50,
+  },
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: '#DB0000',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+  },
+  backRightBtn: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75,
+  },
+  backRightBtnRight: {
+    backgroundColor: '#DB0000',
+    right: 0,
+  },
+  backTextWhite: {
+    color: '#FFF',
+  },
+  trash: {
+    height: 25,
+    width: 25,
+    marginRight: 7,
   },
 });
