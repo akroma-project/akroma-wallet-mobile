@@ -20,7 +20,7 @@ interface WalletsSectionParams {
   wallets: WalletModel[];
   style?: any;
 }
-const WalletsSection = (params: WalletsSectionParams) => {
+const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
   const { setActive, updateBalance, removeWallet } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
 
@@ -122,24 +122,30 @@ const WalletsSection = (params: WalletsSectionParams) => {
     return <HiddenItemWithActions data={data} rowMap={rowMap} rowActionAnimatedValue={rowActionAnimatedValue} rowHeightAnimatedValue={rowHeightAnimatedValue} onClose={() => closeRow(rowMap, data)} />;
   };
 
+  const ListOrMessage = wallets?.length ? (
+    <SwipeListView
+      data={wallets}
+      renderItem={renderItem}
+      renderHiddenItem={renderHiddenItem}
+      leftOpenValue={75}
+      rightOpenValue={-100}
+      leftActivationValue={100}
+      rightActivationValue={-100}
+      leftActionValue={0}
+      rightActionValue={-500}
+      disableRightSwipe
+    />
+  ) : null;
+
   return (
-    <View style={params.style}>
-      <Text style={styles.subTitle}>{params.title}</Text>
-      <SwipeListView
-        data={params.wallets}
-        renderItem={renderItem}
-        renderHiddenItem={renderHiddenItem}
-        leftOpenValue={75}
-        rightOpenValue={-100}
-        leftActivationValue={100}
-        rightActivationValue={-100}
-        leftActionValue={0}
-        rightActionValue={-500}
-        disableRightSwipe
-      />
+    <View style={style}>
+      <Text style={styles.subTitle}>{title}</Text>
+      {ListOrMessage}
+      {title === 'Watched Wallets' && wallets?.length === 0 && <Text style={styles.noWatched}>There are no wallets being watched</Text>}
     </View>
   );
 };
+
 export const TopWallets = ({ wallets }: Props) => {
   const [walletsState, setWalletsState] = useState<WalletModel[]>([]);
   const [watchWallets, setWatchWallets] = useState<WalletModel[]>([]);
@@ -157,15 +163,13 @@ export const TopWallets = ({ wallets }: Props) => {
     setViewHeight(Dimensions.get('screen').height);
   });
 
-  const WatchedWallets = watchWallets?.length ? <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} /> : null;
-
   return (
     <View style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <Text style={[GlobalStyles.titleText, GlobalStyles.pv24]}>Wallets</Text>
       <SafeAreaView>
         <ScrollView>
           <WalletsSection title={'My Wallets'} wallets={walletsState} />
-          {WatchedWallets}
+          <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -178,7 +182,7 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     paddingHorizontal: 20,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     color: '#1C1C1E',
   },
@@ -218,5 +222,10 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     marginRight: 7,
+  },
+  noWatched: {
+    color: 'black',
+    paddingTop: 40,
+    textAlign: 'center',
   },
 });
