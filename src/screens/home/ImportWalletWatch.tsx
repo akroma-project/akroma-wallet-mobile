@@ -2,18 +2,16 @@ import * as React from 'react';
 import { ActivityIndicator, Keyboard, SafeAreaView, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState, useContext, useEffect } from 'react';
-import { Button, Icon, Input, Text } from '@ui-kitten/components';
+import { Button, Input, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { ImageOverlay } from '../../extra/image-overlay.component';
 import { isAddress } from 'ethers/lib/utils';
 import Toast from 'react-native-toast-message';
 import { WalletContext } from '../../providers/WalletProvider';
-import { GlobalContext } from '../../providers/GlobalProvider';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/core';
-import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
+import QRCodeIcon from '../../assets/svg/QRcodeIconSvg';
+import { ArrowForwardIcon } from '../../components/AppIcons';
 
-export const ImportWalletWatch = ({ route }: { route: any }) => {
+export const ImportWalletWatch = ({ route, navigation }) => {
   const walletDirection = route.params?.address ?? '';
   const { walletsRepository } = useDatabaseConnection();
   const [walletAddress, setWalletAddress] = useState('');
@@ -22,9 +20,6 @@ export const ImportWalletWatch = ({ route }: { route: any }) => {
 
   const isValidAddress = isAddress(walletAddress);
   const { addWallet } = useContext(WalletContext);
-
-  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
-  const navigator = useNavigation<homeScreenProp>();
 
   useEffect(() => {
     setWalletAddress(walletDirection);
@@ -60,13 +55,14 @@ export const ImportWalletWatch = ({ route }: { route: any }) => {
       onSuccessWatchWallet();
       addWallet(created);
       setLoading(false);
+      navigation.navigate('HomeScreen');
     }, 1500);
   };
 
-  const ScanIcon = (props: any) => {
+  const ScanIcon = () => {
     return (
-      <TouchableOpacity onPress={() => navigator.navigate('ScannerScreen', { watchedWallet: true })}>
-        <Icon {...props} name="video" />
+      <TouchableOpacity onPress={() => navigation.navigate('ScannerScreen', { watchedWallet: true })}>
+        <QRCodeIcon />
       </TouchableOpacity>
     );
   };
@@ -82,9 +78,10 @@ export const ImportWalletWatch = ({ route }: { route: any }) => {
               <View style={{ marginTop: 30 }}>
                 <Text style={{ color: 'white', fontSize: 14, paddingBottom: 8 }}>Address</Text>
                 <Input style={GlobalStyles.input} onChangeText={setWalletAddress} value={walletAddress} placeholder="Enter address or Scan QR code" disabled={loading} accessoryRight={ScanIcon} />
-                <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-                <Button disabled={loading} onPress={async () => await OnImportPress()}>
-                  IMPORT
+                <Text style={{ color: 'white', fontSize: 14, paddingBottom: 8 }}>Name</Text>
+                <Input style={[GlobalStyles.input, GlobalStyles.marginBottom20]} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" />
+                <Button style={GlobalStyles.akromaRedButton} disabled={loading} onPress={async () => await OnImportPress()} accessoryRight={ArrowForwardIcon}>
+                  Watch
                 </Button>
               </View>
             </View>
