@@ -15,6 +15,7 @@ import { WalletSettingsHeaderRight } from '../components/WalletSettingsHeaderRig
 import { WalletModel } from '../data/entities/wallet';
 import { TransactionScreen } from '../screens/home/TransactionScreen';
 import { TransparentHeader } from '../components/TransparentHeader';
+import { SuccessScreen } from '../screens/home/SuccessScreen';
 
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
@@ -23,6 +24,8 @@ export type HomeStackParamList = {
   SendCoinScreen: { address: string } | undefined;
   ScannerScreen: undefined;
   ReceiveCoinScreen: undefined;
+  SuccessScreen: undefined;
+
   CreateWalletScreen: undefined;
   WalletSettingsScreen: { wallet: WalletModel };
   ImportWalletKeystore: undefined;
@@ -43,13 +46,14 @@ export function HomeStackNavigator() {
         gestureDirection: 'horizontal',
         gestureEnabled: true,
       })}>
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="TransactionScreen" component={TransactionScreen} options={{ headerShown: false }} />
-      <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create' }} />
+      <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create', headerShown: false }} />
       <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />
       <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />
       <HomeStack.Screen name="ReceiveCoinScreen" component={ReceiveCoinScreen} options={{ title: 'Receive' }} />
+      <HomeStack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown: false }} />
 
       <HomeStack.Screen name="WalletSettingsScreen" component={WalletSettingsScreen} options={{ title: 'Settings', headerRight: () => <WalletSettingsHeaderRight /> }} />
       <HomeStack.Screen name="ImportWalletKeystore" component={ImportWalletKeystore} options={{ header: () => <TransparentHeader title={'Import Keystore'} /> }} />

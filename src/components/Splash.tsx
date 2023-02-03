@@ -24,18 +24,56 @@ export const Splash = (_: { isAppReady: boolean }) => {
   const [state, setState] = useState<typeof LOADING_IMAGE | typeof IMAGE_INCREMENT | typeof IMAGE_DECREMENT | typeof IMAGE_BIG | typeof WAIT_FOR_APP_TO_BE_READY | typeof FADE_OUT | typeof HIDDEN>(LOADING_IMAGE);
 
   useEffect(() => {
-    Animated.sequence([
-      Animated.timing(imageSize, { toValue: 250, delay: 500, duration: 1000, useNativeDriver: false }),
-      Animated.parallel([Animated.timing(imageSize, { toValue: 120, duration: 1000, useNativeDriver: false }), Animated.timing(textToUp, { toValue: 60, duration: 1000, useNativeDriver: false })]),
-      Animated.parallel([Animated.timing(imageSize, { toValue: 14000, delay: 500, duration: 700, useNativeDriver: false }), Animated.timing(textHidden, { toValue: 0, delay: 500, duration: 300, useNativeDriver: false })]),
-      Animated.timing(containerOpacity, { toValue: 0, duration: 400, delay: 200, useNativeDriver: true }),
-    ]).start(() => setState(HIDDEN));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    animation();
   }, []);
 
-  if (state === HIDDEN) {
-    return null;
-  }
+  const animation = () => {
+    Animated.sequence([
+      Animated.timing(imageSize, {
+        toValue: 250,
+        delay: 500,
+        duration: 1000,
+        useNativeDriver: false,
+      }),
+
+      Animated.parallel([
+        Animated.timing(imageSize, {
+          toValue: 120,
+          duration: 1000,
+          useNativeDriver: false,
+        }),
+        Animated.timing(textToUp, {
+          toValue: 60,
+          duration: 1000,
+          useNativeDriver: false,
+        }),
+      ]),
+
+      Animated.parallel([
+        Animated.timing(imageSize, {
+          toValue: 14000,
+          delay: 500,
+          duration: 700,
+          useNativeDriver: false,
+        }),
+        Animated.timing(textHidden, {
+          toValue: 0,
+          delay: 500,
+          duration: 300,
+          useNativeDriver: false,
+        }),
+      ]),
+
+      Animated.timing(containerOpacity, {
+        toValue: 0,
+        duration: 400,
+        delay: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setState(HIDDEN));
+  };
+
+  if (state === HIDDEN) return null;
 
   return (
     <Animated.View collapsable={false} style={[style.container, { opacity: containerOpacity }]}>

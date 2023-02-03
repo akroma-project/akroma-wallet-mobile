@@ -21,7 +21,7 @@ export const TransparentHeader = (props: Props) => {
       </View>
       <View style={GlobalStyles.arrowBackContainer}>
         <TouchableOpacity onPress={handleBack}>
-          <ArrowleftSvg fill="#FFFFFF" />
+          <ArrowleftSvg color="#FFFFFF" />
         </TouchableOpacity>
       </View>
     </View>
