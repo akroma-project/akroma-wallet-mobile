@@ -17,7 +17,7 @@ interface WalletsSectionParams {
   wallets: WalletModel[];
   style?: any;
 }
-const WalletsSection = (params: WalletsSectionParams) => {
+const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
   const { setActive, updateBalance } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
@@ -26,17 +26,20 @@ const WalletsSection = (params: WalletsSectionParams) => {
     setActive(id);
     navigator.navigate('TransactionScreen');
   };
+
   return (
-    <View style={params.style}>
-      <Text style={styles.subTitle}>{params.title}</Text>
-      {params.wallets?.map(wallet => (
-        <TouchableHighlight underlayColor="#DDDDDD" key={wallet.id} onPress={() => handleSelect(wallet.id)}>
-          <View>
-            <WalletCard wallet={wallet} />
-            <Divider />
-          </View>
-        </TouchableHighlight>
-      ))}
+    <View style={style}>
+      <Text style={styles.subTitle}>{title}</Text>
+      {wallets?.length > 0 &&
+        wallets.map(wallet => (
+          <TouchableHighlight underlayColor="#DDDDDD" key={wallet.id} onPress={() => handleSelect(wallet.id)}>
+            <View>
+              <WalletCard wallet={wallet} />
+              <Divider />
+            </View>
+          </TouchableHighlight>
+        ))}
+      {title === 'Watched Wallets' && wallets?.length === 0 && <Text style={styles.noWatched}>There are no wallets being watched</Text>}
     </View>
   );
 };
@@ -62,7 +65,7 @@ export const TopWallets = ({ wallets }: Props) => {
       <SafeAreaView>
         <ScrollView>
           <WalletsSection title={'My Wallets'} wallets={walletsState} />
-          {watchWallets?.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />}
+          <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -75,12 +78,17 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     paddingHorizontal: 20,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     color: '#1C1C1E',
   },
   container: {
     height: '29%',
     backgroundColor: 'red',
+  },
+  noWatched: {
+    color: 'black',
+    paddingTop: 40,
+    textAlign: 'center',
   },
 });
