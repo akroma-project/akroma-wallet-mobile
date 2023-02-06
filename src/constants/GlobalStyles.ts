@@ -130,6 +130,49 @@ const GlobalStyles = StyleSheet.create({
     color: 'white',
     borderColor: '#DC9A9A',
   },
+  akromaWhiteButton: {
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    color: 'white',
+    borderColor: '#FFFFFF',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 13,
+  },
+  akromaButtonIcon: {
+    height: 20,
+  },
+  grayTextAkromaButton: {
+    color: '#676768',
+    fontSize: 16,
+    fontWeight: '400',
+  },
+  grayTextAkromaButtonSelected: {
+    color: '#1C1C1E',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  grayTextAkromaButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+  },
+  grayTextAkromaButtonContainerSelected: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+    paddingLeft: 60,
+    paddingRight: 10,
+  },
+  ml20: {
+    marginLeft: 20,
+  },
   label: {
     paddingVertical: 5,
     paddingLeft: 5,
@@ -298,6 +341,15 @@ const GlobalStyles = StyleSheet.create({
   },
   mb15: {
     marginBottom: 15,
+  },
+  mb20: {
+    marginBottom: 20,
+  },
+  mb25: {
+    marginBottom: 25,
+  },
+  mb30: {
+    marginBottom: 30,
   },
   textBold: {
     fontWeight: '700',

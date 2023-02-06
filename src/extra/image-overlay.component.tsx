@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import React from 'react';
-import { ImageBackground, ImageBackgroundProps, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { ImageBackgroundProps, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 interface OverlayImageStyle extends ViewStyle {
