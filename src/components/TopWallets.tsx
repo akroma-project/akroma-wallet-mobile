@@ -167,10 +167,8 @@ export const TopWallets = ({ wallets }: Props) => {
     <View style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <Text style={[GlobalStyles.titleText, GlobalStyles.pv24]}>Wallets</Text>
       <SafeAreaView>
-        <ScrollView>
-          <WalletsSection title={'My Wallets'} wallets={walletsState} />
-          <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
-        </ScrollView>
+        <WalletsSection title={'My Wallets'} wallets={walletsState} />
+        <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
       </SafeAreaView>
     </View>
   );
