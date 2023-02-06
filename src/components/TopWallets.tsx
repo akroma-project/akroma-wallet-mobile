@@ -2,7 +2,7 @@ import { Divider } from '@ui-kitten/components';
 import GlobalStyles, { DymanicStyles } from '../constants/GlobalStyles';
 import React, { useEffect, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
-import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions, Alert, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Alert, TouchableOpacity, Animated } from 'react-native';
 import { WalletCard } from './WalletCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WalletContext } from '../providers/WalletProvider';
