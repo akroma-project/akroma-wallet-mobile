@@ -11,20 +11,9 @@ import AkaIcon from '../../assets/svg/AkaIconSvg';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 
 export const SignIn = () => {
-  const { walletsRepository, isConnected } = useDatabaseConnection();
-
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
   const navigationCreateWallet = () => navigator.navigate('CreateWalletScreen');
-
-  useEffect(() => {
-    (async () => {
-      const wallets = await walletsRepository.any();
-      if (wallets) {
-        navigator.navigate('HomeScreen');
-      }
-    })();
-  }, [isConnected]);
 
   return (
     <SafeAreaView style={GlobalStyles.flex}>
