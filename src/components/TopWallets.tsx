@@ -1,6 +1,6 @@
 import { Divider } from '@ui-kitten/components';
 import GlobalStyles, { DymanicStyles } from '../constants/GlobalStyles';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
 import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions, Alert, TouchableOpacity, Animated } from 'react-native';
 import { WalletCard } from './WalletCard';
@@ -11,6 +11,8 @@ import { HomeStackParamList } from '../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Trash from '../assets/svg/Trash';
+import ConfirmationModal from './ConfirmationModal';
+import { ModalProp } from '../interfaces/ModalProp';
 
 interface Props {
   wallets: WalletModel[];
@@ -19,8 +21,9 @@ interface WalletsSectionParams {
   title: string;
   wallets: WalletModel[];
   style?: any;
+  openModal: () => void;
 }
-const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
+const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionParams) => {
   const { setActive, updateBalance, removeWallet } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
 
@@ -44,18 +47,19 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
   };
 
   const confirmationModal = (rowMap, wallet: WalletModel) => {
-    Alert.alert('Are you sure you want to remove this wallet?', null, [
-      {
-        text: 'Yes',
-        onPress: () => {
-          closeRow(rowMap, wallet);
-          setTimeout(() => deleteRow(rowMap, wallet), 1000);
-        },
-      },
-      {
-        text: 'No',
-      },
-    ]);
+    // Alert.alert('Are you sure you want to remove this wallet?', null, [
+    //   {
+    //     text: 'Yes',
+    //     onPress: () => {
+    //       closeRow(rowMap, wallet);
+    //       setTimeout(() => deleteRow(rowMap, wallet), 1000);
+    //     },
+    //   },
+    //   {
+    //     text: 'No',
+    //   },
+    // ]);
+    openModal();
   };
 
   const VisibleItem = props => {
@@ -149,6 +153,7 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
 export const TopWallets = ({ wallets }: Props) => {
   const [walletsState, setWalletsState] = useState<WalletModel[]>([]);
   const [watchWallets, setWatchWallets] = useState<WalletModel[]>([]);
+  const modalRef = useRef<ModalProp>();
 
   const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
 
@@ -159,18 +164,20 @@ export const TopWallets = ({ wallets }: Props) => {
     const tempWatchwallet = wallets.filter(element => element.encrypted === 'watch');
     setWatchWallets(tempWatchwallet);
   }, [wallets]);
+
   Dimensions.addEventListener('change', () => {
     setViewHeight(Dimensions.get('screen').height);
   });
+
+  const openModal = () => modalRef.current.openModal();
 
   return (
     <View style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <Text style={[GlobalStyles.titleText, GlobalStyles.pv24]}>Wallets</Text>
       <SafeAreaView>
-        <ScrollView>
-          <WalletsSection title={'My Wallets'} wallets={walletsState} />
-          <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
-        </ScrollView>
+        <WalletsSection openModal={openModal} title={'My Wallets'} wallets={walletsState} />
+        <WalletsSection openModal={openModal} title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
+        <ConfirmationModal ref={modalRef} />
       </SafeAreaView>
     </View>
   );
