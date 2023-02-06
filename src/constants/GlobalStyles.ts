@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions } from 'react-native';
-
 const height = Dimensions.get('screen').height;
 // $akroma-gold-darker: 	#E25D00;
 // $akroma-gold-dark: 		#F17100;
@@ -21,6 +20,36 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
     alignContent: 'center',
     justifyContent: 'flex-end',
+  },
+  transparentHeaderContainer: {
+    backgroundColor: '#00000000',
+    position: 'absolute',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowBackContainer: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
+    paddingLeft: 10,
+    paddingTop: 20,
+  },
+  titleTransparentContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  transparentHeaderTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#FFFFFF',
   },
   backdrop: {},
   body: {
@@ -45,7 +74,9 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-
+  pt100: {
+    paddingTop: 100,
+  },
   card: {
     marginLeft: 0,
     marginRight: 0,
@@ -87,6 +118,61 @@ const GlobalStyles = StyleSheet.create({
   input: {
     paddingBottom: 20,
   },
+  akromaRedButton: {
+    borderRadius: 8,
+    backgroundColor: '#DB0000',
+    color: 'white',
+    borderColor: '#DB0000',
+  },
+  akromaRedButtonDisabled: {
+    borderRadius: 8,
+    backgroundColor: '#DC9A9A',
+    color: 'white',
+    borderColor: '#DC9A9A',
+  },
+  akromaWhiteButton: {
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    color: 'white',
+    borderColor: '#FFFFFF',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 13,
+  },
+  akromaButtonIcon: {
+    height: 20,
+  },
+  grayTextAkromaButton: {
+    color: '#676768',
+    fontSize: 16,
+    fontWeight: '400',
+  },
+  grayTextAkromaButtonSelected: {
+    color: '#1C1C1E',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  grayTextAkromaButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+  },
+  grayTextAkromaButtonContainerSelected: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+    paddingLeft: 60,
+    paddingRight: 10,
+  },
+  ml20: {
+    marginLeft: 20,
+  },
   label: {
     paddingVertical: 5,
     paddingLeft: 5,
@@ -125,6 +211,12 @@ const GlobalStyles = StyleSheet.create({
   p: {
     paddingBottom: 10,
   },
+  pt10: {
+    paddingTop: 10,
+  },
+  pt50: {
+    paddingTop: 50,
+  },
   rowSpaceBetween: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -149,7 +241,6 @@ const GlobalStyles = StyleSheet.create({
   p10: {
     padding: 10,
   },
-
   titleText: {
     fontSize: 18,
     fontWeight: '600',
@@ -192,7 +283,7 @@ const GlobalStyles = StyleSheet.create({
   },
   copyIcon: {
     height: 23,
-    with: 22,
+    width: 22,
     flex: 1,
   },
   copyIconContainer: {
@@ -237,6 +328,29 @@ const GlobalStyles = StyleSheet.create({
     color: '#676768',
     fontWeight: '400',
   },
+  smallTextWhite: {
+    fontSize: 11,
+    color: '#FFFFFF',
+    fontWeight: '400',
+  },
+  mb5: {
+    marginBottom: 5,
+  },
+  mb10: {
+    marginBottom: 10,
+  },
+  mb15: {
+    marginBottom: 15,
+  },
+  mb20: {
+    marginBottom: 20,
+  },
+  mb25: {
+    marginBottom: 25,
+  },
+  mb30: {
+    marginBottom: 30,
+  },
   textBold: {
     fontWeight: '700',
   },
@@ -255,9 +369,6 @@ const GlobalStyles = StyleSheet.create({
   },
   pt8: {
     paddingTop: 8,
-  },
-  pt10: {
-    paddingTop: 10,
   },
   pv24: {
     paddingVertical: 24,
