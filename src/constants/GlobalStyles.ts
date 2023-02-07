@@ -442,6 +442,17 @@ const GlobalStyles = StyleSheet.create({
   mt100: {
     marginTop: 100,
   },
+  themedPicker: {
+    backgroundColor: 'rgb(237, 241, 247)',
+    bordercolor: 'rgb(237, 241, 247)',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  themedPickerContainer: {
+    overflow: 'hidden',
+    borderRadius: 8,
+    width: '100%',
+  },
 });
 
 export const DymanicStyles = ({ viewHeight }) =>

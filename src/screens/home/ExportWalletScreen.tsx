@@ -6,7 +6,6 @@ import { GradientOverlay } from '../../extra/background-overlay.component';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
-import ArrowRightSvg from '../../assets/svg/ArrowRightSvg';
 import { Button, Card } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
@@ -31,17 +30,19 @@ export const ExportWalletScreen = ({ route }) => {
   // Settings code
 
   const { setActive, state } = useContext(WalletContext);
-  const wallet: WalletModel = route.params.wallet;
+  const wallet: WalletModel = route.params?.wallet;
   const path = RNFS.DocumentDirectoryPath;
   const [visible, setVisible] = React.useState(false);
   const [message, setMessage] = React.useState<string>();
 
   useEffect(() => {
-    setActive(wallet.id);
+    if (wallet?.id) {
+      setActive(wallet?.id);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet.id]);
+  }, [wallet?.id]);
 
-  if (state.wallet === undefined) {
+  if (state?.wallet === undefined) {
     return (
       <View>
         <Text>Loading wallet...please wait...</Text>
@@ -119,14 +120,15 @@ export const ExportWalletScreen = ({ route }) => {
 
   // End settings code
 
-  const exportKeystore = (type: string) => {
-    if (type === 'fileSystem') {
+  const exportKeystore = () => {
+    console.log(item);
+    if (item === 'fileSystem') {
       downloadKeystore();
     }
-    if (type === 'iCloud') {
+    if (item === 'iCloud') {
       exportToIcloud();
     }
-    if (type === 'googleDrive') {
+    if (item === 'googleDrive') {
       exportToGoogleDrive();
     }
   };
@@ -136,12 +138,14 @@ export const ExportWalletScreen = ({ route }) => {
       <GradientOverlay style={GlobalStyles.container}>
         <View style={[GlobalStyles.noticeContainer]}>
           <Image style={[GlobalStyles.walletLogoNotice]} source={WalletLogo} resizeMode="contain" />
-          <Picker style={[GlobalStyles.fullWidth]} selectedValue={item} onValueChange={itemValue => setItem(itemValue)}>
-            <Picker.Item label="Download to File system" value="fileSystem" />
-            {Platform.OS === 'ios' && <Picker.Item label="Export to Icloud Drive" value="iCloud" />}
-            <Picker.Item label="Google Drive" value="googleDrive" />
-          </Picker>
-          <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.fullWidth, GlobalStyles.continueButton]} onPress={exportKeystore}>
+          <View style={[GlobalStyles.themedPickerContainer]}>
+            <Picker style={[GlobalStyles.fullWidth, GlobalStyles.themedPicker]} selectedValue={item} onValueChange={itemValue => setItem(itemValue)}>
+              <Picker.Item label="Download to File system" value="fileSystem" />
+              {Platform.OS === 'ios' && <Picker.Item label="Export to Icloud Drive" value="iCloud" />}
+              <Picker.Item label="Google Drive" value="googleDrive" />
+            </Picker>
+          </View>
+          <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.fullWidth, GlobalStyles.continueButton]} onPress={() => exportKeystore()}>
             <Text>Export File</Text>
           </Button>
           <TouchableOpacity style={GlobalStyles.mt100} onPress={() => navigator.navigate('HomeScreen')}>
