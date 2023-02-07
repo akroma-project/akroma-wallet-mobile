@@ -11,6 +11,7 @@ import { ButtonDesign } from '../../components/ButtonDesign';
 import AkaIcon from '../../assets/svg/AkaIconSvg';
 import { CommonActions } from '@react-navigation/native';
 import ArrowleftSvg from '../../assets/svg/ArrowleftSvg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const CreateWalletScreen = ({ navigation }) => {
   const { walletsRepository } = useDatabaseConnection();
@@ -41,6 +42,7 @@ export const CreateWalletScreen = ({ navigation }) => {
         encrypted: s,
       });
       addWallet(created);
+      AsyncStorage.setItem('newCreatedWallet', JSON.stringify(created));
       setLoading(false);
       pinChange('');
       setName('');

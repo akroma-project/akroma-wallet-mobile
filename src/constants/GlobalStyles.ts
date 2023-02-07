@@ -238,6 +238,9 @@ const GlobalStyles = StyleSheet.create({
   mt20: {
     marginTop: 20,
   },
+  mt50: {
+    marginTop: 20,
+  },
   p10: {
     padding: 10,
   },
@@ -333,6 +336,9 @@ const GlobalStyles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '400',
   },
+  textWhite: {
+    color: '#FFFFFF',
+  },
   mb5: {
     marginBottom: 5,
   },
@@ -387,6 +393,65 @@ const GlobalStyles = StyleSheet.create({
   },
   ph24: {
     paddingHorizontal: 24,
+  },
+  walletLogoNotice: {
+    width: 175,
+    height: 172,
+    marginBottom: 20,
+  },
+  titleContainer: {
+    marginBottom: 15,
+  },
+  noticeWhiteTitle: {
+    color: '#FFFFFF',
+    fontSize: 32,
+    fontWeight: '600',
+    fontFamily: 'SF Pro Display',
+  },
+  noticeWhiteTextContent: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 24,
+    fontFamily: 'SF Pro Text',
+    textAlign: 'justify',
+  },
+  justifyCenter: {
+    justifyContent: 'center',
+  },
+  noticeContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    height: 700,
+    padding: 20,
+  },
+  fullWidth: {
+    width: '100%',
+  },
+  continueButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'baseline',
+    flexDirection: 'row',
+    marginTop: 70,
+  },
+  mt100: {
+    marginTop: 100,
+  },
+  themedPicker: {
+    backgroundColor: 'rgb(237, 241, 247)',
+    bordercolor: 'rgb(237, 241, 247)',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  themedPickerContainer: {
+    overflow: 'hidden',
+    borderRadius: 8,
+    width: '100%',
   },
 });
 
