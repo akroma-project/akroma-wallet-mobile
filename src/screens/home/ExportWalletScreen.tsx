@@ -25,7 +25,7 @@ const WalletLogo = require('../../assets/images/icon.png');
 export const ExportWalletScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
-  const [item, setItem] = useState();
+  const [item, setItem] = useState('fileSystem');
 
   // Settings code
   const [wallet, setWallet] = useState<WalletModel>();
@@ -143,6 +143,14 @@ export const ExportWalletScreen = () => {
               <Picker.Item label="Google Drive" value="googleDrive" />
             </Picker>
           </View>
+          {visible && (
+            <View style={[GlobalStyles.fullWidth]}>
+              <Text style={[GlobalStyles.mb10, GlobalStyles.textWhite]}>{message}</Text>
+              <Button style={[GlobalStyles.akromaRedButton]} onPress={() => setVisible(false)}>
+                Ok
+              </Button>
+            </View>
+          )}
           <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.fullWidth, GlobalStyles.continueButton]} onPress={() => exportKeystore()}>
             <Text>Export File</Text>
           </Button>
@@ -150,14 +158,6 @@ export const ExportWalletScreen = () => {
             <Text style={[GlobalStyles.textWhite, GlobalStyles.textBold]}>Go Home</Text>
           </TouchableOpacity>
         </View>
-        <Modal visible={visible}>
-          <Card disabled={true}>
-            <Text>{message}</Text>
-            <Button style={[GlobalStyles.akromaRedButton]} onPress={() => setVisible(false)}>
-              Ok
-            </Button>
-          </Card>
-        </Modal>
       </GradientOverlay>
     </SafeAreaView>
   );
