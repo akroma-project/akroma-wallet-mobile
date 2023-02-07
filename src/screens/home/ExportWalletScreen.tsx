@@ -29,8 +29,6 @@ export const ExportWalletScreen = ({ route }) => {
   const [item, setItem] = useState();
 
   // Settings code
-
-  const { setActive, state } = useContext(WalletContext);
   const [wallet, setWallet] = useState<WalletModel>();
   const path = RNFS.DocumentDirectoryPath;
   const [visible, setVisible] = React.useState(false);
@@ -43,13 +41,7 @@ export const ExportWalletScreen = ({ route }) => {
     });
   }, []);
 
-  useEffect(() => {
-    setActive(wallet.id);
-  }, [wallet.id]);
-
-  useEffect(() => {}, [wallet?.id]);
-
-  if (state?.wallet === undefined) {
+  if (wallet === undefined) {
     return (
       <View>
         <Text>Loading wallet...please wait...</Text>
@@ -156,18 +148,18 @@ export const ExportWalletScreen = ({ route }) => {
             <Text>Export File</Text>
           </Button>
           <TouchableOpacity style={GlobalStyles.mt100} onPress={() => navigator.navigate('HomeScreen')}>
-            <Text style={[GlobalStyles.textWhite, GlobalStyles.textBold]}>Skip</Text>
+            <Text style={[GlobalStyles.textWhite, GlobalStyles.textBold]}>Go Home</Text>
           </TouchableOpacity>
         </View>
+        <Modal visible={visible}>
+          <Card disabled={true}>
+            <Text>{message}</Text>
+            <Button style={[GlobalStyles.akromaRedButton]} onPress={() => setVisible(false)}>
+              Ok
+            </Button>
+          </Card>
+        </Modal>
       </GradientOverlay>
-      <Modal visible={visible}>
-        <Card disabled={true}>
-          <Text>{message}</Text>
-          <Button style={GlobalStyles.exportModalBtn} onPress={() => setVisible(false)}>
-            Ok
-          </Button>
-        </Card>
-      </Modal>
     </SafeAreaView>
   );
 };
