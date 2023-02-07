@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export const SuccessScreen = ({ navigation }) => {
   useEffect(() => {
-    setTimeout(() => navigation.navigate('HomeScreen'), 3000);
+    setTimeout(() => navigation.navigate('ExportWalletNotice'), 3000);
   }, []);
   return (
     <SafeAreaView style={GlobalStyles.flex}>

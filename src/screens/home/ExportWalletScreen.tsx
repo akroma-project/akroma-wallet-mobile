@@ -19,6 +19,7 @@ import { WalletContext } from '../../providers/WalletProvider';
 import { WalletModel } from '../../data/entities/wallet';
 import RNFS from 'react-native-fs';
 import { GOOGLESIGNIN_IOS_CLIENTID } from '../../constants/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WalletLogo = require('../../assets/images/icon.png');
 
@@ -30,17 +31,23 @@ export const ExportWalletScreen = ({ route }) => {
   // Settings code
 
   const { setActive, state } = useContext(WalletContext);
-  const wallet: WalletModel = route.params?.wallet;
+  const [wallet, setWallet] = useState<WalletModel>();
   const path = RNFS.DocumentDirectoryPath;
   const [visible, setVisible] = React.useState(false);
   const [message, setMessage] = React.useState<string>();
 
   useEffect(() => {
-    if (wallet?.id) {
-      setActive(wallet?.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet?.id]);
+    AsyncStorage.getItem('newCreatedWallet').then(walletString => {
+      const walletObject = JSON.parse(walletString);
+      setWallet(walletObject);
+    });
+  }, []);
+
+  useEffect(() => {
+    setActive(wallet.id);
+  }, [wallet.id]);
+
+  useEffect(() => {}, [wallet?.id]);
 
   if (state?.wallet === undefined) {
     return (

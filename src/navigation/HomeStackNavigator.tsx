@@ -50,8 +50,6 @@ export function HomeStackNavigator() {
         gestureDirection: 'horizontal',
         gestureEnabled: true,
       })}>
-      <HomeStack.Screen name="ExportWalletScreen" component={ExportWalletScreen} options={{ header: () => <TransparentHeader title={'Export Wallet Keystore'} /> }} />
-      <HomeStack.Screen name="ExportWalletNotice" component={ExportWalletNotice} options={{ headerShown: false }} />
       <HomeStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="TransactionScreen" component={TransactionScreen} options={{ headerShown: false }} />
@@ -65,6 +63,8 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="ImportWalletPrivateKey" component={ImportWalletPrivateKey} options={{ title: 'Import Private Key' }} />
       <HomeStack.Screen name="ImportWalletSeedPhrase" component={ImportWalletSeedPhrase} options={{ title: 'Import Seed Phrase' }} />
       <HomeStack.Screen name="ImportWalletWatch" component={ImportWalletWatch} options={{ title: 'Watch Wallet' }} />
+      <HomeStack.Screen name="ExportWalletScreen" component={ExportWalletScreen} options={{ header: () => <TransparentHeader title={'Export Wallet Keystore'} /> }} />
+      <HomeStack.Screen name="ExportWalletNotice" component={ExportWalletNotice} options={{ headerShown: false }} />
     </HomeStack.Navigator>
   );
 }
