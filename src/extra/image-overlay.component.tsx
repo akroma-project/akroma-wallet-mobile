@@ -1,8 +1,7 @@
 // @ts-nocheck
 
 import React from 'react';
-import { ImageBackgroundProps, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { ImageBackground, ImageBackgroundProps, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface OverlayImageStyle extends ViewStyle {
   overlayColor?: string;
@@ -20,9 +19,9 @@ export const ImageOverlay = (props?: ImageOverlayProps): React.ReactElement<Imag
   const { overlayColor, ...imageBackgroundStyle } = StyleSheet.flatten(style);
 
   return (
-    <LinearGradient colors={['#4C4C5280', '#050505']} {...imageBackgroundProps} style={imageBackgroundStyle}>
+    <ImageBackground {...imageBackgroundProps} style={imageBackgroundStyle}>
       <View style={[StyleSheet.absoluteFill, { backgroundColor: overlayColor || DEFAULT_OVERLAY_COLOR }]} />
       {children}
-    </LinearGradient>
+    </ImageBackground>
   );
 };

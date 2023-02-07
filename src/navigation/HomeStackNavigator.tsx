@@ -16,6 +16,7 @@ import { WalletModel } from '../data/entities/wallet';
 import { TransactionScreen } from '../screens/home/TransactionScreen';
 import { TransparentHeader } from '../components/TransparentHeader';
 import { SuccessScreen } from '../screens/home/SuccessScreen';
+import { ExportWalletNotice } from '../screens/home/ExportWalletNotice';
 
 export type HomeStackParamList = {
   HomeScreen: { update: boolean } | undefined;
@@ -29,6 +30,8 @@ export type HomeStackParamList = {
   CreateWalletScreen: undefined;
   WalletSettingsScreen: { wallet: WalletModel };
   ImportWalletKeystore: undefined;
+  ExportWalletNotice: undefined;
+  ExportWalletScreen: undefined;
   ImportWalletPrivateKey: undefined;
   ImportWalletSeedPhrase: undefined;
   ImportWalletWatch: undefined;
@@ -46,6 +49,8 @@ export function HomeStackNavigator() {
         gestureDirection: 'horizontal',
         gestureEnabled: true,
       })}>
+      <HomeStack.Screen name="ExportWalletNotice" component={ExportWalletNotice} options={{ headerShown: false }} />
+      <HomeStack.Screen name="ExportWalletScreen" component={ExportWalletNotice} options={{ headerShown: false }} />
       <HomeStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="TransactionScreen" component={TransactionScreen} options={{ headerShown: false }} />
