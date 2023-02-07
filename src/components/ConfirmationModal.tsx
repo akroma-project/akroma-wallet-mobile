@@ -22,9 +22,12 @@ const ConfirmationModal = forwardRef((props: {}, ref: ForwardedRef<unknown>) => 
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={styles.modalText}>Are you sure you want to delete this wallet?</Text>
             <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Delete Wallet</Text>
+            </Pressable>
+            <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>Cancel</Text>
             </Pressable>
           </View>
         </View>
@@ -36,15 +39,16 @@ const ConfirmationModal = forwardRef((props: {}, ref: ForwardedRef<unknown>) => 
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginTop: 22,
   },
   modalView: {
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 8,
+    padding: 0,
+    width: '85%',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -56,21 +60,26 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   button: {
-    borderRadius: 20,
-    padding: 20,
+    borderTopEndRadius: 8,
+    paddingVertical: 8,
+    width: '100%',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#1C1C1E',
   },
   textStyle: {
-    color: 'black',
-    fontSize: 15,
-    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '500',
     textAlign: 'center',
   },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
+    color: 'white',
+    width: '100%',
+    marginBottom: 1,
+    backgroundColor: '#1C1C1E',
+    borderTopEndRadius: 25,
   },
 });
 
