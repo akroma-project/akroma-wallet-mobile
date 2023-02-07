@@ -1,12 +1,12 @@
 // import { AkromaRn } from 'akroma-react-native/lib';
 import React, { useEffect, useState } from 'react';
-import { Image, Modal, Platform, SafeAreaView, Text, View } from 'react-native';
+import { Image, Platform, SafeAreaView, Text, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { GradientOverlay } from '../../extra/background-overlay.component';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
-import { Button, Card } from '@ui-kitten/components';
+import { Button } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 // export
@@ -144,11 +144,8 @@ export const ExportWalletScreen = () => {
             </Picker>
           </View>
           {visible && (
-            <View style={[GlobalStyles.fullWidth]}>
-              <Text style={[GlobalStyles.mb10, GlobalStyles.textWhite]}>{message}</Text>
-              <Button style={[GlobalStyles.akromaRedButton]} onPress={() => setVisible(false)}>
-                Ok
-              </Button>
+            <View style={[GlobalStyles.fullWidth, GlobalStyles.mt20]}>
+              <Text style={[GlobalStyles.mb10, GlobalStyles.textWhite]}>{message || ''}</Text>
             </View>
           )}
           <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.fullWidth, GlobalStyles.continueButton]} onPress={() => exportKeystore()}>
