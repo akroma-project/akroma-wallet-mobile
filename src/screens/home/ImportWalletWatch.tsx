@@ -1,33 +1,33 @@
 import * as React from 'react';
-import { ActivityIndicator, Keyboard, SafeAreaView, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Keyboard, SafeAreaView, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState, useContext, useEffect } from 'react';
-import { Button, Input } from '@ui-kitten/components';
+import { Button, Input, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { ImageOverlay } from '../../extra/image-overlay.component';
 import { isAddress } from 'ethers/lib/utils';
 import Toast from 'react-native-toast-message';
 import { WalletContext } from '../../providers/WalletProvider';
-import { GlobalContext } from '../../providers/GlobalProvider';
+import QRCodeIcon from '../../assets/svg/QRcodeIconSvg';
+import { ArrowForwardIcon } from '../../components/AppIcons';
 
-export const ImportWalletWatch = () => {
+export const ImportWalletWatch = ({ route, navigation }) => {
+  const walletDirection = route.params?.address ?? '';
   const { walletsRepository } = useDatabaseConnection();
-  const [walletAddress, walletAddressChange] = useState('');
+  const [walletAddress, setWalletAddress] = useState('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+
   const isValidAddress = isAddress(walletAddress);
   const { addWallet } = useContext(WalletContext);
-  const { newWatchWallet, setNewWatchWallet } = useContext(GlobalContext);
 
   useEffect(() => {
-    walletAddressChange(newWatchWallet);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setWalletAddress(walletDirection);
+  }, [walletDirection]);
 
   const onSuccessWatchWallet = () => {
     setName('');
-    walletAddressChange('');
-    setNewWatchWallet('');
+    setWalletAddress('');
     Toast.show({
       text1: 'The wallet is saved',
       position: 'top',
@@ -55,7 +55,16 @@ export const ImportWalletWatch = () => {
       onSuccessWatchWallet();
       addWallet(created);
       setLoading(false);
+      navigation.navigate('HomeScreen');
     }, 1500);
+  };
+
+  const ScanIcon = () => {
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('ScannerScreen', { watchedWallet: true })}>
+        <QRCodeIcon />
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -66,11 +75,13 @@ export const ImportWalletWatch = () => {
             <ActivityIndicator size="large" />
           ) : (
             <View style={GlobalStyles.container}>
-              <View>
-                <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-                <Input style={GlobalStyles.input} onChangeText={walletAddressChange} value={walletAddress} placeholder="Wallet Address" disabled={loading} />
-                <Button disabled={loading} onPress={async () => await OnImportPress()}>
-                  IMPORT
+              <View style={{ marginTop: 30 }}>
+                <Text style={{ color: 'white', fontSize: 14, paddingBottom: 8 }}>Address</Text>
+                <Input style={GlobalStyles.input} onChangeText={setWalletAddress} value={walletAddress} placeholder="Enter address or Scan QR code" disabled={loading} accessoryRight={ScanIcon} />
+                <Text style={{ color: 'white', fontSize: 14, paddingBottom: 8 }}>Name</Text>
+                <Input style={[GlobalStyles.input, GlobalStyles.marginBottom20]} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" />
+                <Button style={GlobalStyles.akromaRedButton} disabled={loading} onPress={async () => await OnImportPress()} accessoryRight={ArrowForwardIcon}>
+                  Watch
                 </Button>
               </View>
             </View>

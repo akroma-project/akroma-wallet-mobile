@@ -7,8 +7,9 @@ import { WalletContext } from '../../providers/WalletProvider';
 import { TopWallets } from '../../components/TopWallets';
 import { useDatabaseConnection } from '../../data/connection';
 import MainLayout from '../../layout/MainLayout';
-export const HomeScreen = () => {
-  const { isConnected } = useDatabaseConnection();
+
+export const HomeScreen = ({ navigation }) => {
+  const { walletsRepository, isConnected } = useDatabaseConnection();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [statuses, setStatuses] = useState<Partial<Record<Permission, PermissionStatus>>>({});
@@ -46,10 +47,16 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     (async () => {
+      const wallets = await walletsRepository.any();
+
+      if (!wallets && isConnected) {
+        navigation.navigate('SignIn');
+      }
       await refreshWallets();
       await loadWallets();
     })();
   }, [isConnected]);
+
   return (
     <MainLayout>
       <TopWallets wallets={state.wallets} />
