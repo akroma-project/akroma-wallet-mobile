@@ -23,10 +23,10 @@ const ConfirmationModal = forwardRef((props: {}, ref: ForwardedRef<unknown>) => 
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Are you sure you want to delete this wallet?</Text>
-            <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Delete Wallet</Text>
+            <Pressable style={[styles.button, styles.buttonDelete]} onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={[styles.textStyle, styles.redColor]}>Delete Wallet</Text>
             </Pressable>
-            <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+            <Pressable style={[styles.button, styles.buttonCancel]} onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>Cancel</Text>
             </Pressable>
           </View>
@@ -44,42 +44,44 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 0,
+    marginVertical: 15,
+    backgroundColor: 'rgba(0,0,0,0)',
     width: '85%',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
   },
   button: {
-    borderTopEndRadius: 8,
-    paddingVertical: 8,
+    paddingVertical: 12,
     width: '100%',
-  },
-  buttonClose: {
     backgroundColor: '#1C1C1E',
+  },
+  buttonDelete: {
+    borderBottomStartRadius: 8,
+    borderBottomEndRadius: 8,
+  },
+  buttonCancel: {
+    borderRadius: 8,
+    marginTop: 8,
   },
   textStyle: {
     color: 'white',
     fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
+    lineHeight: 18,
+  },
+  redColor: {
+    color: '#F65454',
   },
   modalText: {
     textAlign: 'center',
     color: 'white',
     width: '100%',
+    paddingVertical: 10,
     marginBottom: 1,
     backgroundColor: '#1C1C1E',
-    borderTopEndRadius: 25,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    fontSize: 12,
   },
 });
 
