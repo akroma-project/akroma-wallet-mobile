@@ -24,7 +24,7 @@ export type HomeStackParamList = {
   SignIn: undefined;
   TransactionScreen: undefined;
   SendCoinScreen: { address: string } | undefined;
-  ScannerScreen: undefined;
+  ScannerScreen: { watchedWallet: boolean } | undefined;
   ReceiveCoinScreen: undefined;
   SuccessScreen: undefined;
 
@@ -35,7 +35,7 @@ export type HomeStackParamList = {
   ExportWalletScreen: undefined;
   ImportWalletPrivateKey: undefined;
   ImportWalletSeedPhrase: undefined;
-  ImportWalletWatch: undefined;
+  ImportWalletWatch: { address: string } | undefined;
   WalletScreen: { wallet: WalletModel };
   WalletTransactionHistory: undefined;
 };
@@ -50,8 +50,8 @@ export function HomeStackNavigator() {
         gestureDirection: 'horizontal',
         gestureEnabled: true,
       })}>
-      <HomeStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+      <HomeStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <HomeStack.Screen name="TransactionScreen" component={TransactionScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create', headerShown: false }} />
       <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />

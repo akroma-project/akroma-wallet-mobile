@@ -50,9 +50,15 @@ const WalletProvider = (props: serverProviderProps) => {
     setWallets(state.wallets.concat(wallet));
   };
 
-  const removeWallet = (wallet: WalletModel) => {
+  const removeWallet = async (wallet: WalletModel) => {
     console.debug('remove wallet called', wallet.id);
     const wallets = state.wallets.filter(x => x.id !== wallet.id);
+    try {
+      await walletsRepository.delete(wallet.id);
+    } catch (error) {
+      console.error(error);
+    }
+
     setWallets(wallets);
   };
 

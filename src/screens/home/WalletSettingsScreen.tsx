@@ -33,7 +33,6 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
 
   useEffect(() => {
     setActive(wallet.id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wallet.id]);
 
   if (state.wallet === undefined) {
