@@ -1,5 +1,5 @@
 // import { AkromaRn } from 'akroma-react-native/lib';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Modal, Platform, SafeAreaView, Text, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { GradientOverlay } from '../../extra/background-overlay.component';
@@ -15,7 +15,6 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { GDrive, MimeTypes } from '@robinbobin/react-native-google-drive-api-wrapper';
 import { defaultICloudContainerPath } from 'react-native-cloud-store';
 
-import { WalletContext } from '../../providers/WalletProvider';
 import { WalletModel } from '../../data/entities/wallet';
 import RNFS from 'react-native-fs';
 import { GOOGLESIGNIN_IOS_CLIENTID } from '../../constants/constants';
@@ -23,7 +22,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WalletLogo = require('../../assets/images/icon.png');
 
-export const ExportWalletScreen = ({ route }) => {
+export const ExportWalletScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
   const [item, setItem] = useState();
