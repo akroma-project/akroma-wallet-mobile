@@ -439,6 +439,9 @@ const GlobalStyles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 70,
   },
+  mt100: {
+    marginTop: 100,
+  },
 });
 
 export const DymanicStyles = ({ viewHeight }) =>
