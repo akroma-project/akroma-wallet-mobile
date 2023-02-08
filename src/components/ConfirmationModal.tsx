@@ -1,14 +1,58 @@
 import React, { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import { WalletContext } from '../providers/WalletProvider';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeStackParamList } from '../navigation/HomeStackNavigator';
 
 const ConfirmationModal = forwardRef((props: {}, ref: ForwardedRef<unknown>) => {
+  const { state, removeWallet } = React.useContext(WalletContext);
+  type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
+  const navigator = useNavigation<homeScreenProp>();
+
   useImperativeHandle(ref, () => {
     return {
       openModal: showModal,
     };
   });
   const [modalVisible, setModalVisible] = useState(false);
-  const showModal = () => setModalVisible(true);
+
+  const deleteWallet = () => {
+    removeWallet(state.wallet);
+    setModalState(firstModalState);
+    setModalVisible(false);
+  };
+
+  const goToExportScreen = () => {
+    setModalVisible(false);
+    setModalState(firstModalState);
+    navigator.navigate('CreateWalletScreen'); //Test route while export screen is finish
+  };
+
+  const changeModalState = () => {
+    setModalState({
+      state: 2,
+      modalText: 'Once you delete this wallet you will lose all your data. Try exporting your key first to avoid losing your data.',
+      firstBtnText: 'Export Key',
+      firstBtnEvent: () => goToExportScreen(),
+      secondBtnText: 'Delete Wallet',
+      secondBtnEvent: () => {},
+    });
+  };
+
+  const firstModalState = {
+    state: 1,
+    modalText: 'Are you sure you want to delete this wallet?',
+    firstBtnText: 'Delete Wallet',
+    firstBtnEvent: () => changeModalState(),
+    secondBtnText: 'Cancel',
+    secondBtnEvent: () => setModalVisible(false),
+  };
+
+  const [modalState, setModalState] = useState(firstModalState);
+  const showModal = () => {
+    setModalVisible(true);
+  };
 
   return (
     <View style={styles.centeredView}>
@@ -17,17 +61,16 @@ const ConfirmationModal = forwardRef((props: {}, ref: ForwardedRef<unknown>) => 
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure you want to delete this wallet?</Text>
-            <Pressable style={[styles.button, styles.buttonDelete]} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={[styles.textStyle, styles.redColor]}>Delete Wallet</Text>
+            <Text style={styles.modalText}>{modalState.modalText}</Text>
+            <Pressable style={[styles.button, styles.buttonDelete]} onPress={modalState.firstBtnEvent}>
+              <Text style={[styles.textStyle, styles.redColor]}>{modalState.firstBtnText}</Text>
             </Pressable>
-            <Pressable style={[styles.button, styles.buttonCancel]} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Cancel</Text>
+            <Pressable style={[styles.button, styles.buttonCancel]} onPress={modalState.state === 1 ? modalState.secondBtnEvent : () => deleteWallet()}>
+              <Text style={styles.textStyle}>{modalState.secondBtnText}</Text>
             </Pressable>
           </View>
         </View>
