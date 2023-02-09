@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { ActivityIndicator, Keyboard, SafeAreaView, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Keyboard, SafeAreaView, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState, useContext, useEffect } from 'react';
 import { Button, Input, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
-import { ImageOverlay } from '../../extra/image-overlay.component';
 import { isAddress } from 'ethers/lib/utils';
 import Toast from 'react-native-toast-message';
 import { WalletContext } from '../../providers/WalletProvider';
 import QRCodeIcon from '../../assets/svg/QRcodeIconSvg';
 import { ArrowForwardIcon } from '../../components/AppIcons';
+import { GradientOverlay } from '../../extra/background-overlay.component';
 
 export const ImportWalletWatch = ({ route, navigation }) => {
   const walletDirection = route.params?.address ?? '';
@@ -70,15 +70,15 @@ export const ImportWalletWatch = ({ route, navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={GlobalStyles.flex}>
-        <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+        <GradientOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
           {loading ? (
             <ActivityIndicator size="large" />
           ) : (
             <View style={GlobalStyles.container}>
-              <View style={{ marginTop: 30 }}>
-                <Text style={{ color: 'white', fontSize: 14, paddingBottom: 8 }}>Address</Text>
+              <View style={Styles.innerContainer}>
+                <Text style={Styles.formText}>Address</Text>
                 <Input style={GlobalStyles.input} onChangeText={setWalletAddress} value={walletAddress} placeholder="Enter address or Scan QR code" disabled={loading} accessoryRight={ScanIcon} />
-                <Text style={{ color: 'white', fontSize: 14, paddingBottom: 8 }}>Name</Text>
+                <Text style={Styles.formText}>Name</Text>
                 <Input style={[GlobalStyles.input, GlobalStyles.marginBottom20]} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" />
                 <Button style={GlobalStyles.akromaRedButton} disabled={loading} onPress={async () => await OnImportPress()} accessoryRight={ArrowForwardIcon}>
                   Watch
@@ -86,8 +86,19 @@ export const ImportWalletWatch = ({ route, navigation }) => {
               </View>
             </View>
           )}
-        </ImageOverlay>
+        </GradientOverlay>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
+
+const Styles = StyleSheet.create({
+  innerContainer: {
+    marginTop: '15%',
+  },
+  formText: {
+    color: 'white',
+    fontSize: 14,
+    paddingBottom: 8,
+  },
+});
