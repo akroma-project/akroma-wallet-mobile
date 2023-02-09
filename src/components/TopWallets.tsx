@@ -24,7 +24,7 @@ interface WalletsSectionParams {
   openModal: () => void;
 }
 const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionParams) => {
-  const { setActive, updateBalance, removeWallet } = React.useContext(WalletContext);
+  const { setActive, updateBalance } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
 
   const navigator = useNavigation<homeScreenProp>();
@@ -72,7 +72,7 @@ const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionPara
     );
   };
 
-  const renderItem = (data, rowMap) => {
+  const renderItem = data => {
     const rowHeightAnimatedValue = new Animated.Value(50);
     return <VisibleItem rowHeightAnimatedValue={rowHeightAnimatedValue} data={data} removeRow={() => {}} />;
   };
@@ -164,7 +164,6 @@ export const TopWallets = ({ wallets }: Props) => {
         <WalletsSection openModal={openModal} title={'My Wallets'} wallets={walletsState} />
         <WalletsSection openModal={openModal} title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
         <ConfirmationModal ref={modalRef} />
-
       </SafeAreaView>
     </View>
   );
