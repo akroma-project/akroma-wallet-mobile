@@ -51,7 +51,6 @@ const GlobalStyles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFFFFF',
   },
-  backdrop: {},
   body: {
     flex: 1,
   },
@@ -453,9 +452,23 @@ const GlobalStyles = StyleSheet.create({
     borderRadius: 8,
     width: '100%',
   },
+  modalBackdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
 });
 
-export const DymanicStyles = ({ viewHeight }) =>
+interface dynamicStylesProps {
+  viewHeight?: number;
+  viewWidth?: number;
+}
+
+const defaultValues = {
+  viewHeight: 1,
+  viewWidth: 1,
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const DymanicStyles = ({ viewHeight, viewWidth }: dynamicStylesProps = defaultValues) =>
   StyleSheet.create({
     walletsContainer: {
       display: 'flex',
