@@ -26,7 +26,7 @@ const ConfirmationModal = forwardRef((props: {}, ref: ForwardedRef<unknown>) => 
   const goToExportScreen = () => {
     setModalVisible(false);
     setModalState(firstModalState);
-    navigator.navigate('CreateWalletScreen'); //Test route while export screen is finish
+    navigator.navigate('ExportWalletScreen'); //Test route while export screen is finish
   };
 
   const changeModalState = () => {
