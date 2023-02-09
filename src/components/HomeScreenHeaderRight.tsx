@@ -78,7 +78,7 @@ export const HomeScreenHeaderRight = () => {
         <Icon name="more-vertical-outline" style={GlobalStyles.iconRight} fill="#fff" />
       </TouchableOpacity>
       {/* <Modal visible={visible} backdropStyle={[GlobalStyles.modalBackdrop]} onBackdropPress={() => setVisible(false)}> */}
-      <Modal isVisible={visible} onDismiss={() => setVisible(false)} onBackButtonPress={() => setVisible(false)} onBackdropPress={() => setVisible(false)} style={{ marginLeft: 0, marginBottom: 0}}>
+      <Modal isVisible={visible} onDismiss={() => setVisible(false)} onBackButtonPress={() => setVisible(false)} onBackdropPress={() => setVisible(false)} style={{ marginLeft: 0, marginBottom: 0 }}>
         <Card
           onLayout={e => layoutSet(e)}
           style={[
