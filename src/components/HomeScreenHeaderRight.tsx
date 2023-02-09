@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Dimensions, LayoutChangeEvent, Text, TouchableOpacity, View } from 'react-native';
-// import { Modal } from 'react-native';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Card, Icon } from '@ui-kitten/components';
-import { Modal } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
 import { HomeStackParamList } from '../navigation/HomeStackNavigator';
+// import { Modal } from 'react-native';
+// import { Modal } from '@ui-kitten/components';
+import Modal from 'react-native-modal';
 
 let layoutUpdate = 0;
 
@@ -64,15 +65,7 @@ export const HomeScreenHeaderRight = () => {
     );
   const layoutSet = (event: LayoutChangeEvent) => {
     const { x, y, width, height } = event.nativeEvent.layout;
-    console.debug(
-      'layoutSet', layoutUpdate,
-      'PositionX:', x,
-      'PositionY:', y,
-      'cardWidth:', width,
-      'cardHeight', height,
-      'vh', viewHeight,
-      'vw', viewWidth,
-      );
+    console.debug('layoutSet', layoutUpdate, 'PositionX:', x, 'PositionY:', y, 'cardWidth:', width, 'cardHeight', height, 'vh', viewHeight, 'vw', viewWidth);
     layoutUpdate = layoutUpdate + 1;
     if (modalWidth !== width && modalHeight !== height) {
       setModalWidth(width);
@@ -84,16 +77,20 @@ export const HomeScreenHeaderRight = () => {
       <TouchableOpacity onPress={() => setVisible(true)}>
         <Icon name="more-vertical-outline" style={GlobalStyles.iconRight} fill="#fff" />
       </TouchableOpacity>
-      <Modal visible={visible} backdropStyle={[GlobalStyles.modalBackdrop]} onBackdropPress={() => setVisible(false)}>
+      {/* <Modal visible={visible} backdropStyle={[GlobalStyles.modalBackdrop]} onBackdropPress={() => setVisible(false)}> */}
+      <Modal isVisible={visible} onDismiss={() => setVisible(false)} onBackButtonPress={() => setVisible(false)} onBackdropPress={() => setVisible(false)} style={{ marginLeft: 0, marginBottom: 0}}>
         <Card
           onLayout={e => layoutSet(e)}
           style={[
             {
               width: viewWidth,
               position: 'absolute',
-              left: -(isNaN(modalWidth) ? 0 : modalWidth) / 2,
-              // bottom: viewHeight/2 - (isNaN(modalHeight) ? 0 : modalHeight) / 2,
-              bottom: 2 -viewHeight/2 + (isNaN(modalHeight) ? 0 : modalHeight) / 2 ,
+              // left: -(isNaN(modalWidth) ? 0 : modalWidth) / 2,
+              left: 0,
+              bottom: 0,
+              // marginLeft: 0,
+              // // bottom: viewHeight/2 - (isNaN(modalHeight) ? 0 : modalHeight) / 2,
+              // bottom: 2 - viewHeight / 2 + (isNaN(modalHeight) ? 0 : modalHeight) / 2,
               borderBottomWidth: 1,
               borderBottomColor: '#f00',
             },
