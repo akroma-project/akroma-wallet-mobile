@@ -164,6 +164,7 @@ export const TopWallets = ({ wallets }: Props) => {
         <WalletsSection openModal={openModal} title={'My Wallets'} wallets={walletsState} />
         <WalletsSection openModal={openModal} title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
         <ConfirmationModal ref={modalRef} />
+
       </SafeAreaView>
     </View>
   );

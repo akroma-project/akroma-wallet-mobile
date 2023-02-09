@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { ActivityIndicator, Keyboard, Platform, SafeAreaView, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Platform, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState } from 'react';
-import { Button, Input } from '@ui-kitten/components';
+import { Input, Button } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
 import { AkromaRn } from '@akroma-project/akroma-react-native';
 import { ImageOverlay } from '../../extra/image-overlay.component';
@@ -12,6 +12,9 @@ import { PermissionsAndroid } from 'react-native';
 import { checkPermission } from '../../utils/Permissions';
 import { WalletContext } from '../../providers/WalletProvider';
 import Toast from 'react-native-toast-message';
+import CloudSvg from '../../assets/svg/Cloud';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import RedCrossSvg from '../../assets/svg/RedCrossSvg';
 
 const akromaRn = new AkromaRn();
 const permissionsRequiered = [PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE];
@@ -22,6 +25,7 @@ export const ImportWalletKeystore = () => {
   const { walletsRepository } = useDatabaseConnection();
   const [walletJson, walletJsonChange] = useState('');
   const [walletPassword, walletPasswordChange] = useState('');
+  const [fileName, setFileName] = useState('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   React.useEffect(() => {
@@ -33,6 +37,7 @@ export const ImportWalletKeystore = () => {
     walletJsonChange('');
     walletPasswordChange('');
     setName('');
+    setFileName('');
   };
   const OnImportPress = async () => {
     setLoading(true);
@@ -96,6 +101,10 @@ export const ImportWalletKeystore = () => {
     }
   };
   const loadJson = async () => {
+    if (fileName) {
+      setFileName('');
+      return;
+    }
     try {
       const pickerResult = await DocumentPicker.pickSingle({
         presentationStyle: 'fullScreen',
@@ -103,6 +112,7 @@ export const ImportWalletKeystore = () => {
         // type: DocumentPicker.types.plainText,
       });
       pickerResult.uri;
+      setFileName(pickerResult.name);
       const res = await RNFS.readFile(pickerResult.fileCopyUri);
       walletJsonChange(res);
     } catch (e) {
@@ -112,27 +122,34 @@ export const ImportWalletKeystore = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={GlobalStyles.flex}>
-        <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+        <ImageOverlay style={[GlobalStyles.container, GlobalStyles.pt100]} source={require('../../assets/images/background.png')}>
           {loading ? (
             <ActivityIndicator size="large" />
           ) : (
             <View style={GlobalStyles.container}>
               <View>
-                <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-                <Input style={GlobalStyles.input} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Current Wallet Password" disabled={loading} />
-
-                <Input multiline={true} style={GlobalStyles.button} value={walletJson} numberOfLines={14} placeholder="Wallet JSON" disabled={true} />
+                <View style={GlobalStyles.input}>
+                  <Input style={[GlobalStyles.mb5]} onChangeText={setName} value={name} placeholder="Wallet name" disabled={loading} />
+                  <Text style={[GlobalStyles.smallTextWhite, GlobalStyles.mb15]}>Must contain at least 5 characters</Text>
+                </View>
+                <View style={GlobalStyles.input}>
+                  <Input style={GlobalStyles.mb5} onChangeText={walletPasswordChange} value={walletPassword} placeholder="Current Wallet Password" disabled={loading} />
+                  <Text style={[GlobalStyles.smallTextWhite, GlobalStyles.mb15]}>Must contain at least 4 numbers</Text>
+                </View>
 
                 {loading ? (
                   <ActivityIndicator size="large" />
                 ) : (
                   <View>
-                    <View style={GlobalStyles.input}>
-                      <Button style={GlobalStyles.input} onPress={async () => await loadJson()}>
-                        Load JSON
-                      </Button>
+                    <View style={[GlobalStyles.input, GlobalStyles.mb30]}>
+                      <TouchableOpacity style={GlobalStyles.akromaWhiteButton} onPress={async () => await loadJson()}>
+                        <View style={[GlobalStyles.ml20, GlobalStyles.akromaButtonIcon]}>{fileName ? <RedCrossSvg /> : <CloudSvg />}</View>
+                        <View style={fileName ? GlobalStyles.grayTextAkromaButtonContainerSelected : GlobalStyles.grayTextAkromaButtonContainer}>
+                          {fileName ? <Text style={GlobalStyles.grayTextAkromaButtonSelected}>{fileName}</Text> : <Text style={GlobalStyles.grayTextAkromaButton}>Load JSON</Text>}
+                        </View>
+                      </TouchableOpacity>
                     </View>
-                    <Button disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
+                    <Button style={loading || invalid() ? GlobalStyles.akromaRedButtonDisabled : GlobalStyles.akromaRedButton} disabled={loading || invalid()} onPress={async () => await OnImportPress()}>
                       IMPORT
                     </Button>
                   </View>
