@@ -74,7 +74,7 @@ const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionPara
 
   const renderItem = (data, rowMap) => {
     const rowHeightAnimatedValue = new Animated.Value(50);
-    return <VisibleItem rowHeightAnimatedValue={rowHeightAnimatedValue} data={data} removeRow={() => confirmationModal(rowMap, data.item)} />;
+    return <VisibleItem rowHeightAnimatedValue={rowHeightAnimatedValue} data={data} removeRow={() => {}} />;
   };
 
   const HiddenItemWithActions = props => {
@@ -82,7 +82,7 @@ const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionPara
 
     if (rightActionActivated) {
       Animated.spring(rowActionAnimatedValue, {
-        toValue: 500,
+        toValue: 100,
         useNativeDriver: false,
       }).start();
     } else {
@@ -114,6 +114,8 @@ const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionPara
   const ListOrMessage = wallets?.length ? (
     <SwipeListView
       data={wallets}
+      closeOnRowOpen
+      closeOnRowBeginSwipe
       renderItem={renderItem}
       renderHiddenItem={renderHiddenItem}
       leftOpenValue={75}
@@ -121,7 +123,6 @@ const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionPara
       leftActivationValue={100}
       rightActivationValue={-100}
       leftActionValue={0}
-      rightActionValue={-500}
       disableRightSwipe
     />
   ) : null;
