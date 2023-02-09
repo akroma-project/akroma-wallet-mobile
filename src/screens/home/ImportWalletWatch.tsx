@@ -28,21 +28,25 @@ export const ImportWalletWatch = ({ route, navigation }) => {
   const onSuccessWatchWallet = () => {
     setName('');
     setWalletAddress('');
+    setLoading(false);
+  };
+
+  const validationMessage = (message: string) => {
     Toast.show({
-      text1: 'The wallet is saved',
+      type: 'error',
+      text1: message,
       position: 'top',
     });
+    setLoading(false);
   };
 
   const OnImportPress = async () => {
     setLoading(true);
     if (!isValidAddress) {
-      Toast.show({
-        type: 'error',
-        text1: 'The address is no valid',
-        position: 'top',
-      });
-      setLoading(false);
+      validationMessage('The address is not valid');
+      return;
+    } else if (name.length < 5) {
+      validationMessage('The wallet name should be at least 5 characters');
       return;
     }
     setTimeout(async () => {
@@ -54,7 +58,6 @@ export const ImportWalletWatch = ({ route, navigation }) => {
       });
       onSuccessWatchWallet();
       addWallet(created);
-      setLoading(false);
       navigation.navigate('HomeScreen');
     }, 1500);
   };
@@ -86,6 +89,7 @@ export const ImportWalletWatch = ({ route, navigation }) => {
               </View>
             </View>
           )}
+          <Toast />
         </GradientOverlay>
       </SafeAreaView>
     </TouchableWithoutFeedback>
