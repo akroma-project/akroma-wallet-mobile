@@ -338,6 +338,19 @@ const GlobalStyles = StyleSheet.create({
   textWhite: {
     color: '#FFFFFF',
   },
+  menuOptionText: {
+    fontFamily: 'SF Pro Text',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#1C1C1E',
+  },
+  mr5: {
+    marginRight: 5,
+  },
+  mr10: {
+    marginRight: 10,
+  },
   mb5: {
     marginBottom: 5,
   },
@@ -452,8 +465,9 @@ const GlobalStyles = StyleSheet.create({
     borderRadius: 8,
     width: '100%',
   },
-  modalBackdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  menuModal: {
+    marginLeft: 0,
+    marginBottom: 0,
   },
 });
 
@@ -467,7 +481,6 @@ const defaultValues = {
   viewWidth: 1,
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DymanicStyles = ({ viewHeight, viewWidth }: dynamicStylesProps = defaultValues) =>
   StyleSheet.create({
     walletsContainer: {
@@ -477,6 +490,14 @@ export const DymanicStyles = ({ viewHeight, viewWidth }: dynamicStylesProps = de
       backgroundColor: '#fff',
       height: 'auto',
       minHeight: viewHeight * 0.61,
+    },
+    menuCard: {
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+      width: viewWidth,
+      position: 'absolute',
+      left: 0,
+      bottom: 0,
     },
   });
 export default GlobalStyles;
