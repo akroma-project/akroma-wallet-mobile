@@ -1,6 +1,6 @@
 import { Card } from '@ui-kitten/components';
 import React, { useState } from 'react';
-import { Dimensions, Text } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import CreateWalletSvg from '../assets/svg/CreateWalletSvg';
@@ -20,7 +20,7 @@ export interface optionListItem {
   onPress: (...args: any) => any;
 }
 
-const BottomMenu = ({ visible, onDismiss, onBackButtonPress, onBackdropPress }: Props) => {
+const BottomMenu = ({ visible, onDismiss, onBackButtonPress, onBackdropPress, optionList }: Props) => {
   const [viewWidth, setViewWidth] = useState(Dimensions.get('screen').width);
   Dimensions.addEventListener('change', () => {
     setViewWidth(Dimensions.get('screen').width);
@@ -28,10 +28,12 @@ const BottomMenu = ({ visible, onDismiss, onBackButtonPress, onBackdropPress }: 
   return (
     <Modal isVisible={visible} onDismiss={onDismiss} onBackButtonPress={onBackButtonPress} onBackdropPress={onBackdropPress} style={[GlobalStyles.menuModal]}>
       <Card style={[DymanicStyles({ viewWidth }).menuCard]} disabled={true}>
-        <TouchableOpacity style={[GlobalStyles.displayFlex, GlobalStyles.flexRow]}>
-          <CreateWalletSvg style={[GlobalStyles.mr10]} />
-          <Text style={[GlobalStyles.menuOptionText]}>Create Wallet</Text>
-        </TouchableOpacity>
+        {optionList.map(({ onPress, text, icon }: optionListItem) => (
+          <TouchableOpacity onPress={onPress} style={[GlobalStyles.displayFlex, GlobalStyles.flexRow]}>
+            <View style={[GlobalStyles.mr10]}>{icon}</View>
+            <Text style={[GlobalStyles.menuOptionText]}>{text}</Text>
+          </TouchableOpacity>
+        ))}
       </Card>
     </Modal>
   );
