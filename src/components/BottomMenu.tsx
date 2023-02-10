@@ -1,4 +1,3 @@
-import { Card } from '@ui-kitten/components';
 import React, { useState } from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
