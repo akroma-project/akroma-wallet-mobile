@@ -338,6 +338,19 @@ const GlobalStyles = StyleSheet.create({
   textWhite: {
     color: '#FFFFFF',
   },
+  menuOption: {
+    borderBottomColor: '#1C1C1E',
+    borderBottomWidth: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    width: '100%',
+  },
+  menuOptionCenter: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
   menuOptionText: {
     fontFamily: 'SF Pro Text',
     fontStyle: 'normal',
@@ -350,6 +363,9 @@ const GlobalStyles = StyleSheet.create({
   },
   mr10: {
     marginRight: 10,
+  },
+  mr16: {
+    marginRight: 16,
   },
   mb5: {
     marginBottom: 5,
@@ -468,6 +484,7 @@ const GlobalStyles = StyleSheet.create({
   menuModal: {
     marginLeft: 0,
     marginBottom: 0,
+    padding: 0,
   },
 });
 
@@ -498,6 +515,8 @@ export const DymanicStyles = ({ viewHeight, viewWidth }: dynamicStylesProps = de
       position: 'absolute',
       left: 0,
       bottom: 0,
+      backgroundColor: '#FFFFFF',
+      paddingTop: 10,
     },
   });
 export default GlobalStyles;

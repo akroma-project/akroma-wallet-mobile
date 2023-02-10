@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
-import CreateWalletSvg from '../assets/svg/CreateWalletSvg';
 import GlobalStyles, { DymanicStyles } from '../constants/GlobalStyles';
 
 interface Props {
@@ -27,14 +26,14 @@ const BottomMenu = ({ visible, onDismiss, onBackButtonPress, onBackdropPress, op
   });
   return (
     <Modal isVisible={visible} onDismiss={onDismiss} onBackButtonPress={onBackButtonPress} onBackdropPress={onBackdropPress} style={[GlobalStyles.menuModal]}>
-      <Card style={[DymanicStyles({ viewWidth }).menuCard]} disabled={true}>
+      <View style={[DymanicStyles({ viewWidth }).menuCard]}>
         {optionList.map(({ onPress, text, icon }: optionListItem) => (
-          <TouchableOpacity onPress={onPress} style={[GlobalStyles.displayFlex, GlobalStyles.flexRow]}>
-            <View style={[GlobalStyles.mr10]}>{icon}</View>
-            <Text style={[GlobalStyles.menuOptionText]}>{text}</Text>
+          <TouchableOpacity onPress={onPress} style={[GlobalStyles.displayFlex, GlobalStyles.flexRow, GlobalStyles.menuOption]}>
+            <View style={[GlobalStyles.mr16, GlobalStyles.menuOptionCenter]}>{icon}</View>
+            <Text style={[GlobalStyles.menuOptionText, GlobalStyles.menuOptionCenter]}>{text}</Text>
           </TouchableOpacity>
         ))}
-      </Card>
+      </View>
     </Modal>
   );
 };
