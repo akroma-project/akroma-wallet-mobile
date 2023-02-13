@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { HomeTransferButtons } from '../../components/HomeTransferButtons';
+import PanUpHandler from '../../components/PanUpHandler';
 import { TransactionSection } from '../../components/TransactionSection';
 import MainLayout from '../../layout/MainLayout';
 
@@ -13,8 +14,9 @@ export const TransactionScreen = () => {
       <View style={{ display: displayButtons }}>
         <HomeTransferButtons />
       </View>
-
-      <TransactionSection setDisplayButtons={setDisplayButtons} />
+      <PanUpHandler>
+        <TransactionSection setDisplayButtons={setDisplayButtons} />
+      </PanUpHandler>
     </MainLayout>
   );
 };

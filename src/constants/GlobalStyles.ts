@@ -305,7 +305,6 @@ const GlobalStyles = StyleSheet.create({
     gap: 40,
     justifyContent: 'space-between',
     alignSelf: 'center',
-    height: '13%',
     width: 344,
   },
   textButton: {

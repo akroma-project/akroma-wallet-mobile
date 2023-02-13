@@ -81,7 +81,7 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
         console.debug('file written');
       })
       .catch(err => {
-        console.log(err.message);
+        // console.log(err.message);
       });
   };
 
