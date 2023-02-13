@@ -69,7 +69,7 @@ export const ExportWalletScreen = () => {
         exportMessage('File downloaded in file system');
         console.debug('file written');
       })
-      .catch(err => {
+      .catch(_err => {
         // console.log(err.message);
       });
   };
