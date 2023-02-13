@@ -26,7 +26,7 @@ export type HomeStackParamList = {
   SendCoinScreen: { address: string } | undefined;
   ScannerScreen: { watchedWallet: boolean } | undefined;
   ReceiveCoinScreen: undefined;
-  SuccessScreen: undefined;
+  SuccessScreen: { message: string } | undefined;
 
   CreateWalletScreen: undefined;
   WalletSettingsScreen: { wallet: WalletModel };
