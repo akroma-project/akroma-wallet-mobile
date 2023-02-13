@@ -51,7 +51,6 @@ const GlobalStyles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFFFFF',
   },
-  backdrop: {},
   body: {
     flex: 1,
   },
@@ -339,6 +338,35 @@ const GlobalStyles = StyleSheet.create({
   textWhite: {
     color: '#FFFFFF',
   },
+  menuOption: {
+    borderBottomColor: '#1C1C1E',
+    borderBottomWidth: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    width: '100%',
+  },
+  menuOptionCenter: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  menuOptionText: {
+    fontFamily: 'SF Pro Text',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#1C1C1E',
+  },
+  mr5: {
+    marginRight: 5,
+  },
+  mr10: {
+    marginRight: 10,
+  },
+  mr16: {
+    marginRight: 16,
+  },
   mb5: {
     marginBottom: 5,
   },
@@ -453,9 +481,24 @@ const GlobalStyles = StyleSheet.create({
     borderRadius: 8,
     width: '100%',
   },
+  menuModal: {
+    marginLeft: 0,
+    marginBottom: 0,
+    padding: 0,
+  },
 });
 
-export const DymanicStyles = ({ viewHeight }) =>
+interface dynamicStylesProps {
+  viewHeight?: number;
+  viewWidth?: number;
+}
+
+const defaultValues = {
+  viewHeight: 1,
+  viewWidth: 1,
+};
+
+export const DymanicStyles = ({ viewHeight, viewWidth }: dynamicStylesProps = defaultValues) =>
   StyleSheet.create({
     walletsContainer: {
       display: 'flex',
@@ -464,6 +507,16 @@ export const DymanicStyles = ({ viewHeight }) =>
       backgroundColor: '#fff',
       height: 'auto',
       minHeight: viewHeight * 0.61,
+    },
+    menuCard: {
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+      width: viewWidth,
+      position: 'absolute',
+      left: 0,
+      bottom: 0,
+      backgroundColor: '#FFFFFF',
+      paddingTop: 10,
     },
   });
 export default GlobalStyles;
