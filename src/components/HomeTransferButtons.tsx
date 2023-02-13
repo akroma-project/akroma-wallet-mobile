@@ -14,7 +14,7 @@ export const HomeTransferButtons = () => {
         let { height } = event.nativeEvent.layout;
         setSendButtonsHeight(height);
       }}
-      style={[GlobalStyles.transferButtonsContainer, { borderWidth: 1, borderColor: 'green' }]}>
+      style={[GlobalStyles.transferButtonsContainer]}>
       <Button accessoryLeft={() => <ArrowupSvg />} style={GlobalStyles.transferButton} status="control">
         {() => <Text style={GlobalStyles.textButton}>Send</Text>}
       </Button>

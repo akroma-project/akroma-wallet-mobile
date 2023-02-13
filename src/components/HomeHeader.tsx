@@ -19,7 +19,7 @@ export const HomeHeader = (params: Params) => {
         let { height } = event.nativeEvent.layout;
         setMainHeaderHeight(height);
       }}
-      style={[GlobalStyles.headerContainer, { borderWidth: 1, borderColor: 'red' }]}>
+      style={[GlobalStyles.headerContainer]}>
       <View>
         {params.address && (
           <View>

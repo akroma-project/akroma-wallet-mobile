@@ -72,7 +72,7 @@ export const HomeResumeAmount = () => {
         let { height } = event.nativeEvent.layout;
         setBalanceHeaderHeight(height);
       }}
-      style={[styles.resumeContainer, { borderWidth: 1, borderColor: 'blue' }]}>
+      style={[styles.resumeContainer]}>
       <AkaIcon style={styles.icon} />
 
       <LinearGradient style={styles.resumeCard} colors={['#8F0000', '#DB0000']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} locations={[0.0588, 0.9449]}>
