@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, FlatList, Dimensions } from 'react-native';
+import { SafeAreaView, FlatList } from 'react-native';
 
 import { getTransactionsByAddress } from '../services/AkromaApi';
 import { TransactionCard } from './TransactionCard';
