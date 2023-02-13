@@ -54,7 +54,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <HomeStack.Screen name="TransactionScreen" component={TransactionScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="CreateWalletScreen" component={CreateWalletScreen} options={{ title: 'Create', headerShown: false }} />
-      <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ title: 'Send' }} />
+      <HomeStack.Screen name="SendCoinScreen" component={SendCoinScreen} options={{ header: () => <TransparentHeader title={'Send'} /> }} />
       <HomeStack.Screen name="ScannerScreen" component={ScannerScreen} options={{ title: 'Scan' }} />
       <HomeStack.Screen name="ReceiveCoinScreen" component={ReceiveCoinScreen} options={{ title: 'Receive' }} />
       <HomeStack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown: false }} />

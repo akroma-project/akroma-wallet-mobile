@@ -235,6 +235,9 @@ const GlobalStyles = StyleSheet.create({
     fontWeight: '400',
     color: '#fff',
   },
+  mt20percent: {
+    marginTop: '20%',
+  },
   mt20: {
     marginTop: 20,
   },

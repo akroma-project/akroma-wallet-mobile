@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, Alert, SafeAreaView, ScrollView, TouchableOpacity, View, RefreshControl } from 'react-native';
+import { ActivityIndicator, Alert, SafeAreaView, ScrollView, TouchableOpacity, View, RefreshControl, StyleSheet } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useEffect, useState } from 'react';
 import { WalletContext } from '../../providers/WalletProvider';
@@ -12,6 +12,9 @@ import { TransactionCard } from '../../components/TransactionCard';
 import { WalletModel } from '../../data/entities/wallet';
 import _ from 'lodash';
 import { GlobalContext } from '../../providers/GlobalProvider';
+import { GradientOverlay } from '../../extra/background-overlay.component';
+import QRCodeIcon from '../../assets/svg/QRcodeIconSvg';
+import { ArrowForwardIcon } from '../../components/AppIcons';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -100,18 +103,10 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     ]);
   };
 
-  const ScanIcon = (props: any) => {
+  const ScanIcon = () => {
     return (
       <TouchableOpacity onPress={() => navigator.navigate('ScannerScreen')}>
-        <Icon {...props} name="video" />
-      </TouchableOpacity>
-    );
-  };
-
-  const ContactIcon = (props: any) => {
-    return (
-      <TouchableOpacity>
-        <Icon {...props} name="person" />
+        <QRCodeIcon />
       </TouchableOpacity>
     );
   };
@@ -140,36 +135,63 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
 
   return (
     <SafeAreaView style={GlobalStyles.flex}>
-      <View style={GlobalStyles.container}>
-        {sending || showStatus ? (
-          <View style={GlobalStyles.mt20}>
-            <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
-            <View style={GlobalStyles.mt20}>{status === 'Successful' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
-            {!walletExists() && status === 'Successful' && (
-              <View style={GlobalStyles.mt20}>
-                <Button onPress={addToWatchList}>Add to Watch List</Button>
-              </View>
-            )}
+      <GradientOverlay style={GlobalStyles.container}>
+        <View style={[GlobalStyles.container, GlobalStyles.mt20percent]}>
+          <View style={Styles.tabContainer}>
+            <Text style={Styles.tabText}>Enter Address</Text>
+            <Text style={Styles.tabText}>Watching</Text>
           </View>
-        ) : (
-          <View>
-            <Input style={GlobalStyles.input} onChangeText={setAddress} value={address} placeholder="To" accessoryLeft={ContactIcon} accessoryRight={ScanIcon} />
-            <Input style={GlobalStyles.input} onChangeText={setAmount} value={amount} placeholder="Amount to send" keyboardType="number-pad" />
-            <Button disabled={invalid()} onPress={OnSendPress}>
-              SEND
-            </Button>
-            <Text style={GlobalStyles.label}>A confirm dialog will open before sending</Text>
-            <ScrollView style={GlobalStyles.walletsList} contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-              {/* {state.wallets.length < 1 && <NoWallet />} */}
-              {state.wallets.length > 0 &&
-                _.sortBy(
-                  state.wallets.filter(wallet1 => wallet1.address !== state.wallet.address),
-                  x => x.address,
-                ).map((item, index) => <ListItem key={index} title={item.name} description={item.address} onPress={() => onWalletPress(item)} />)}
-            </ScrollView>
-          </View>
-        )}
-      </View>
+          {sending || showStatus ? (
+            <View>
+              <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
+              <View style={GlobalStyles.mt20}>{status === 'Successful' || status === 'Error' ? <Button onPress={anotherSend}>Make another Transaction</Button> : <ActivityIndicator size="large" />}</View>
+              {!walletExists() && status === 'Successful' && (
+                <View style={GlobalStyles.mt20}>
+                  <Button onPress={addToWatchList}>Add to Watch List</Button>
+                </View>
+              )}
+            </View>
+          ) : (
+            <View>
+              <Text style={Styles.inputText}>Address</Text>
+              <Input style={GlobalStyles.input} onChangeText={setAddress} value={address} placeholder="Enter address or Scan QR code" accessoryRight={ScanIcon} />
+              <Text style={[Styles.inputText, GlobalStyles.mt20]}>Amount</Text>
+              <Input style={GlobalStyles.input} onChangeText={setAmount} value={amount} placeholder="Amount to send" keyboardType="number-pad" />
+              <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.mt20]} disabled={invalid()} onPress={OnSendPress} accessoryRight={ArrowForwardIcon}>
+                Send
+              </Button>
+              <Text style={GlobalStyles.label}>A confirm dialog will open before sending</Text>
+              {/* <ScrollView style={GlobalStyles.walletsList} contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                {state.wallets.length > 0 &&
+                  _.sortBy(
+                    state.wallets.filter(wallet1 => wallet1.address !== state.wallet.address),
+                    x => x.address,
+                  ).map((item, index) => <ListItem key={index} title={item.name} description={item.address} onPress={() => onWalletPress(item)} />)}
+              </ScrollView> */}
+            </View>
+          )}
+        </View>
+      </GradientOverlay>
     </SafeAreaView>
   );
 };
+
+const Styles = StyleSheet.create({
+  tabContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginHorizontal: '8%',
+    marginBottom: '10%',
+  },
+  tabText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  inputText: {
+    color: 'white',
+    fontSize: 14,
+    paddingBottom: 8,
+  },
+});
