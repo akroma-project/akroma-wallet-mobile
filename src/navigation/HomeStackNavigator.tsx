@@ -62,7 +62,7 @@ export function HomeStackNavigator() {
       <HomeStack.Screen name="ImportWalletKeystore" component={ImportWalletKeystore} options={{ header: () => <TransparentHeader title={'Import Keystore'} /> }} />
       <HomeStack.Screen name="ImportWalletPrivateKey" component={ImportWalletPrivateKey} options={{ title: 'Import Private Key' }} />
       <HomeStack.Screen name="ImportWalletSeedPhrase" component={ImportWalletSeedPhrase} options={{ title: 'Import Seed Phrase' }} />
-      <HomeStack.Screen name="ImportWalletWatch" component={ImportWalletWatch} options={{ title: 'Watch Wallet' }} />
+      <HomeStack.Screen name="ImportWalletWatch" component={ImportWalletWatch} options={{ header: () => <TransparentHeader title={'Watch Wallet'} /> }} />
       <HomeStack.Screen name="ExportWalletScreen" component={ExportWalletScreen} options={{ header: () => <TransparentHeader title={'Export Wallet Keystore'} /> }} />
       <HomeStack.Screen name="ExportWalletNotice" component={ExportWalletNotice} options={{ headerShown: false }} />
     </HomeStack.Navigator>

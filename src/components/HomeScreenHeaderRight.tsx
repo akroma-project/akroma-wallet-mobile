@@ -1,47 +1,65 @@
-import { useActionSheet } from '@expo/react-native-action-sheet';
+import * as React from 'react';
+import { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Icon } from '@ui-kitten/components';
-import * as React from 'react';
-import { TouchableOpacity } from 'react-native';
 import GlobalStyles from '../constants/GlobalStyles';
 import { HomeStackParamList } from '../navigation/HomeStackNavigator';
+import BottomMenu from './BottomMenu';
+import CreateWalletSvg from '../assets/svg/CreateWalletSvg';
+import ImportKeystoreSvg from '../assets/svg/ImportKeystoreSvg';
+import ImportWalletPrivateKeySvg from '../assets/svg/ImportPrivateKeySvg';
+import ImportWalletSeedPhraseSvg from '../assets/svg/ImportSeedPhraseSvg';
+import ImportWalletWatchSvg from '../assets/svg/WatchWalletSvg';
 
 export const HomeScreenHeaderRight = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
-  const { showActionSheetWithOptions } = useActionSheet();
+  const [visible, setVisible] = useState(false);
+
+  const hideMenu = () => {
+    setVisible(false);
+  };
 
   return (
-    <TouchableOpacity
-      onPress={() =>
-        showActionSheetWithOptions(
+    <>
+      <TouchableOpacity onPress={() => setVisible(true)}>
+        <Icon name="more-vertical-outline" style={GlobalStyles.iconRight} fill="#fff" />
+      </TouchableOpacity>
+      <BottomMenu
+        visible={visible}
+        onBackdropPress={hideMenu}
+        onBackButtonPress={hideMenu}
+        onDismiss={hideMenu}
+        optionList={[
           {
-            options: ['Create Wallet', 'Import Keystore', 'Import Private Key', 'Import Seed Phrase', 'Watch Wallet', 'Cancel'],
-            cancelButtonIndex: 5 || 99,
-            destructiveButtonIndex: 5,
-            showSeparators: true,
+            icon: <CreateWalletSvg />,
+            text: 'Create Wallet',
+            onPress: () => navigator.navigate('CreateWalletScreen'),
           },
-          (index: number) => {
-            if (index === 0) {
-              navigator.navigate('CreateWalletScreen');
-            }
-            if (index === 1) {
-              navigator.navigate('ImportWalletKeystore');
-            }
-            if (index === 2) {
-              navigator.navigate('ImportWalletPrivateKey');
-            }
-            if (index === 3) {
-              navigator.navigate('ImportWalletSeedPhrase');
-            }
-            if (index === 4) {
-              navigator.navigate('ImportWalletWatch');
-            }
+          {
+            icon: <ImportKeystoreSvg />,
+            text: 'Import Keystore',
+            onPress: () => navigator.navigate('ImportWalletKeystore'),
           },
-        )
-      }>
-      <Icon name="more-vertical-outline" style={GlobalStyles.iconRight} fill="#fff" />
-    </TouchableOpacity>
+          {
+            icon: <ImportWalletPrivateKeySvg />,
+            text: 'Import Private Key',
+            onPress: () => navigator.navigate('ImportWalletPrivateKey'),
+          },
+          {
+            icon: <ImportWalletSeedPhraseSvg />,
+            text: 'Import Seed Phrase',
+            onPress: () => navigator.navigate('ImportWalletSeedPhrase'),
+          },
+          {
+            icon: <ImportWalletWatchSvg />,
+            text: 'Watch Wallet',
+            onPress: () => navigator.navigate('ImportWalletWatch'),
+          },
+        ]}
+      />
+    </>
   );
 };
