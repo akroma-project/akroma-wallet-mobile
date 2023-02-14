@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { ActivityIndicator, Alert, SafeAreaView, ScrollView, TouchableOpacity, View, RefreshControl, StyleSheet } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
-import { useEffect, useState } from 'react';
 import { WalletContext } from '../../providers/WalletProvider';
-import { Input, Button, Text, Icon, ListItem } from '@ui-kitten/components';
+import { Input, Button, Text, ListItem } from '@ui-kitten/components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
@@ -15,19 +14,21 @@ import { GlobalContext } from '../../providers/GlobalProvider';
 import { GradientOverlay } from '../../extra/background-overlay.component';
 import QRCodeIcon from '../../assets/svg/QRcodeIconSvg';
 import { ArrowForwardIcon } from '../../components/AppIcons';
+import ArrowDownSelectSvg from '../../assets/svg/ArrowDownSelectSvg';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
 
   const sendToAddress = route.params?.address ?? '';
+  const [isWatchingActive, setIsWatchingActive] = useState(false);
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
   const [showStatus, setShowStatus] = useState(false);
-  const [sending, setSending] = React.useState(false);
-  const { send, state, loadWallets } = React.useContext(WalletContext);
-  const { setNewWatchWallet } = React.useContext(GlobalContext);
+  const [sending, setSending] = useState(false);
+  const { send, state, loadWallets } = useContext(WalletContext);
+  const { setNewWatchWallet } = useContext(GlobalContext);
   const u = new Utils();
 
   const addToWatchList = () => {
@@ -137,10 +138,6 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     <SafeAreaView style={GlobalStyles.flex}>
       <GradientOverlay style={GlobalStyles.container}>
         <View style={[GlobalStyles.container, GlobalStyles.mt20percent]}>
-          <View style={Styles.tabContainer}>
-            <Text style={Styles.tabText}>Enter Address</Text>
-            <Text style={Styles.tabText}>Watching</Text>
-          </View>
           {sending || showStatus ? (
             <View>
               <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
@@ -153,8 +150,23 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
             </View>
           ) : (
             <View>
+              <View style={Styles.tabContainer}>
+                <TouchableOpacity onPress={() => setIsWatchingActive(false)}>
+                  <Text style={[Styles.tabText, { borderBottomColor: !isWatchingActive ? 'white' : 'rgba(0,0,0,0)' }]}>Enter Address</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setIsWatchingActive(true)}>
+                  <Text style={[Styles.tabText, { borderBottomColor: isWatchingActive ? 'white' : 'rgba(0,0,0,0)' }]}>Watching</Text>
+                </TouchableOpacity>
+              </View>
               <Text style={Styles.inputText}>Address</Text>
-              <Input style={GlobalStyles.input} onChangeText={setAddress} value={address} placeholder="Enter address or Scan QR code" accessoryRight={ScanIcon} />
+              {isWatchingActive ? (
+                <TouchableOpacity style={Styles.arrowContainer} onPress={() => console.log('Nooo')}>
+                  <Text style={Styles.selectText}>Select</Text>
+                  <ArrowDownSelectSvg />
+                </TouchableOpacity>
+              ) : (
+                <Input style={GlobalStyles.input} onChangeText={setAddress} disabled={isWatchingActive} value={address} placeholder="Enter address or Scan QR code" accessoryRight={ScanIcon} />
+              )}
               <Text style={[Styles.inputText, GlobalStyles.mt20]}>Amount</Text>
               <Input style={GlobalStyles.input} onChangeText={setAmount} value={amount} placeholder="Amount to send" keyboardType="number-pad" />
               <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.mt20]} disabled={invalid()} onPress={OnSendPress} accessoryRight={ArrowForwardIcon}>
@@ -188,10 +200,25 @@ const Styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '700',
+    paddingBottom: 5,
+    borderBottomWidth: 3,
   },
   inputText: {
     color: 'white',
     fontSize: 14,
     paddingBottom: 8,
+  },
+  arrowContainer: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  selectText: {
+    color: 'gray',
   },
 });
