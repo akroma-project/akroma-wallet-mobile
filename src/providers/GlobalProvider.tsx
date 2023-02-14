@@ -5,6 +5,8 @@ type Props = {
   setDisplayExport: React.Dispatch<React.SetStateAction<boolean>>;
   newWatchWallet: string;
   setNewWatchWallet: React.Dispatch<React.SetStateAction<string>>;
+  appHeight: number;
+  setAppHeight: React.Dispatch<React.SetStateAction<number>>;
   mainHeaderHeight: number;
   setMainHeaderHeight: React.Dispatch<React.SetStateAction<number>>;
   balanceHeaderHeight: number;
@@ -22,6 +24,7 @@ interface serverProviderProps {
 const GlobalProvider = (props: serverProviderProps) => {
   const [displayExport, setDisplayExport] = useState(false);
   const [newWatchWallet, setNewWatchWallet] = useState('');
+  const [appHeight, setAppHeight] = useState(0);
   const [mainHeaderHeight, setMainHeaderHeight] = useState(0);
   const [balanceHeaderHeight, setBalanceHeaderHeight] = useState(0);
   const [sendButtonsHeight, setSendButtonsHeight] = useState(0);
@@ -30,6 +33,8 @@ const GlobalProvider = (props: serverProviderProps) => {
     setDisplayExport,
     newWatchWallet,
     setNewWatchWallet,
+    appHeight,
+    setAppHeight,
     mainHeaderHeight,
     setMainHeaderHeight,
     balanceHeaderHeight,

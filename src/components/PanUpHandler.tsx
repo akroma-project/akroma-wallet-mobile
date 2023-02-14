@@ -5,11 +5,10 @@ import { GlobalContext } from '../providers/GlobalProvider';
 import { TransactionSectionTop } from './TransactionSectionTop';
 
 let PanUpHandler = ({ children }) => {
-  const { mainHeaderHeight, balanceHeaderHeight, sendButtonsHeight } = useContext(GlobalContext);
-  const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
-  const [animatedHeight, setAnimatedHeight] = useState(new Animated.Value(viewHeight * 0.61));
-  const [leftLimit, setLeftLimit] = useState(viewHeight * 0.3);
-  const [rightLimit, setRightLimit] = useState(viewHeight * 0.59);
+  const { appHeight, mainHeaderHeight, balanceHeaderHeight, sendButtonsHeight } = useContext(GlobalContext);
+  const [animatedHeight, setAnimatedHeight] = useState(new Animated.Value(appHeight * 0.3));
+  const [leftLimit, setLeftLimit] = useState(appHeight * 0.3);
+  const [rightLimit, setRightLimit] = useState(appHeight * 0.59);
   let onGestureTopEvent = Animated.event(
     [
       {
@@ -20,16 +19,13 @@ let PanUpHandler = ({ children }) => {
     ],
     { useNativeDriver: false },
   );
-  Dimensions.addEventListener('change', () => {
-    setViewHeight(Dimensions.get('screen').height);
-  });
   useEffect(() => {
-    const leftLimitNew = viewHeight - 80 - balanceHeaderHeight - mainHeaderHeight - sendButtonsHeight;
-    const rightLimitNew = viewHeight - 70 - balanceHeaderHeight - mainHeaderHeight;
+    const leftLimitNew = appHeight - balanceHeaderHeight - mainHeaderHeight - sendButtonsHeight - 10;
+    const rightLimitNew = appHeight - balanceHeaderHeight - mainHeaderHeight + 10;
     setLeftLimit(leftLimitNew);
     setRightLimit(rightLimitNew);
     setAnimatedHeight(new Animated.Value(leftLimitNew));
-  }, [balanceHeaderHeight, mainHeaderHeight, sendButtonsHeight, viewHeight]);
+  }, [balanceHeaderHeight, mainHeaderHeight, sendButtonsHeight, appHeight]);
   return (
     <PanGestureHandler onGestureEvent={onGestureTopEvent}>
       <Animated.View
@@ -37,18 +33,18 @@ let PanUpHandler = ({ children }) => {
           // eslint-disable-next-line react-native/no-inline-styles
           {
             height: animatedHeight.interpolate({
-              inputRange: [rightLimit - leftLimit, rightLimit],
+              inputRange: [0, sendButtonsHeight],
               outputRange: [rightLimit, leftLimit],
               extrapolate: 'clamp',
             }),
-            paddingTop: 20,
             overflow: 'hidden',
             position: 'absolute',
             width: '100%',
             display: 'flex',
+            paddingTop: 10,
             borderTopLeftRadius: 24,
             borderTopRightRadius: 24,
-            backgroundColor: '#fff',
+            backgroundColor: '#ffffff',
             bottom: 0,
             zIndex: 1000,
           },
