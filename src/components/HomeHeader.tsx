@@ -5,6 +5,7 @@ import GlobalStyles from '../constants/GlobalStyles';
 import { HomeScreenHeaderRight } from './HomeScreenHeaderRight';
 import { CopyIcon } from './CopyIcon';
 import { getAddressFormat } from '../utils/Wallet';
+import { DetailsScreenHeaderRight } from './DetailsScreenHeaderRight';
 import { GlobalContext } from '../providers/GlobalProvider';
 interface Params {
   address: string;
@@ -33,9 +34,7 @@ export const HomeHeader = (params: Params) => {
           </View>
         )}
       </View>
-      <View style={styles.menuIconContainer}>
-        <HomeScreenHeaderRight />
-      </View>
+      <View style={styles.menuIconContainer}>{params?.address ? <DetailsScreenHeaderRight /> : <HomeScreenHeaderRight />}</View>
     </View>
   );
 };

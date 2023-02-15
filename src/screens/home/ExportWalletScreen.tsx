@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, Platform, SafeAreaView, Text, View } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { GradientOverlay } from '../../extra/background-overlay.component';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { Button } from '@ui-kitten/components';
@@ -26,6 +26,8 @@ export const ExportWalletScreen = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
   const navigator = useNavigation<homeScreenProp>();
   const [item, setItem] = useState('fileSystem');
+  const route = useRoute();
+  const { oldWallet } = route.params as any;
 
   // Settings code
   const [wallet, setWallet] = useState<WalletModel>();
@@ -151,9 +153,11 @@ export const ExportWalletScreen = () => {
           <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.fullWidth, GlobalStyles.continueButton]} onPress={() => exportKeystore()}>
             <Text>Export File</Text>
           </Button>
-          <TouchableOpacity style={GlobalStyles.mt100} onPress={() => navigator.navigate('HomeScreen')}>
-            <Text style={[GlobalStyles.textWhite, GlobalStyles.textBold]}>Go Home</Text>
-          </TouchableOpacity>
+          {!oldWallet && (
+            <TouchableOpacity style={GlobalStyles.mt100} onPress={() => navigator.navigate('HomeScreen')}>
+              <Text style={[GlobalStyles.textWhite, GlobalStyles.textBold]}>Go Home</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </GradientOverlay>
     </SafeAreaView>
