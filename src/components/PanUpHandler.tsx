@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Animated, Dimensions } from 'react-native';
+import { Animated } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
+import GlobalStyles from '../constants/GlobalStyles';
 import { GlobalContext } from '../providers/GlobalProvider';
 import { TransactionSectionTop } from './TransactionSectionTop';
 
@@ -21,7 +22,7 @@ let PanUpHandler = ({ children }) => {
   );
   useEffect(() => {
     const leftLimitNew = appHeight - balanceHeaderHeight - mainHeaderHeight - sendButtonsHeight - 10;
-    const rightLimitNew = appHeight - balanceHeaderHeight - mainHeaderHeight + 10;
+    const rightLimitNew = appHeight - balanceHeaderHeight - mainHeaderHeight + 5;
     setLeftLimit(leftLimitNew);
     setRightLimit(rightLimitNew);
     setAnimatedHeight(new Animated.Value(leftLimitNew));
@@ -37,17 +38,8 @@ let PanUpHandler = ({ children }) => {
               outputRange: [rightLimit, leftLimit],
               extrapolate: 'clamp',
             }),
-            overflow: 'hidden',
-            position: 'absolute',
-            width: '100%',
-            display: 'flex',
-            paddingTop: 10,
-            borderTopLeftRadius: 24,
-            borderTopRightRadius: 24,
-            backgroundColor: '#ffffff',
-            bottom: 0,
-            zIndex: 1000,
           },
+          GlobalStyles.panUpCard,
         ]}>
         <TransactionSectionTop />
         {children}

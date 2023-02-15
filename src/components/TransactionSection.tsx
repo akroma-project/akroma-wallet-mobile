@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, FlatList } from 'react-native';
+import { SafeAreaView, FlatList, Dimensions } from 'react-native';
 
 import { getTransactionsByAddress } from '../services/AkromaApi';
 import { TransactionCard } from './TransactionCard';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
 import { WalletContext } from '../providers/WalletProvider';
 import { Divider } from '@ui-kitten/components';
+
+import { TransactionSectionTop } from './TransactionSectionTop';
+import { DymanicStyles } from '../constants/GlobalStyles';
 
 export const TransactionSection = ({ setDisplayButtons }) => {
   const { state } = React.useContext(WalletContext);
@@ -14,6 +17,11 @@ export const TransactionSection = ({ setDisplayButtons }) => {
   const listRef = useRef(null);
   const utils = new Utils();
   const sumAddress = utils.toChecksumAddress(state.wallet.address);
+  const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
+
+  Dimensions.addEventListener('change', () => {
+    setViewHeight(Dimensions.get('screen').height);
+  });
 
   useEffect(() => {
     getTransactionsByAddress(sumAddress, page - 1).then(json => {
@@ -32,8 +40,10 @@ export const TransactionSection = ({ setDisplayButtons }) => {
       setDisplayButtons('flex');
     }
   };
+  const isWatchWallet = state.wallet.encrypted === 'watch';
   return (
-    <SafeAreaView>
+    <SafeAreaView style={!isWatchWallet ? [] : [DymanicStyles({ viewHeight }).walletsContainer]}>
+      {!isWatchWallet ? <></> : <TransactionSectionTop />}
       {transactions.length > 0 && (
         <FlatList
           ref={listRef}

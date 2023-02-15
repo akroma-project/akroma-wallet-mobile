@@ -1,8 +1,8 @@
 import { Divider } from '@ui-kitten/components';
 import GlobalStyles, { DymanicStyles } from '../constants/GlobalStyles';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { WalletModel } from '../data/entities/wallet';
-import { StyleSheet, Text, View, TouchableHighlight, Dimensions, Alert, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { WalletCard } from './WalletCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WalletContext } from '../providers/WalletProvider';
@@ -11,6 +11,8 @@ import { HomeStackParamList } from '../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Trash from '../assets/svg/Trash';
+import ConfirmationModal from './ConfirmationModal';
+import { ModalProp } from '../interfaces/ModalProp';
 
 interface Props {
   wallets: WalletModel[];
@@ -19,9 +21,10 @@ interface WalletsSectionParams {
   title: string;
   wallets: WalletModel[];
   style?: any;
+  openModal: () => void;
 }
-const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
-  const { setActive, updateBalance, removeWallet } = React.useContext(WalletContext);
+const WalletsSection = ({ title, wallets, style, openModal }: WalletsSectionParams) => {
+  const { setActive, updateBalance } = React.useContext(WalletContext);
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
 
   const navigator = useNavigation<homeScreenProp>();
@@ -38,24 +41,10 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
     }
   };
 
-  const deleteRow = (rowMap, wallet: WalletModel) => {
-    closeRow(rowMap, wallet);
-    removeWallet(wallet);
-  };
-
   const confirmationModal = (rowMap, wallet: WalletModel) => {
-    Alert.alert('Are you sure you want to remove this wallet?', null, [
-      {
-        text: 'Yes',
-        onPress: () => {
-          closeRow(rowMap, wallet);
-          setTimeout(() => deleteRow(rowMap, wallet), 1000);
-        },
-      },
-      {
-        text: 'No',
-      },
-    ]);
+    setActive(wallet.id);
+    closeRow(rowMap, wallet);
+    openModal();
   };
 
   const VisibleItem = props => {
@@ -83,9 +72,9 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
     );
   };
 
-  const renderItem = (data, rowMap) => {
+  const renderItem = data => {
     const rowHeightAnimatedValue = new Animated.Value(50);
-    return <VisibleItem rowHeightAnimatedValue={rowHeightAnimatedValue} data={data} removeRow={() => confirmationModal(rowMap, data.item)} />;
+    return <VisibleItem rowHeightAnimatedValue={rowHeightAnimatedValue} data={data} removeRow={() => {}} />;
   };
 
   const HiddenItemWithActions = props => {
@@ -93,7 +82,7 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
 
     if (rightActionActivated) {
       Animated.spring(rowActionAnimatedValue, {
-        toValue: 500,
+        toValue: 100,
         useNativeDriver: false,
       }).start();
     } else {
@@ -125,6 +114,8 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
   const ListOrMessage = wallets?.length ? (
     <SwipeListView
       data={wallets}
+      closeOnRowOpen
+      closeOnRowBeginSwipe
       renderItem={renderItem}
       renderHiddenItem={renderHiddenItem}
       leftOpenValue={75}
@@ -132,7 +123,6 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
       leftActivationValue={100}
       rightActivationValue={-100}
       leftActionValue={0}
-      rightActionValue={-500}
       disableRightSwipe
     />
   ) : null;
@@ -149,6 +139,7 @@ const WalletsSection = ({ title, wallets, style }: WalletsSectionParams) => {
 export const TopWallets = ({ wallets }: Props) => {
   const [walletsState, setWalletsState] = useState<WalletModel[]>([]);
   const [watchWallets, setWatchWallets] = useState<WalletModel[]>([]);
+  const modalRef = useRef<ModalProp>();
 
   const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
 
@@ -159,16 +150,20 @@ export const TopWallets = ({ wallets }: Props) => {
     const tempWatchwallet = wallets.filter(element => element.encrypted === 'watch');
     setWatchWallets(tempWatchwallet);
   }, [wallets]);
+
   Dimensions.addEventListener('change', () => {
     setViewHeight(Dimensions.get('screen').height);
   });
+
+  const openModal = () => modalRef.current.openModal();
 
   return (
     <View style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <Text style={[GlobalStyles.titleText, GlobalStyles.pv24]}>Wallets</Text>
       <SafeAreaView>
-        <WalletsSection title={'My Wallets'} wallets={walletsState} />
-        <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
+        <WalletsSection openModal={openModal} title={'My Wallets'} wallets={walletsState} />
+        <WalletsSection openModal={openModal} title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />
+        <ConfirmationModal ref={modalRef} />
       </SafeAreaView>
     </View>
   );
