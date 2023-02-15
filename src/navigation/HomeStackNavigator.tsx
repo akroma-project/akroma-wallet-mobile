@@ -32,7 +32,7 @@ export type HomeStackParamList = {
   WalletSettingsScreen: { wallet: WalletModel };
   ImportWalletKeystore: undefined;
   ExportWalletNotice: undefined;
-  ExportWalletScreen: undefined;
+  ExportWalletScreen: { oldWallet?: boolean } | undefined;
   ImportWalletPrivateKey: undefined;
   ImportWalletSeedPhrase: undefined;
   ImportWalletWatch: { address: string } | undefined;

@@ -38,16 +38,11 @@ export const DetailsScreenHeaderRight = () => {
         onDismiss={hideMenu}
         optionList={[
           {
-            icon: <CreateWalletSvg />,
-            text: 'Create Wallet',
-            onPress: () => navigator.navigate('WalletTransactionHistory'),
-          },
-          {
             icon: <ImportKeystoreSvg />,
             text: 'Import Keystore',
             onPress: async () =>
-              navigator.navigate('WalletSettingsScreen', {
-                wallet: JSON.parse(await AsyncStorage.getItem('walletSelected')),
+              navigator.navigate('ExportWalletScreen', {
+                oldWallet: true,
               }),
           },
         ]}
