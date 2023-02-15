@@ -246,6 +246,9 @@ const GlobalStyles = StyleSheet.create({
   p10: {
     padding: 10,
   },
+  p20: {
+    padding: 20,
+  },
   titleText: {
     fontSize: 18,
     fontWeight: '600',

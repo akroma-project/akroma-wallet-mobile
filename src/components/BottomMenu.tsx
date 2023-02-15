@@ -27,7 +27,7 @@ const BottomMenu = ({ visible, onDismiss, onBackButtonPress, onBackdropPress, op
     <Modal isVisible={visible} onDismiss={onDismiss} onBackButtonPress={onBackButtonPress} onBackdropPress={onBackdropPress} style={[GlobalStyles.menuModal]}>
       <View style={[DymanicStyles({ viewWidth }).menuCard]}>
         {optionList.map(({ onPress, text, icon }: optionListItem) => (
-          <TouchableOpacity onPress={onPress} style={[GlobalStyles.displayFlex, GlobalStyles.flexRow, GlobalStyles.menuOption]}>
+          <TouchableOpacity key={text} onPress={onPress} style={[GlobalStyles.displayFlex, GlobalStyles.flexRow, GlobalStyles.menuOption]}>
             <View style={[GlobalStyles.mr16, GlobalStyles.menuOptionCenter]}>{icon}</View>
             <Text style={[GlobalStyles.menuOptionText, GlobalStyles.menuOptionCenter]}>{text}</Text>
           </TouchableOpacity>

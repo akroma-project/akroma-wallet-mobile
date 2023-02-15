@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { ActivityIndicator, Alert, SafeAreaView, ScrollView, TouchableOpacity, View, RefreshControl, StyleSheet } from 'react-native';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import { ActivityIndicator, Alert, SafeAreaView, ScrollView, TouchableOpacity, View, RefreshControl, StyleSheet, Animated } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { WalletContext } from '../../providers/WalletProvider';
 import { Input, Button, Text, ListItem } from '@ui-kitten/components';
@@ -15,6 +15,7 @@ import { GradientOverlay } from '../../extra/background-overlay.component';
 import QRCodeIcon from '../../assets/svg/QRcodeIconSvg';
 import { ArrowForwardIcon } from '../../components/AppIcons';
 import ArrowDownSelectSvg from '../../assets/svg/ArrowDownSelectSvg';
+import { WalletsRender } from '../../components/WalletsRender';
 
 export const SendCoinScreen = ({ route }: { route: any }) => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
@@ -30,6 +31,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
   const { send, state, loadWallets } = useContext(WalletContext);
   const { setNewWatchWallet } = useContext(GlobalContext);
   const u = new Utils();
+  const walletsListPosition = useRef(new Animated.Value(-600)).current;
 
   const addToWatchList = () => {
     setNewWatchWallet(address);
@@ -134,10 +136,18 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     return !!state.wallets.find(wallet1 => wallet1.address === address);
   };
 
+  const handlerAnimationList = () => {
+    Animated.timing(walletsListPosition, {
+      toValue: 60,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.flex}>
-      <GradientOverlay style={GlobalStyles.container}>
-        <View style={[GlobalStyles.container, GlobalStyles.mt20percent]}>
+      <GradientOverlay style={GlobalStyles.flex}>
+        <View style={[GlobalStyles.mt20percent, GlobalStyles.p20]}>
           {sending || showStatus ? (
             <View>
               <TransactionCard sent={true} addressFrom={state.wallet.address} amount={amount} addressTo={address} status={status} />
@@ -160,7 +170,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
               </View>
               <Text style={Styles.inputText}>Address</Text>
               {isWatchingActive ? (
-                <TouchableOpacity style={Styles.arrowContainer} onPress={() => console.log('Nooo')}>
+                <TouchableOpacity style={Styles.arrowContainer} onPress={() => handlerAnimationList()}>
                   <Text style={Styles.selectText}>Select</Text>
                   <ArrowDownSelectSvg />
                 </TouchableOpacity>
@@ -172,7 +182,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
               <Button style={[GlobalStyles.akromaRedButton, GlobalStyles.mt20]} disabled={invalid()} onPress={OnSendPress} accessoryRight={ArrowForwardIcon}>
                 Send
               </Button>
-              <Text style={GlobalStyles.label}>A confirm dialog will open before sending</Text>
+
               {/* <ScrollView style={GlobalStyles.walletsList} contentContainerStyle={GlobalStyles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 {state.wallets.length > 0 &&
                   _.sortBy(
@@ -183,6 +193,11 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
             </View>
           )}
         </View>
+        {isWatchingActive && (
+          <Animated.View style={[Styles.walletList, { bottom: walletsListPosition }]}>
+            <WalletsRender wallets={state.wallets} />
+          </Animated.View>
+        )}
       </GradientOverlay>
     </SafeAreaView>
   );
@@ -220,5 +235,10 @@ const Styles = StyleSheet.create({
   },
   selectText: {
     color: 'gray',
+  },
+  walletList: {
+    position: 'absolute',
+    width: '100%',
+    bottom: -600,
   },
 });
