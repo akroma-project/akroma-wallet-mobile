@@ -6,6 +6,11 @@ import { HomeHeader } from '../components/HomeHeader';
 import { HomeResumeAmount } from '../components/HomeResumeAmount';
 import { WalletContext } from '../providers/WalletProvider';
 
+interface MainLayoutProps {
+  isDetails?: boolean;
+  children?: any;
+}
+
 const MainLayout = ({ children }) => {
   const { state } = useContext(WalletContext);
 

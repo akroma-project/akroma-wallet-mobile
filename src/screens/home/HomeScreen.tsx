@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppState, Platform } from 'react-native';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useLayoutEffect } from 'react';
 
 import RNPermissions, { NotificationsResponse, Permission, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { WalletContext } from '../../providers/WalletProvider';

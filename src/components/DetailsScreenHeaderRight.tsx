@@ -1,13 +1,15 @@
-import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Icon } from '@ui-kitten/components';
-import React from 'react';
+import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native';
 import GlobalStyles from '../constants/GlobalStyles';
 import { WalletModel } from '../data/entities/wallet';
 import { HomeStackParamList } from '../navigation/HomeStackNavigator';
+import CreateWalletSvg from '../assets/svg/CreateWalletSvg';
+import ImportKeystoreSvg from '../assets/svg/ImportKeystoreSvg';
+import BottomMenu from './BottomMenu';
 interface options {
   title: string;
   screen: string;
@@ -17,31 +19,39 @@ interface options {
 export const DetailsScreenHeaderRight = () => {
   type homeScreenProp = StackNavigationProp<HomeStackParamList, 'WalletScreen'>;
   const navigator = useNavigation<homeScreenProp>();
-  const { showActionSheetWithOptions } = useActionSheet();
 
-  const navigation = () => {
-    showActionSheetWithOptions(
-      {
-        options: ['History Transactions', 'Wallet Settings'],
-        cancelButtonIndex: 99,
-        showSeparators: true,
-      },
-      async (index: number) => {
-        if (index === 0) {
-          navigator.navigate('WalletTransactionHistory');
-        }
-        if (index === 1) {
-          navigator.navigate('WalletSettingsScreen', {
-            wallet: JSON.parse(await AsyncStorage.getItem('walletSelected')),
-          });
-        }
-      },
-    );
+  const [visible, setVisible] = useState(false);
+
+  const hideMenu = () => {
+    setVisible(false);
   };
 
   return (
-    <TouchableOpacity onPress={() => navigation()}>
-      <Icon name="menu-outline" style={GlobalStyles.iconRight} fill="#000000" />
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity onPress={() => setVisible(true)}>
+        <Icon name="more-vertical-outline" style={GlobalStyles.iconRight} fill="#fff" />
+      </TouchableOpacity>
+      <BottomMenu
+        visible={visible}
+        onBackdropPress={hideMenu}
+        onBackButtonPress={hideMenu}
+        onDismiss={hideMenu}
+        optionList={[
+          {
+            icon: <CreateWalletSvg />,
+            text: 'Create Wallet',
+            onPress: () => navigator.navigate('WalletTransactionHistory'),
+          },
+          {
+            icon: <ImportKeystoreSvg />,
+            text: 'Import Keystore',
+            onPress: async () =>
+              navigator.navigate('WalletSettingsScreen', {
+                wallet: JSON.parse(await AsyncStorage.getItem('walletSelected')),
+              }),
+          },
+        ]}
+      />
+    </>
   );
 };
