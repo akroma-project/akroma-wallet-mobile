@@ -39,7 +39,7 @@ export const DetailsScreenHeaderRight = () => {
         optionList={[
           {
             icon: <ImportKeystoreSvg />,
-            text: 'Import Keystore',
+            text: 'Export Keystore',
             onPress: async () =>
               navigator.navigate('ExportWalletScreen', {
                 oldWallet: true,
