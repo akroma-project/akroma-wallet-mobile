@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Dimensions } from 'react-native';
+const height = Dimensions.get('screen').height;
 // $akroma-gold-darker: 	#E25D00;
 // $akroma-gold-dark: 		#F17100;
 // $akroma-gold-base: 		#FFA600;
@@ -21,11 +21,42 @@ const GlobalStyles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'flex-end',
   },
-  backdrop: {},
+  transparentHeaderContainer: {
+    backgroundColor: '#00000000',
+    position: 'absolute',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowBackContainer: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
+    paddingLeft: 10,
+    paddingTop: 20,
+  },
+  titleTransparentContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  transparentHeaderTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
   body: {
     flex: 1,
   },
-  button: {},
+  button: {
+    marginBottom: 20,
+  },
   colorWhite: {
     color: 'white',
   },
@@ -41,6 +72,9 @@ const GlobalStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  pt100: {
+    paddingTop: 100,
   },
   card: {
     marginLeft: 0,
@@ -83,6 +117,61 @@ const GlobalStyles = StyleSheet.create({
   input: {
     paddingBottom: 20,
   },
+  akromaRedButton: {
+    borderRadius: 8,
+    backgroundColor: '#DB0000',
+    color: 'white',
+    borderColor: '#DB0000',
+  },
+  akromaRedButtonDisabled: {
+    borderRadius: 8,
+    backgroundColor: '#DC9A9A',
+    color: 'white',
+    borderColor: '#DC9A9A',
+  },
+  akromaWhiteButton: {
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    color: 'white',
+    borderColor: '#FFFFFF',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 13,
+  },
+  akromaButtonIcon: {
+    height: 20,
+  },
+  grayTextAkromaButton: {
+    color: '#676768',
+    fontSize: 16,
+    fontWeight: '400',
+  },
+  grayTextAkromaButtonSelected: {
+    color: '#1C1C1E',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  grayTextAkromaButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+  },
+  grayTextAkromaButtonContainerSelected: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
+    paddingLeft: 60,
+    paddingRight: 10,
+  },
+  ml20: {
+    marginLeft: 20,
+  },
   label: {
     paddingVertical: 5,
     paddingLeft: 5,
@@ -121,6 +210,12 @@ const GlobalStyles = StyleSheet.create({
   p: {
     paddingBottom: 10,
   },
+  pt10: {
+    paddingTop: 10,
+  },
+  pt50: {
+    paddingTop: 50,
+  },
   rowSpaceBetween: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -142,20 +237,25 @@ const GlobalStyles = StyleSheet.create({
   mt20: {
     marginTop: 20,
   },
+  mt50: {
+    marginTop: 20,
+  },
   p10: {
     padding: 10,
   },
-
   titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '600',
     textAlign: 'center',
-    color: '#fba304',
+    color: '#1C1C1E',
   },
   headerContainer: {
-    height: '45%',
-    maxHeight: '45%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 20,
+    height: '12%',
   },
 
   exportBtn: {
@@ -168,10 +268,10 @@ const GlobalStyles = StyleSheet.create({
   },
   generalBackground: {
     flex: 1,
-    backgroundColor: '#b0b0b0',
+    backgroundColor: '#1C1C1E',
   },
   bgTransparent: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: '#1C1C1E',
   },
   flexRow: {
     flexDirection: 'row',
@@ -183,6 +283,251 @@ const GlobalStyles = StyleSheet.create({
   walletsList: {
     maxHeight: 400,
   },
+  copyIcon: {
+    height: 23,
+    width: 22,
+    flex: 1,
+  },
+  copyIconContainer: {
+    width: 22,
+  },
+  transferButton: {
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    width: 152,
+    height: 48,
+    color: 'black',
+    paddingHorizontal: 20,
+  },
+  transferButtonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 40,
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    width: 344,
+  },
+  textButton: {
+    fontWeight: '700',
+    fontSize: 16,
+    paddingLeft: 10,
+  },
+  walletsContainer: {
+    display: 'flex',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    backgroundColor: '#fff',
+    height: 'auto',
+    minHeight: height * 0.61,
+  },
+  generalText: {
+    fontSize: 14,
+    color: '#1C1C1E',
+  },
+  smallText: {
+    fontSize: 12,
+    color: '#676768',
+    fontWeight: '400',
+  },
+  smallTextWhite: {
+    fontSize: 11,
+    color: '#FFFFFF',
+    fontWeight: '400',
+  },
+  textWhite: {
+    color: '#FFFFFF',
+  },
+  menuOption: {
+    borderBottomColor: '#1C1C1E',
+    borderBottomWidth: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    width: '100%',
+  },
+  menuOptionCenter: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  menuOptionText: {
+    fontFamily: 'SF Pro Text',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#1C1C1E',
+  },
+  mr5: {
+    marginRight: 5,
+  },
+  mr10: {
+    marginRight: 10,
+  },
+  mr16: {
+    marginRight: 16,
+  },
+  mb5: {
+    marginBottom: 5,
+  },
+  mb10: {
+    marginBottom: 10,
+  },
+  mb15: {
+    marginBottom: 15,
+  },
+  mb20: {
+    marginBottom: 20,
+  },
+  mb25: {
+    marginBottom: 25,
+  },
+  mb30: {
+    marginBottom: 30,
+  },
+  textBold: {
+    fontWeight: '700',
+  },
+  walletCard: {
+    minHeight: 70,
+    maxHeight: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backArrow: {
+    top: 10,
+    left: 24,
+  },
+  alingItemsCenter: {
+    alignItems: 'center',
+  },
+  pt8: {
+    paddingTop: 8,
+  },
+  pv24: {
+    paddingVertical: 24,
+  },
+  displayFlex: {
+    display: 'flex',
+  },
+  alingItemsStart: {
+    alignItems: 'flex-start',
+  },
+  greenColor: {
+    color: '#0F8400',
+  },
+  textRight: {
+    textAlign: 'right',
+  },
+  ph24: {
+    paddingHorizontal: 24,
+  },
+  walletLogoNotice: {
+    width: 175,
+    height: 172,
+    marginBottom: 20,
+  },
+  titleContainer: {
+    marginBottom: 15,
+  },
+  noticeWhiteTitle: {
+    color: '#FFFFFF',
+    fontSize: 32,
+    fontWeight: '600',
+    fontFamily: 'SF Pro Display',
+  },
+  noticeWhiteTextContent: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 24,
+    fontFamily: 'SF Pro Text',
+    textAlign: 'justify',
+  },
+  justifyCenter: {
+    justifyContent: 'center',
+  },
+  noticeContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    height: 700,
+    padding: 20,
+  },
+  fullWidth: {
+    width: '100%',
+  },
+  continueButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'baseline',
+    flexDirection: 'row',
+    marginTop: 70,
+  },
+  mt100: {
+    marginTop: 100,
+  },
+  themedPicker: {
+    backgroundColor: 'rgb(237, 241, 247)',
+    bordercolor: 'rgb(237, 241, 247)',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  themedPickerContainer: {
+    overflow: 'hidden',
+    borderRadius: 8,
+    width: '100%',
+  },
+  menuModal: {
+    marginLeft: 0,
+    marginBottom: 0,
+    padding: 0,
+  },
+  panUpCard: {
+    overflow: 'hidden',
+    position: 'absolute',
+    width: '100%',
+    display: 'flex',
+    paddingTop: 10,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    backgroundColor: '#ffffff',
+    bottom: 0,
+    zIndex: 1,
+  },
 });
 
+interface dynamicStylesProps {
+  viewHeight?: number;
+  viewWidth?: number;
+}
+
+const defaultValues = {
+  viewHeight: 1,
+  viewWidth: 1,
+};
+
+export const DymanicStyles = ({ viewHeight, viewWidth }: dynamicStylesProps = defaultValues) =>
+  StyleSheet.create({
+    walletsContainer: {
+      display: 'flex',
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+      backgroundColor: '#fff',
+      height: 'auto',
+      minHeight: viewHeight * 0.61,
+    },
+    menuCard: {
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+      width: viewWidth,
+      position: 'absolute',
+      left: 0,
+      bottom: 0,
+      backgroundColor: '#FFFFFF',
+      paddingTop: 10,
+    },
+  });
 export default GlobalStyles;

@@ -32,7 +32,7 @@ export const WalletsScreen = () => {
 
   const onWalletPress = async (wallet: WalletModel) => {
     await AsyncStorage.setItem('walletSelected', JSON.stringify(wallet));
-    navigator.navigate('WalletScreen', { wallet: wallet });
+    navigator.navigate('WalletScreen', { wallet });
   };
 
   const renderWalletRight = (item: WalletModel) => <Text>{item.lastBalance?.toString()}</Text>;

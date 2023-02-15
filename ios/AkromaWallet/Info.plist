@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -20,12 +22,12 @@
 	<string>507652349383-rmhtbabce3ir7tk5pmv32j9qug0bfc9o.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-	<dict>
-		<key>CFBundleURLSchemes</key>
-		<array>
-		<string>com.googleusercontent.apps.507652349383-rmhtbabce3ir7tk5pmv32j9qug0bfc9o</string>
-		</array>
-	</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.507652349383-rmhtbabce3ir7tk5pmv32j9qug0bfc9o</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
@@ -50,7 +52,7 @@
 	<string>for any reason</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>for any reason</string>
-  <key>NSCameraUsageDescription</key>
+	<key>NSCameraUsageDescription</key>
 	<string>To scan the QR of the wallets</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>for any reason</string>
@@ -69,17 +71,16 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSUbiquitousContainers</key>
-    <dict>
-        <key>iCloud.org.reactjs.native.example.AkromaWallet</key>
-        <dict>
-            <key>NSUbiquitousContainerIsDocumentScopePublic</key>
-            <true/>
-            <key>NSUbiquitousContainerName</key>
-            <string>AkromaWallet</string>
+	<dict>
+		<key>iCloud.org.reactjs.native.example.AkromaWallet</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>AkromaWallet</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>Any</string>
-        </dict>
-    </dict>
+		</dict>
+	</dict>
 </dict>
-
 </plist>

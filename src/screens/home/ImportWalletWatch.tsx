@@ -1,48 +1,52 @@
 import * as React from 'react';
-import { ActivityIndicator, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, Keyboard, SafeAreaView, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet } from 'react-native';
 import GlobalStyles from '../../constants/GlobalStyles';
 import { useState, useContext, useEffect } from 'react';
-import { Button, Input } from '@ui-kitten/components';
+import { Button, Input, Text } from '@ui-kitten/components';
 import { useDatabaseConnection } from '../../data/connection';
-import { ImageOverlay } from '../../extra/image-overlay.component';
 import { isAddress } from 'ethers/lib/utils';
 import Toast from 'react-native-toast-message';
 import { WalletContext } from '../../providers/WalletProvider';
-import { GlobalContext } from '../../providers/GlobalProvider';
+import QRCodeIcon from '../../assets/svg/QRcodeIconSvg';
+import { ArrowForwardIcon } from '../../components/AppIcons';
+import { GradientOverlay } from '../../extra/background-overlay.component';
 
-export const ImportWalletWatch = () => {
+export const ImportWalletWatch = ({ route, navigation }) => {
+  const walletDirection = route.params?.address ?? '';
   const { walletsRepository } = useDatabaseConnection();
-  const [walletAddress, walletAddressChange] = useState('');
+  const [walletAddress, setWalletAddress] = useState('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+
   const isValidAddress = isAddress(walletAddress);
   const { addWallet } = useContext(WalletContext);
-  const { newWatchWallet, setNewWatchWallet } = useContext(GlobalContext);
 
   useEffect(() => {
-    walletAddressChange(newWatchWallet);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setWalletAddress(walletDirection);
+  }, [walletDirection]);
 
   const onSuccessWatchWallet = () => {
     setName('');
-    walletAddressChange('');
-    setNewWatchWallet('');
+    setWalletAddress('');
+    setLoading(false);
+  };
+
+  const validationMessage = (message: string) => {
     Toast.show({
-      text1: 'The wallet is saved',
+      type: 'error',
+      text1: message,
       position: 'top',
     });
+    setLoading(false);
   };
 
   const OnImportPress = async () => {
     setLoading(true);
     if (!isValidAddress) {
-      Toast.show({
-        type: 'error',
-        text1: 'The address is no valid',
-        position: 'top',
-      });
-      setLoading(false);
+      validationMessage('The address is not valid');
+      return;
+    } else if (name.length < 5) {
+      validationMessage('The wallet name should be at least 5 characters');
       return;
     }
     setTimeout(async () => {
@@ -54,27 +58,51 @@ export const ImportWalletWatch = () => {
       });
       onSuccessWatchWallet();
       addWallet(created);
-      setLoading(false);
+      navigation.navigate('HomeScreen');
     }, 1500);
   };
 
+  const ScanIcon = () => {
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('ScannerScreen', { watchedWallet: true })}>
+        <QRCodeIcon />
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <SafeAreaView style={GlobalStyles.flex}>
-      <ImageOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
-        {loading ? (
-          <ActivityIndicator size="large" />
-        ) : (
-          <View style={GlobalStyles.container}>
-            <View>
-              <Input style={GlobalStyles.input} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" disabled={loading} />
-              <Input style={GlobalStyles.input} onChangeText={walletAddressChange} value={walletAddress} placeholder="Wallet Address" disabled={loading} />
-              <Button disabled={loading} onPress={async () => await OnImportPress()}>
-                IMPORT
-              </Button>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={GlobalStyles.flex}>
+        <GradientOverlay style={GlobalStyles.container} source={require('../../assets/images/background.png')}>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <View style={GlobalStyles.container}>
+              <View style={Styles.innerContainer}>
+                <Text style={Styles.formText}>Address</Text>
+                <Input style={GlobalStyles.input} onChangeText={setWalletAddress} value={walletAddress} placeholder="Enter address or Scan QR code" disabled={loading} accessoryRight={ScanIcon} />
+                <Text style={Styles.formText}>Name</Text>
+                <Input style={[GlobalStyles.input, GlobalStyles.marginBottom20]} onChangeText={setName} value={name} placeholder="Wallet name, min 5 chars" />
+                <Button style={GlobalStyles.akromaRedButton} disabled={loading} onPress={async () => await OnImportPress()} accessoryRight={ArrowForwardIcon}>
+                  Watch
+                </Button>
+              </View>
             </View>
-          </View>
-        )}
-      </ImageOverlay>
-    </SafeAreaView>
+          )}
+          <Toast />
+        </GradientOverlay>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
+
+const Styles = StyleSheet.create({
+  innerContainer: {
+    marginTop: '15%',
+  },
+  formText: {
+    color: 'white',
+    fontSize: 14,
+    paddingBottom: 8,
+  },
+});
