@@ -2,12 +2,10 @@ import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Icon } from '@ui-kitten/components';
 import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native';
 import GlobalStyles from '../constants/GlobalStyles';
 import { WalletModel } from '../data/entities/wallet';
 import { HomeStackParamList } from '../navigation/HomeStackNavigator';
-import CreateWalletSvg from '../assets/svg/CreateWalletSvg';
 import ImportKeystoreSvg from '../assets/svg/ImportKeystoreSvg';
 import BottomMenu from './BottomMenu';
 interface options {
