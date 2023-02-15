@@ -11,19 +11,16 @@ interface WalletsSectionProps {
   title: string;
   wallets: WalletModel[];
   style?: any;
+  callSelectWallet: (string) => void;
 }
 const WalletsSection = (params: WalletsSectionProps) => {
-  const { setActive, updateBalance } = useContext(WalletContext);
+  const { setActive } = useContext(WalletContext);
 
-  const handleSelect = (id: string) => {
-    updateBalance(id);
-    setActive(id);
-  };
   return (
     <View style={params.style}>
       <Text style={styles.subTitle}>{params.title}</Text>
       {params.wallets?.map(wallet => (
-        <TouchableHighlight underlayColor="#DDDDDD" key={wallet.id} onPress={() => handleSelect(wallet.id)}>
+        <TouchableHighlight underlayColor="#DDDDDD" key={wallet.id} onPress={() => params.callSelectWallet(wallet.address)}>
           <View>
             <WalletCard wallet={wallet} />
             <Divider />
@@ -36,9 +33,10 @@ const WalletsSection = (params: WalletsSectionProps) => {
 
 interface WalletsRenderProps {
   wallets: WalletModel[];
+  callSelectWallet: (string) => void;
 }
 
-export const WalletsRender = ({ wallets }: WalletsRenderProps) => {
+export const WalletsRender = ({ wallets, callSelectWallet }: WalletsRenderProps) => {
   const [walletsState, setWalletsState] = useState<WalletModel[]>();
   const [watchWallets, setWatchWallets] = useState<WalletModel[]>();
   const [viewHeight, setViewHeight] = useState(Dimensions.get('screen').height);
@@ -59,8 +57,8 @@ export const WalletsRender = ({ wallets }: WalletsRenderProps) => {
     <View style={[DymanicStyles({ viewHeight }).walletsContainer]}>
       <SafeAreaView style={GlobalStyles.mt20}>
         <ScrollView>
-          <WalletsSection title={'My Wallets'} wallets={walletsState} />
-          {watchWallets?.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} />}
+          <WalletsSection title={'My Wallets'} wallets={walletsState} callSelectWallet={callSelectWallet} />
+          {watchWallets?.length > 0 && <WalletsSection title={'Watched Wallets'} wallets={watchWallets} style={styles.walletsSection} callSelectWallet={callSelectWallet} />}
         </ScrollView>
       </SafeAreaView>
     </View>

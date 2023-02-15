@@ -23,6 +23,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
 
   const sendToAddress = route.params?.address ?? '';
   const [isWatchingActive, setIsWatchingActive] = useState(false);
+  const [selectText, setSelectText] = useState('Select');
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
@@ -51,6 +52,12 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSelectWallet = (address: string) => {
+    handleAnimationList(-600);
+    setSelectText(address);
+    setAddress(address);
+  };
 
   const onWalletPress = async (wallet: WalletModel) => {
     setAddress(wallet.address);
@@ -136,9 +143,9 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
     return !!state.wallets.find(wallet1 => wallet1.address === address);
   };
 
-  const handlerAnimationList = () => {
+  const handleAnimationList = (height: number) => {
     Animated.timing(walletsListPosition, {
-      toValue: 60,
+      toValue: height,
       duration: 1000,
       useNativeDriver: false,
     }).start();
@@ -170,8 +177,8 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
               </View>
               <Text style={Styles.inputText}>Address</Text>
               {isWatchingActive ? (
-                <TouchableOpacity style={Styles.arrowContainer} onPress={() => handlerAnimationList()}>
-                  <Text style={Styles.selectText}>Select</Text>
+                <TouchableOpacity style={Styles.arrowContainer} onPress={() => handleAnimationList(10)}>
+                  <Text style={Styles.selectText}>{selectText}</Text>
                   <ArrowDownSelectSvg />
                 </TouchableOpacity>
               ) : (
@@ -195,7 +202,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
         </View>
         {isWatchingActive && (
           <Animated.View style={[Styles.walletList, { bottom: walletsListPosition }]}>
-            <WalletsRender wallets={state.wallets} />
+            <WalletsRender wallets={state.wallets} callSelectWallet={handleSelectWallet} />
           </Animated.View>
         )}
       </GradientOverlay>
