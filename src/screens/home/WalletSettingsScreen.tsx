@@ -80,8 +80,8 @@ export const WalletSettingsScreen = ({ route }: { route: any }) => {
         exportMessage('File downloaded in file system');
         console.debug('file written');
       })
-      .catch(err => {
-        console.log(err.message);
+      .catch(_err => {
+        // console.log(err.message);
       });
   };
 

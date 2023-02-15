@@ -71,8 +71,8 @@ export const ExportWalletScreen = () => {
         exportMessage('File downloaded in file system');
         console.debug('file written');
       })
-      .catch(err => {
-        console.log(err.message);
+      .catch(_err => {
+        // console.log(err.message);
       });
   };
 
@@ -121,7 +121,7 @@ export const ExportWalletScreen = () => {
   // End settings code
 
   const exportKeystore = () => {
-    console.log(item);
+    // console.log(item);
     if (item === 'fileSystem') {
       downloadKeystore();
     }

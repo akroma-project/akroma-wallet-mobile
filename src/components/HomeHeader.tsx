@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import GlobalStyles from '../constants/GlobalStyles';
@@ -6,14 +6,21 @@ import { HomeScreenHeaderRight } from './HomeScreenHeaderRight';
 import { CopyIcon } from './CopyIcon';
 import { getAddressFormat } from '../utils/Wallet';
 import { DetailsScreenHeaderRight } from './DetailsScreenHeaderRight';
+import { GlobalContext } from '../providers/GlobalProvider';
 interface Params {
   address: string;
   name: string;
 }
 
 export const HomeHeader = (params: Params) => {
+  const { setMainHeaderHeight } = useContext(GlobalContext);
   return (
-    <View style={GlobalStyles.headerContainer}>
+    <View
+      onLayout={event => {
+        let { height } = event.nativeEvent.layout;
+        setMainHeaderHeight(height);
+      }}
+      style={[GlobalStyles.headerContainer]}>
       <View>
         {params.address && (
           <View>
