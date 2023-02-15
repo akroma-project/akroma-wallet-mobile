@@ -1,0 +1,49 @@
+name: PR Quality
+on:
+  pull_request:
+    branches: [develop]
+    types: [opened, edited, synchronize]
+
+jobs:
+  pr-conventions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Check the branch convention usage
+        uses: duart38/branch-convention-check@v2.1.0
+        with:
+          standard_branch_check: '(build|chore|ci|docs|feat|fix|perf|refactor|test)\/issue-[0-9]+'
+          ignore_branch_check: '(\b(?:testing)\b(-([0-9])+|)\b(?:-[a-z]{3,})+\b)'
+          ignore: main
+
+      - name: Validate PR title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  code-quality:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use LTS node version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Linting
+        run: yarn run lint
+
+      # - name: Test
+      #   run: yarn run test
+
+      - name: Checking typescript
+        run: yarn run tsc

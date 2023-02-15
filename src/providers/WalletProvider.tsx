@@ -14,6 +14,7 @@ type Props = {
   updateBalance: (id: string) => Promise<WalletModel>;
   setWallets: (wallets: WalletModel[]) => void;
   setActive: (id: string) => void;
+  cleanWalletActive: () => void;
   send: (to: string, value: string) => Promise<string>;
   getTransactionCountByAddress: (address: string) => Promise<number>;
   refreshWallets: () => Promise<void>;
@@ -37,6 +38,7 @@ const WalletProvider = (props: serverProviderProps) => {
   const address = 'https://boot2.akroma.org';
   const provider = new TypeSafeWeb3(address);
   const utils = new Utils();
+
   const loadWallets = async () => {
     const wallets = await walletsRepository.getAll();
     console.debug(`wallets:: ${JSON.stringify(wallets)}`);
@@ -48,9 +50,15 @@ const WalletProvider = (props: serverProviderProps) => {
     setWallets(state.wallets.concat(wallet));
   };
 
-  const removeWallet = (wallet: WalletModel) => {
+  const removeWallet = async (wallet: WalletModel) => {
     console.debug('remove wallet called', wallet.id);
     const wallets = state.wallets.filter(x => x.id !== wallet.id);
+    try {
+      await walletsRepository.delete(wallet.id);
+    } catch (error) {
+      console.error(error);
+    }
+
     setWallets(wallets);
   };
 
@@ -58,7 +66,6 @@ const WalletProvider = (props: serverProviderProps) => {
     console.debug('set wallets called', wallets.length);
     let totalBalance = 0;
     totalBalance = wallets.reduce((accumulator, wallet) => (wallet.encrypted !== 'watch' ? parseFloat(wallet.lastBalance.toString()) + accumulator : accumulator), 0);
-    console.log(totalBalance);
     setState({ ...state, wallets: wallets, totalBalance: totalBalance });
   };
 
@@ -68,10 +75,12 @@ const WalletProvider = (props: serverProviderProps) => {
     if (wallet === undefined) {
       throw 'setActive: could not find wallet';
     }
-    wallet.address = utils.toChecksumAddress(wallet.address);
     setState({ ...state, wallet: wallet, wallets: state.wallets });
   };
-
+  const cleanWalletActive = (): void => {
+    const cleanWallet = new WalletModel();
+    setState({ ...state, wallet: cleanWallet, wallets: state.wallets });
+  };
   const updateBalance = async (id: string): Promise<WalletModel> => {
     console.debug('update balance called', id);
     const wallet = state.wallets.find(x => x.id === id);
@@ -81,7 +90,7 @@ const WalletProvider = (props: serverProviderProps) => {
     const success = await provider.getBalance(wallet.address);
     let balance = 0;
     if (success.ok) {
-      balance = parseInt(utils.fromWei(success.data ?? 0, 'ether').toString(), 10);
+      balance = parseFloat(utils.fromWei(success.data ?? 0, 'ether').toString());
     }
 
     const updated: WalletModel = {
@@ -107,10 +116,10 @@ const WalletProvider = (props: serverProviderProps) => {
       throw 'send: could not find active wallet';
     }
     const akromaRn = new AkromaRn();
-    await akromaRn.loadWallet(wallet.encrypted, wallet.pin);
+    const walletSigned = await akromaRn.loadWallet(wallet.encrypted, wallet.pin);
     // wallet must be loaded first
-    console.debug('from:', wallet.address, 'to:', to);
-    const txid = await akromaRn.sendFunds(wallet.address, wallet.pin, to, parseInt(value, 10), EthUnits.eth);
+    console.debug('from:', walletSigned.address, 'to:', to);
+    const txid = await akromaRn.sendFunds(walletSigned.address, wallet.pin, to, parseInt(value, 10), EthUnits.eth);
     console.debug('txid:', txid);
     return txid;
   };
@@ -152,6 +161,7 @@ const WalletProvider = (props: serverProviderProps) => {
     send: send,
     getTransactionCountByAddress: getTransactionCountByAddress,
     refreshWallets,
+    cleanWalletActive: cleanWalletActive,
   };
 
   return <WalletContext.Provider value={initalValue}>{props.children}</WalletContext.Provider>;

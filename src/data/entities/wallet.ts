@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('wallet')
@@ -11,7 +12,7 @@ export class WalletModel {
   @Column({ name: 'address', type: 'varchar', nullable: false })
   address: string;
 
-  @Column({ name: 'lastBalance', type: 'int', nullable: true, default: 0 })
+  @Column({ name: 'lastBalance', type: 'float', nullable: true, default: 0 })
   lastBalance?: Number;
 
   // @Column({ name: 'name', type: 'varchar', nullable: false })

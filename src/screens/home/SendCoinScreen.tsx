@@ -8,7 +8,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../navigation/HomeStackNavigator';
 import { useNavigation } from '@react-navigation/core';
 import { Utils } from 'typesafe-web3/dist/lib/utils';
-import Toast from 'react-native-toast-message';
 import { TransactionCard } from '../../components/TransactionCard';
 import { WalletModel } from '../../data/entities/wallet';
 import _ from 'lodash';
@@ -63,11 +62,7 @@ export const SendCoinScreen = ({ route }: { route: any }) => {
       setShowStatus(true);
       await send(address, amount);
       setStatus('Successful');
-
-      Toast.show({
-        text1: 'The transfer was succesfully sent',
-        position: 'top',
-      });
+      navigator.navigate('SuccessScreen', { message: 'The transfer was succesfully sent' });
     }, 600);
   };
   const anotherSend = () => {
