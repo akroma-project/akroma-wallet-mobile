@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
 import { HomeTransferButtons } from '../../components/HomeTransferButtons';
+import PanUpHandler from '../../components/PanUpHandler';
 import { WalletContext } from '../../providers/WalletProvider';
 import { TransactionSection } from '../../components/TransactionSection';
 import MainLayout from '../../layout/MainLayout';
@@ -13,7 +14,13 @@ export const TransactionScreen = () => {
   return (
     <MainLayout>
       <View style={{ display: displayButtons }}>{!isWatchWallet && <HomeTransferButtons />}</View>
-      <TransactionSection setDisplayButtons={setDisplayButtons} />
+      {!isWatchWallet ? (
+        <PanUpHandler>
+          <TransactionSection setDisplayButtons={setDisplayButtons} />
+        </PanUpHandler>
+      ) : (
+        <TransactionSection setDisplayButtons={setDisplayButtons} />
+      )}
     </MainLayout>
   );
 };

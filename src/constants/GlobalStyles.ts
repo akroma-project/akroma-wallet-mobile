@@ -311,7 +311,6 @@ const GlobalStyles = StyleSheet.create({
     gap: 40,
     justifyContent: 'space-between',
     alignSelf: 'center',
-    height: '13%',
     width: 344,
   },
   textButton: {
@@ -491,6 +490,18 @@ const GlobalStyles = StyleSheet.create({
     marginLeft: 0,
     marginBottom: 0,
     padding: 0,
+  },
+  panUpCard: {
+    overflow: 'hidden',
+    position: 'absolute',
+    width: '100%',
+    display: 'flex',
+    paddingTop: 10,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    backgroundColor: '#ffffff',
+    bottom: 0,
+    zIndex: 1,
   },
 });
 
